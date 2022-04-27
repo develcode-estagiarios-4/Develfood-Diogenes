@@ -13,7 +13,7 @@ export function useApi<T = unknown>(url: string, options?: AxiosRequestConfig){
     useEffect(() => {
       async function fetchData() {
           try {
-            api.get(url, options).then(
+            await api.get(url, options).then(
                 response => setData(response.data)
               )
           } catch (erro) {
