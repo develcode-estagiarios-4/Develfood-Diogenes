@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { useEffect, useState } from "react";
 
 const api = axios.create({
-    baseURL: 'https://api.github.com'
+    baseURL: 'https://api.github.com',
 });
 
 export function useApi<T = unknown>(url: string, options?: AxiosRequestConfig){
