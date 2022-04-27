@@ -6,7 +6,7 @@ import { useApi } from "../services/api";
 
 export function Home(){
 
-  const { data: repositories, loading } = useApi<dataDTO[]>('https://api.github.com/users/diego3g/repos')
+  const { data: repositories, loading } = useApi<dataDTO[]>('/users/diego3g/repos')
 
     return(
         <View>
