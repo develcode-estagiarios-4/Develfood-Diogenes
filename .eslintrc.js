@@ -16,5 +16,15 @@ module.exports = {
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking"
-  ]
+  ],
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx', '*.tsx text eol=lf'],
+      rules: {
+        '@typescript-eslint/no-shadow': ['error'],
+        'no-shadow': 'off',
+        'no-undef': 'off',
+      },
+    },
+  ],
 };
