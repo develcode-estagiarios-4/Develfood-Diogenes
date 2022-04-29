@@ -1,25 +1,14 @@
 import React from "react";
 import LottieView from "lottie-react-native"
-import { CommonActions, useNavigation } from "@react-navigation/native";
-import { useEffect } from "react";
 
 import { Container } from "./styles";
+import { Text } from "react-native";
 
 
 export function Splash(){
-    const navigation = useNavigation()
-
-    useEffect(() => {
-        setTimeout(() => {
-            navigation.dispatch(CommonActions.reset({
-                index: 0,
-                routes: [{name: 'Home'}]
-            }))
-        }, 3000)
-    }, [])
-
     return(
         <Container>
+            <Text style={{top: 20, position: 'absolute'}}>DevelFood</Text>
             <LottieView 
                 source={require('../assets/splash.json')} 
                 autoPlay 
