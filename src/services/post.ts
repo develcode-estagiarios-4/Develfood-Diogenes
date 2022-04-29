@@ -11,7 +11,5 @@ export const usePost= async<T = unknown>(url: string, body: T, options?: AxiosRe
                 return{response}
             } catch (error) {
                 console.log(error)
-            }finally{
-                
             }
 }

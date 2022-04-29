@@ -1,19 +1,19 @@
-import axios, { AxiosRequestConfig } from 'axios';
-import { useEffect, useState } from "react";
+import axios, { AxiosRequestConfig } from 'axios'
+import { useEffect, useState } from 'react';
 
 const api = axios.create({
-    baseURL: 'https://gorest.co.in',
-});
+    baseURL: 'https://gorest.co.in'
+})
 
-export function useFetch<T = unknown>(url: string, options?: AxiosRequestConfig){
-    const [data, setData] = useState<T | null>(null);
+export function useDelete<T = unknown>(url: string, body: T){
+    const [data, setData] = useState();
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<Error | null>(null)
 
     useEffect(() => {
-      async function fetchData() {
+      async function fetchDelete() {
           try {
-            await api.get(url, options).then(
+            await api.delete(url, body).then(
                 response => setData(response.data)
               )
           } catch (erro) {
@@ -22,7 +22,7 @@ export function useFetch<T = unknown>(url: string, options?: AxiosRequestConfig)
             setLoading(false)
           }
       }
-      fetchData()
+      fetchDelete()
     }, []);
     return { data, loading, error }
 }
