@@ -2,11 +2,11 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { useEffect, useState } from "react";
 
 const api = axios.create({
-    baseURL: 'https://gorest.co.in',
+    baseURL: 'https://viacep.com.br',
 });
 
 export function useFetch<T = unknown>(url: string, options?: AxiosRequestConfig){
-    const [data, setData] = useState<T | null>(null);
+    const [data, setData] = useState<T>({} as T);
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<Error | null>(null)
 
