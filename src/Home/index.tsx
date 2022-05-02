@@ -106,7 +106,8 @@ export function Home(){
                       <Text>Gender: {item.gender}</Text>
                       <Text>Name: {item.name}</Text>
                       <Text>Status: {item.status}</Text>
-                    </>)
+                    </>
+                    )
                   }
                   style={{flex: 1, width: '100%', borderWidth: 2, marginTop: 300}}
                   />
