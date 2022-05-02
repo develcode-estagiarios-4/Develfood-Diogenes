@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { useEffect, useState } from "react";
 
 const api = axios.create({
-    baseURL: 'https://viacep.com.br',
+    baseURL: 'https://gorest.co.in',
 });
 
 export function useFetch<T = unknown>(url: string, options?: AxiosRequestConfig){
@@ -16,6 +16,7 @@ export function useFetch<T = unknown>(url: string, options?: AxiosRequestConfig)
             await api.get(url, options).then(
                 response => setData(response.data)
               )
+              console.log(data)
           } catch (erro) {
               setError(error)
           }finally{

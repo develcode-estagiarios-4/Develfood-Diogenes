@@ -1,19 +1,15 @@
 import React from "react";
-import { Text, View, Button } from "react-native";
+import { Text, View, Button, FlatList } from "react-native";
 import { useFetch } from "../services/get";
 import { useDelete } from "../services/delete";
 import { usePost } from "../services/post";
 import { usePut } from "../services/put";
 
-
 interface Data{
-  cep: string;
-  logradouro: string;
-  complemento: string;
-  bairro: string;
-  localidade: string;
-  uf: string;
-  nome: string;
+  name: string;
+  email: string;
+  gender: string;
+  status: string;
 }
 
 interface CreateUserRequest{
@@ -59,7 +55,7 @@ interface UserDataDelete{
 
 export function Home(){
 
-  const { data, loading } = useFetch<Data>('/ws/01001000/json/')
+  const { data, loading } = useFetch<Data[]>('/public/v2/users')
 
   const { data: CreateUsers, loading: isLoadingPost, handlerPost} = usePost<CreateUserRequest, UserData>('/public/v2/users', {
     email: "diogenes@develcode8012.com",
@@ -101,13 +97,28 @@ export function Home(){
             <Text>API's</Text>
             {loading ? <Text>Carregando...</Text> :
               <View>
-                <View>
+
+                <FlatList 
+                  data={data}
+                  renderItem={({item}) => (
+                    <>
+                      <Text>Email: {item.email}</Text>
+                      <Text>Gender: {item.gender}</Text>
+                      <Text>Name: {item.name}</Text>
+                      <Text>Status: {item.status}</Text>
+                    </>)
+                  }
+                  style={{flex: 1, width: '100%', borderWidth: 2, marginTop: 300}}
+                  />
+
+                {/* <View>
                   <Text>
-                      {data.bairro}{'\n'}
-                      {data.logradouro}{'\n'}
-                      {data.localidade}{'\n'}
+                      {data[0].email}{'\n'}
+                      {data.name}{'\n'}
+                      {data.gender}{'\n'}
+                      {data.status}{'\n'}
                   </Text>
-                </View>
+                </View> */}
 
               <Button title="Create New" onPress={() => handlerPost()}/>
 
