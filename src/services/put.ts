@@ -14,11 +14,9 @@ export const usePut= <T = unknown, TResponse = unknown>(url: string, body: T, op
             try {
                 setLoading(true)
                 const response = await api.put(url, body, options)
-                console.log(response.data)
                 setData(response.data)
             } catch (error) {
                 setError(error)
-                console.log(error)
             }finally{
                 setLoading(false)
             }

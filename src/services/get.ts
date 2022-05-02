@@ -16,7 +16,6 @@ export function useFetch<T = unknown>(url: string, options?: AxiosRequestConfig)
             await api.get(url, options).then(
                 response => setData(response.data)
               )
-              console.log(data)
           } catch (erro) {
               setError(error)
           }finally{

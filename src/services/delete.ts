@@ -14,11 +14,9 @@ export const useDelete= <T = unknown, TResponse = unknown>(url: string, options?
             try {
                 setLoading(true)
                 const response = await api.delete(url, options)
-                console.log(response.data)
                 setData(response.data)
             } catch (error) {
                 setError(error)
-                console.log(error)
             }finally{
                 setLoading(false)
             }
