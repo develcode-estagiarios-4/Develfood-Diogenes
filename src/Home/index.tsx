@@ -21,7 +21,7 @@ export function Home(){
   const { data, loading } = useFetch<Data>('/ws/01001000/json/')
 
   const { data: CreateUsers, loading: isLoading, handlerPost} = usePost('/public/v2/users', {
-    email: "diogenes@develcode9.com",
+    email: "diogenes@develcode12.com",
     gender: "male",
     name: "diogenes",
     status: "active",
@@ -34,10 +34,10 @@ export function Home(){
   }
   )
 
-  const { data: ModifyUsers, loading: isloading, handlerPut } = usePut('/public/v2/users/11750', {
-    email: "diogenes@develcode10.com",
-    gender: "female",
-    name: "kevin",
+  const { data: ModifyUsers, loading: isloading, handlerPut } = usePut(`/public/v2/users/11750`, {
+    email: "diogenes@develcode22.com",
+    gender: "male",
+    name: "joao",
     status: "active",
   },
   {
