@@ -15,7 +15,7 @@ os Desenvolvedores trabalham no dia-a-dia.
 # Tecnologias
 
 -- [TypeScript](https://www.typescriptlang.org/)<p></p>
--- [React Native](https://reactnative.dev/)
--- [NodeJS](https://nodejs.org/en/)
--- [Styled Components](https://styled-components.com/)
+-- [React Native](https://reactnative.dev/)<p></p>
+-- [NodeJS](https://nodejs.org/en/)<p></p>
+-- [Styled Components](https://styled-components.com/)<p></p>
 
