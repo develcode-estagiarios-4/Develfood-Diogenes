@@ -1,6 +1,6 @@
-<p aling="center"> # Develfood-IV </p>
+# Develfood-IV
 
-<p aling="center"> ##Tabela de Conteúdos </p>
+##Tabela de Conteúdos 
 
   --[Sobre](#Sobre)<p></p>
   --[Tecnologias](#Sobre)
