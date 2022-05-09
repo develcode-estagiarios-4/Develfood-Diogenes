@@ -1,6 +1,6 @@
 # Develfood-IV
 
-<p aling="center">Tabela de Conteúdos</p> 
+<h3 aling="center">Tabela de Conteúdos</h3> 
 
   -- [Sobre](#Sobre)<p></p>
   -- [Tecnologias](#Sobre)
