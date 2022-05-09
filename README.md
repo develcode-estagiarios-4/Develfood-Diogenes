@@ -2,7 +2,7 @@
 
 <p aling="center"> ##Tabela de Conteúdos </p>
 
-  --[Sobre](#Sobre)<p>'\n'</p>
+  --[Sobre](#Sobre)<p></p>
   --[Tecnologias](#Sobre)
 
 # Sobre
