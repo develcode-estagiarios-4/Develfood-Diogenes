@@ -7,7 +7,9 @@
  
 ---
   
-<h3> Projeto em Construção</h3>  
+<h3> Projeto em Construção</h3>
+
+---
 
 # Sobre
 
@@ -15,6 +17,8 @@ A Develfood é um projeto no qual os estágairios da Develcode fazem para aprend
 os Desenvolvedores trabalham no dia-a-dia.
 
 É desenvolvido para Mobile, simula um aplicativo de delivery.
+
+---
 
 # Tecnologias
 
