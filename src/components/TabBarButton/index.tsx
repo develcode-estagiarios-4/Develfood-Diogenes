@@ -1,57 +1,38 @@
-/* eslint-disable no-lone-blocks */
 import React from 'react';
 import {Image} from 'react-native';
+import {RFValue} from 'react-native-responsive-fontsize';
 import {useTheme} from 'styled-components';
 
-import {Container, ButtonIcon, Title} from './styles';
-
+import {ButtonIcon, Title} from './styles';
 interface Props {
   name: string;
-  icon: string;
+  isPressed: boolean;
+  onPressed: Function;
 }
 
-export function TabBarButton({name, icon}: Props) {
+export function TabBarButton({name, isPressed, onPressed}: Props) {
   const theme = useTheme();
   return (
-    <Container>
-      <ButtonIcon>
-        <Image
-          source={
-            icon === 'home'
-              ? theme.icons.home
-              : icon === 'favorite'
-              ? theme.icons.favorite
-              : icon === 'list'
-              ? theme.icons.list
-              : icon === 'user'
-              ? theme.icons.user
-              : null
-          }
-          style={{
-            tintColor: theme.colors.icon_white,
-          }}
-        />
-        <Title>{name}</Title>
-      </ButtonIcon>
-    </Container>
+    <ButtonIcon onPress={() => onPressed()}>
+      <Image
+        source={
+          name === 'Inicio'
+            ? theme.icons.home
+            : name === 'Favoritos'
+            ? theme.icons.favorite
+            : name === 'Historico'
+            ? theme.icons.list
+            : name === 'Perfil'
+            ? theme.icons.user
+            : null
+        }
+        style={{
+          tintColor: isPressed ? theme.colors.icon_red : theme.colors.icon_gray,
+          height: isPressed ? RFValue(25) : RFValue(20),
+          width: isPressed ? RFValue(36) : RFValue(32),
+        }}
+      />
+      {isPressed ? <Title /> : <Title>{name}</Title>}
+    </ButtonIcon>
   );
-}
-
-{
-  /* <IconButton
-        onPress={() => {
-          setIconPressed(name);
-          return onPress;
-        }}>
-        <TabButton
-          name={icon}
-          color={
-            iconPressed === name
-              ? theme.colors.icon_red
-              : theme.colors.icon_gray
-          }
-          style={{width: 100, height: 100}}
-        />
-      </IconButton>
-      <Title>{name}</Title> */
 }

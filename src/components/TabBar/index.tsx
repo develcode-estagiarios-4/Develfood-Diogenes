@@ -1,53 +1,50 @@
-/* eslint-disable no-lone-blocks */
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import theme from '../../global/styles/theme';
+import {useState} from 'react';
 import {TabBarButton} from '../TabBarButton';
 
-import {Container, Wrapper} from './styles';
+import {Container} from './styles';
 
 export function TabBar() {
   const navigation = useNavigation();
+  const [iconName, setIconName] = useState('');
   return (
     <Container>
-      <Wrapper
-        selected={false}
-        onPress={() => {
+      <TabBarButton
+        onPressed={() => {
+          setIconName('Inicio');
           navigation.navigate('Inicio' as never);
-        }}>
-        <TabBarButton name={theme.nameIcons.home} icon={'home'} />
-      </Wrapper>
+        }}
+        isPressed={iconName === 'Inicio'}
+        name={'Inicio'}
+      />
 
-      <Wrapper
-        selected={false}
-        onPress={() => {
+      <TabBarButton
+        onPressed={() => {
+          setIconName('Favoritos');
           navigation.navigate('Favoritos' as never);
-        }}>
-        <TabBarButton name={theme.nameIcons.favorite} icon={'favorite'} />
-      </Wrapper>
+        }}
+        isPressed={iconName === 'Favoritos'}
+        name={'Favoritos'}
+      />
 
-      <Wrapper
-        selected={false}
-        onPress={() => {
+      <TabBarButton
+        onPressed={() => {
+          setIconName('Historico');
           navigation.navigate('Historico' as never);
-        }}>
-        <TabBarButton name={theme.nameIcons.list} icon={'list'} />
-      </Wrapper>
+        }}
+        isPressed={iconName === 'Historico'}
+        name={'Historico'}
+      />
 
-      <Wrapper
-        selected={false}
-        onPress={() => {
+      <TabBarButton
+        onPressed={() => {
+          setIconName('Perfil');
           navigation.navigate('Perfil' as never);
-        }}>
-        <TabBarButton name={theme.nameIcons.user} icon={'user'} />
-      </Wrapper>
+        }}
+        isPressed={iconName === 'Perfil'}
+        name={'Perfil'}
+      />
     </Container>
   );
-}
-
-{
-  /* <TabBarButton icon="home" onPress={() => {}} name={'Home'} />
-      <TabBarButton icon="star" onPress={() => {}} name={'star'} />
-      <TabBarButton icon="phone" onPress={() => {}} name={'phone'} />
-      <TabBarButton icon="user" onPress={() => {}} name={'user'} /> */
 }

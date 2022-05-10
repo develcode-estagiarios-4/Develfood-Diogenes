@@ -19,6 +19,7 @@ export const usePost = <T = unknown, TResponse = unknown>(
       setLoading(true);
       const response = await api.post(url, body, options);
       setData(response.data);
+      console.log(response.data);
     } catch (erro) {
       setError(error);
     } finally {

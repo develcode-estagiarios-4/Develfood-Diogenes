@@ -1,13 +1,7 @@
 import {RFValue} from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
-  align-items: center;
-  justify-content: space-around;
-  flex-direction: row;
-`;
-
-export const ButtonIcon = styled.View`
+export const ButtonIcon = styled.TouchableOpacity`
   width: ${RFValue(75)}px;
   height: ${RFValue(60)}px;
 
@@ -17,7 +11,8 @@ export const ButtonIcon = styled.View`
 
 export const Title = styled.Text`
   width: ${RFValue(75)}px;
-  font-size: ${RFValue(11)}px;
+  font-size: ${RFValue(12)}px;
   text-align: center;
-  color: white;
+  color: ${({theme}) => theme.colors.icon_gray};
+  font-family: ${({theme}) => theme.fonts.primaryReg};
 `;

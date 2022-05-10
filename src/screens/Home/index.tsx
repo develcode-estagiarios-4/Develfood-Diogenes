@@ -58,7 +58,7 @@ export function Home() {
   } = usePost<CreateUserRequest, UserData>(
     '/public/v2/users',
     {
-      email: 'diogenes@develcode8012.com',
+      email: 'diogenes@develcode8016.com',
       gender: 'male',
       name: 'diogenes',
       status: 'active',
@@ -77,7 +77,7 @@ export function Home() {
     loading: isloadingPut,
     handlerPut,
   } = usePut<CreateUserPut, UserDataPut>(
-    '/public/v2/users/7895',
+    '/public/v2/users/8552',
     {
       email: 'diogenes@develcode611.com',
       gender: 'male',
@@ -97,7 +97,7 @@ export function Home() {
     data: DeleteData,
     loading: isLoadingDelete,
     handlerDelete,
-  } = useDelete<UserDataDelete>('public/v2/users/7895', {
+  } = useDelete<UserDataDelete>('public/v2/users/8552', {
     headers: {
       'Content-type': 'application/json',
       Authorization:

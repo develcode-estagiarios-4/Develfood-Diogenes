@@ -32,11 +32,4 @@ export default {
     list: require('../assets/list.png'),
     user: require('../assets/user.png'),
   },
-
-  nameIcons: {
-    home: 'Inicio',
-    favorite: 'Favorito',
-    list: 'Histórico',
-    user: 'Perfil',
-  },
 };
