@@ -1,5 +1,7 @@
 apply plugin: "com.android.application"
 
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+
 import com.android.build.OutputFile
 import org.apache.tools.ant.taskdefs.condition.Os
 
@@ -77,6 +79,7 @@ import org.apache.tools.ant.taskdefs.condition.Os
  *   extraPackagerArgs: []
  * ]
  */
+
 
 project.ext.react = [
     enableHermes: false,  // clean and rebuild if changing
@@ -268,6 +271,8 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+
+    implementation "androidx.core:core-splashscreen:1.0.0-beta01"
 
     // implementation "androidx.core:core-splashscreen:1.0.0-beta01"
 
