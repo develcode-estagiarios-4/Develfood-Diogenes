@@ -26,57 +26,5 @@ export function Routes() {
       </Navigator>
       <TabBar />
     </>
-    // <Tabs.Navigator
-    //   screenOptions={{
-    //     headerShown: false,
-    //     tabBarActiveTintColor: theme.colors.icon_red,
-    //     tabBarInactiveTintColor: theme.colors.icon_gray,
-    //     tabBarLabelStyle: {
-    //       fontSize: RFValue(12),
-    //       fontFamily: theme.fonts.secondaryMed,
-    //     },
-    //     tabBarStyle: {
-    //       height: 92,
-    //       paddingBottom: 30,
-    //     },
-    //   }}>
-    //   {/* <Tabs.Screen name="Splash" component={Splash} options={{headerShown: false}} /> */}
-    //   <Tabs.Screen
-    //     name="Home"
-    //     component={Home}
-    //     options={{
-    //       tabBarIcon: ({color}) => (
-    //         <AntDesign name="home" size={30} color={color} />
-    //       ),
-    //     }}
-    //   />
-    //   <Tabs.Screen
-    //     name="Favorites"
-    //     component={Favorites}
-    //     options={{
-    //       tabBarIcon: ({color}) => (
-    //         <MaterialIcons name="favorite-border" size={30} color={color} />
-    //       ),
-    //     }}
-    //   />
-    //   <Tabs.Screen
-    //     name="Historic"
-    //     component={Historic}
-    //     options={{
-    //       tabBarIcon: ({color}) => (
-    //         <Octicons name="history" size={30} color={color} />
-    //       ),
-    //     }}
-    //   />
-    //   <Tabs.Screen
-    //     name="Settings"
-    //     component={Settings}
-    //     options={{
-    //       tabBarIcon: ({color}) => (
-    //         <Ionicons name="person-outline" size={30} color={color} />
-    //       ),
-    //     }}
-    //   />
-    // </Tabs.Navigator>
   );
 }

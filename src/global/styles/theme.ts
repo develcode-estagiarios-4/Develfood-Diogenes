@@ -27,9 +27,9 @@ export default {
   },
 
   icons: {
-    home: require('../assets/home.png'),
-    favorite: require('../assets/favorite.png'),
-    list: require('../assets/list.png'),
-    user: require('../assets/user.png'),
+    home: require('../assets/tabIcons/home.png'),
+    favorite: require('../assets/tabIcons/favorite.png'),
+    list: require('../assets/tabIcons/list.png'),
+    user: require('../assets/tabIcons/user.png'),
   },
 };
