@@ -1,22 +1,21 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
 import {ThemeProvider} from 'styled-components';
 import theme from './src/global/styles/theme';
 import {Routes} from './src/global/Routes/routes.routes';
+import {useEffect} from 'react';
 
-export default class App extends Component {
-  componentDidMount() {
+export default function App() {
+  useEffect(() => {
     SplashScreen.hide();
-  }
+  }, []);
 
-  render() {
-    return (
-      <ThemeProvider theme={theme}>
-        <NavigationContainer>
-          <Routes />
-        </NavigationContainer>
-      </ThemeProvider>
-    );
-  }
+  return (
+    <ThemeProvider theme={theme}>
+      <NavigationContainer>
+        <Routes />
+      </NavigationContainer>
+    </ThemeProvider>
+  );
 }
