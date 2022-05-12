@@ -2,7 +2,7 @@ import axios, {AxiosRequestConfig} from 'axios';
 import {useState} from 'react';
 
 const api = axios.create({
-  baseURL: 'https://gorest.co.in',
+  baseURL: 'https://develfood-3.herokuapp.com',
 });
 
 export const usePost = <T = unknown, TResponse = unknown>(
@@ -22,6 +22,7 @@ export const usePost = <T = unknown, TResponse = unknown>(
       console.log(response.data);
     } catch (erro) {
       setError(error);
+      console.log(error);
     } finally {
       setLoading(false);
     }

@@ -16,7 +16,7 @@
 //         DevelFood
 //       </Text>
 //       <LottieView
-//         source={require('../../assets/splash2.json')}
+//         source={require('../../global/assets/splash2.json')}
 //         autoPlay
 //         loop={false}
 //       />
