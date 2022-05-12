@@ -1,21 +1,24 @@
 import React from 'react';
 import {useState} from 'react';
 import {useTheme} from 'styled-components';
+import {Control, Controller} from 'react-hook-form';
 
 import {
   Container,
   InputLogin,
   LoginIcon,
-  Validation,
+  Error,
   IconPassword,
   LogoHide,
 } from './styles';
 
 interface Props {
   name: string;
+  control: Control;
+  error: string;
 }
 
-export function Input({name}: Props) {
+export function Input({name, control, error}: Props) {
   const theme = useTheme();
 
   const [data, setData] = useState({
@@ -30,7 +33,6 @@ export function Input({name}: Props) {
       secureTextEntry: !data.secureTextEntry,
     });
   };
-
   return (
     <>
       <Container>
@@ -43,29 +45,28 @@ export function Input({name}: Props) {
               : null
           }
         />
-        <InputLogin
-          placeholder={name === 'email' ? 'exemplo@email.com' : '********'}
-          autoCapitalize="none"
-          keyboardType={name === 'email' ? 'email-address' : 'default'}
-          secureTextEntry={name === 'password' ? data.secureTextEntry : false}
+        <Controller
+          control={control}
+          rules={{required: true}}
+          render={({field: {onChange, value}}) => (
+            <InputLogin
+              placeholder={name === 'email' ? 'exemplo@email.com' : '********'}
+              autoCapitalize="none"
+              keyboardType={name === 'email' ? 'email-address' : 'default'}
+              secureTextEntry={
+                name === 'password' ? data.secureTextEntry : false
+              }
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
+          name={name}
         />
         <IconPassword onPress={() => updateSecureTextEntry()}>
           <LogoHide source={name === 'password' ? theme.icons.eye : null} />
         </IconPassword>
       </Container>
-      {name === 'email' ? (
-        data.isValidEmail
-      ) : name === 'password' ? (
-        data.isValidPassword
-      ) : (
-        <Validation>
-          {name === 'email'
-            ? 'Email Invalido'
-            : name === 'password'
-            ? 'Senha invalida'
-            : null}
-        </Validation>
-      )}
+      {error && <Error>{error}</Error>}
     </>
   );
 }

@@ -1,5 +1,6 @@
 import axios, {AxiosRequestConfig} from 'axios';
 import {useState} from 'react';
+import {Alert} from 'react-native';
 
 const api = axios.create({
   baseURL: 'https://develfood-3.herokuapp.com',
@@ -22,6 +23,7 @@ export const usePost = <T = unknown, TResponse = unknown>(
       console.log(response.data);
     } catch (erro) {
       setError(error);
+      Alert.alert('Email ou senha erradas');
       console.log(error);
     } finally {
       setLoading(false);

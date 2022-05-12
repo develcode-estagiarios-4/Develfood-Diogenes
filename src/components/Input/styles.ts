@@ -34,7 +34,7 @@ export const IconPassword = styled.TouchableOpacity`
   right: 18;
 `;
 
-export const Validation = styled.Text`
+export const Error = styled.Text`
   align-self: center;
 
   margin-top: 8px;
