@@ -33,6 +33,7 @@ import {
   RegisterButtonTitle,
   ButtonTitle,
 } from './styled';
+import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 
 interface LoginRequest {
   email: string;
@@ -80,8 +81,14 @@ export function Login() {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
         <>
-          <Hamburger source={theme.images.hamburger} />
-          <HalfPizza source={theme.images.pizza} />
+          <Hamburger
+            source={theme.images.hamburger}
+            style={{height: RFValue(210), width: RFValue(75)}}
+          />
+          <HalfPizza
+            source={theme.images.pizza}
+            style={{height: RFValue(280), width: RFValue(130)}}
+          />
           <Content>
             <LogoImage source={theme.images.develfood} />
 
@@ -123,7 +130,10 @@ export function Login() {
               <Text>{data.type}</Text>
             </View>
           </Content>
-          <FooterImage source={theme.images.footer} />
+          <FooterImage
+            source={theme.images.footer}
+            style={{height: RFValue(210), width: RFPercentage(45)}}
+          />
         </>
       </Container>
     </TouchableWithoutFeedback>

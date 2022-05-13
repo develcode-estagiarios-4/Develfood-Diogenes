@@ -4,21 +4,27 @@ import styled from 'styled-components/native';
 export const Container = styled.View`
   flex: 1;
   background-color: ${({theme}) => theme.colors.background};
+  justify-content: center;
+  align-items: center;
 `;
 
-export const Hamburger = styled.Image``;
+export const Hamburger = styled.Image`
+  position: absolute;
+  left: 0;
+  top: 0;
+`;
 
 export const HalfPizza = styled.Image`
   position: absolute;
   right: 0;
+  top: 0;
 `;
 
 export const Content = styled.View`
   flex: 1;
-  position: absolute;
   width: 100%;
   height: ${RFValue(280)}px;
-  margin-top: ${RFValue(220)}px;
+  margin-top: ${RFValue(190)}px;
   background-color: transparent;
   z-index: 1;
 `;
@@ -28,8 +34,8 @@ export const LogoImage = styled.Image`
 `;
 
 export const FogotPassButton = styled.TouchableOpacity`
-  margin-top: 12px;
-  margin-left: 221px;
+  margin-top: ${RFValue(12)}px;
+  margin-left: ${RFValue(221)}px;
   bottom: 0;
 `;
 
@@ -80,10 +86,4 @@ export const ButtonTitle = styled.Text`
 export const FooterImage = styled.Image`
   position: absolute;
   bottom: 0;
-`;
-export const SplashScreen = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  background-color: ${({theme}) => theme.colors.background};
 `;
