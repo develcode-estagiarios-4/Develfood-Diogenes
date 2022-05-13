@@ -7,10 +7,10 @@ import {useForm} from 'react-hook-form';
 import {Error} from '../../components/Input/styles';
 import {Input} from '../../components/Input';
 import {usePost} from '../../global/services/post';
-import {showMessage} from 'react-native-flash-message';
 
 import {
   ActivityIndicator,
+  Alert,
   Keyboard,
   Text,
   TouchableWithoutFeedback,
@@ -54,18 +54,16 @@ export function Login() {
     RNBootSplash.hide({fade: true});
   }, []);
 
-  const {
-    data,
-    loading,
-    handlerPost,
-    error: errorPost,
-  } = usePost<LoginRequest, UserData>('/auth');
+  const {data, loading, handlerPost} = usePost<LoginRequest, UserData>('/auth');
 
   const onSubmit = (value: any) => {
-    handlerPost({
-      email: value.email,
-      password: value.password,
-    });
+    handlerPost(
+      {
+        email: value.email,
+        password: value.password,
+      },
+      error => Alert.alert('Erro', error.response?.data.message),
+    );
   };
 
   const theme = useTheme();
@@ -111,13 +109,6 @@ export function Login() {
               )}
             </LoginButton>
 
-            {errorPost?.status === 409 &&
-              showMessage({
-                message: 'Simple message',
-                type: 'info',
-              })}
-            {console.log('OI', errorPost)}
-
             <WrapperRegister>
               <RegisterSimpleTitle>Não possui cadastro?</RegisterSimpleTitle>
               <RegisterButtonTitle>
@@ -129,9 +120,6 @@ export function Login() {
               <Text>{data.token}</Text>
               <Text>{data.type}</Text>
             </View>
-
-            {/* {errorPost?.status === 409 && Alert.alert('Usuario não encontrado')}
-            {console.log('OI', errorPost)} */}
           </Content>
           <FooterImage source={theme.images.footer} />
         </>

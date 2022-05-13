@@ -15,6 +15,8 @@ export const HalfPizza = styled.Image`
 `;
 
 export const Content = styled.View`
+  flex: 1;
+
   position: absolute;
 
   width: 100%;

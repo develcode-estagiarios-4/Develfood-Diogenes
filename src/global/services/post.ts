@@ -1,4 +1,4 @@
-import axios, {AxiosRequestConfig} from 'axios';
+import axios, {AxiosError, AxiosRequestConfig} from 'axios';
 import {useState} from 'react';
 
 const api = axios.create({
@@ -8,21 +8,24 @@ const api = axios.create({
 export const usePost = <T = unknown, TResponse = unknown>(url: string) => {
   const [data, setData] = useState<TResponse>({} as TResponse);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<Error | null | unknown>(null);
 
-  async function handlerPost(body: T, options?: AxiosRequestConfig) {
+  async function handlerPost(
+    body: T,
+    onError: (error: AxiosError<any, any>) => void,
+    options?: AxiosRequestConfig,
+  ) {
     try {
       setLoading(true);
       const response = await api.post(url, body, options);
       setData(response.data);
       console.log(response.data);
-    } catch (erro: any) {
-      setError(erro.response.data);
-      console.log(erro.response.data);
+    } catch (error: AxiosError<any, any> | any) {
+      error && onError(error);
+      console.log(error.response.data);
     } finally {
       setLoading(false);
     }
   }
 
-  return {data, loading, error, handlerPost};
+  return {data, loading, handlerPost};
 };
