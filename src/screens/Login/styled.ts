@@ -3,7 +3,6 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
   flex: 1;
-
   background-color: ${({theme}) => theme.colors.background};
 `;
 
@@ -16,16 +15,11 @@ export const HalfPizza = styled.Image`
 
 export const Content = styled.View`
   flex: 1;
-
   position: absolute;
-
   width: 100%;
   height: ${RFValue(280)}px;
-
   margin-top: ${RFValue(220)}px;
-
   background-color: transparent;
-
   z-index: 1;
 `;
 
@@ -47,15 +41,11 @@ export const ForgotPass = styled.Text`
 export const LoginButton = styled.TouchableOpacity`
   width: ${RFValue(295)}px;
   height: ${RFValue(50)}px;
-
   align-items: center;
   justify-content: center;
-
   margin-left: ${RFValue(40)}px;
   margin-top: ${RFValue(22)}px;
-
   border-radius: ${RFValue(10)}px;
-
   background-color: ${({theme}) => theme.colors.background_red};
 `;
 
@@ -67,7 +57,6 @@ export const ButtonTitleLogin = styled.Text`
 
 export const WrapperRegister = styled.View`
   margin-top: ${RFValue(19)}px;
-
   flex-direction: row;
   justify-content: center;
 `;
@@ -90,13 +79,11 @@ export const ButtonTitle = styled.Text`
 
 export const FooterImage = styled.Image`
   position: absolute;
-
   bottom: 0;
 `;
 export const SplashScreen = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
-
   background-color: ${({theme}) => theme.colors.background};
 `;
