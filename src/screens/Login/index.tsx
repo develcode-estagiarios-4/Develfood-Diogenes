@@ -89,12 +89,14 @@ export function Login() {
               name="email"
               control={control}
               error={errors.email && <Error>E-mail é obrigatório</Error>}
+              editable={!loading}
             />
 
             <Input
               name="password"
               control={control}
               error={errors.password && <Error>Senha é obrigatório</Error>}
+              editable={!loading}
             />
 
             <FogotPassButton>

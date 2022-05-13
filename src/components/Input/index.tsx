@@ -16,9 +16,10 @@ interface Props {
   name: string;
   control: Control;
   error: string;
+  editable: boolean;
 }
 
-export function Input({name, control, error}: Props) {
+export function Input({name, control, error, editable}: Props) {
   const theme = useTheme();
 
   const [data, setData] = useState({
@@ -59,6 +60,7 @@ export function Input({name, control, error}: Props) {
               }
               onChangeText={onChange}
               value={value}
+              editable={editable}
             />
           )}
           name={name}
