@@ -33,6 +33,7 @@ export function Input({name, control, error}: Props) {
       secureTextEntry: !data.secureTextEntry,
     });
   };
+
   return (
     <>
       <Container>

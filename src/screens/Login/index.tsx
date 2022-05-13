@@ -1,6 +1,14 @@
 import React, {useEffect} from 'react';
 import {useTheme} from 'styled-components';
 import RNBootSplash from 'react-native-bootsplash';
+import * as Yup from 'yup';
+import {yupResolver} from '@hookform/resolvers/yup';
+import {useForm} from 'react-hook-form';
+import {Error} from '../../components/Input/styles';
+import {Input} from '../../components/Input';
+import {usePost} from '../../global/services/post';
+import {showMessage} from 'react-native-flash-message';
+
 import {
   ActivityIndicator,
   Keyboard,
@@ -8,12 +16,6 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import * as Yup from 'yup';
-import {yupResolver} from '@hookform/resolvers/yup';
-import {useForm} from 'react-hook-form';
-import {Error} from '../../components/Input/styles';
-import {Input} from '../../components/Input';
-import {usePost} from '../../global/services/post';
 
 import {
   Container,
@@ -32,7 +34,7 @@ import {
   ButtonTitle,
 } from './styled';
 
-interface CreateUserRequest {
+interface LoginRequest {
   email: string;
   password: string;
 }
@@ -52,13 +54,19 @@ export function Login() {
     RNBootSplash.hide({fade: true});
   }, []);
 
-  const {data, loading, handlerPost} = usePost<CreateUserRequest, UserData>(
-    '/auth',
-    {
-      email: 'exemplo@email.com',
-      password: '123456',
-    },
-  );
+  const {
+    data,
+    loading,
+    handlerPost,
+    error: errorPost,
+  } = usePost<LoginRequest, UserData>('/auth');
+
+  const onSubmit = (value: any) => {
+    handlerPost({
+      email: value.email,
+      password: value.password,
+    });
+  };
 
   const theme = useTheme();
 
@@ -95,13 +103,20 @@ export function Login() {
               <ForgotPass>Esqueci minha senha</ForgotPass>
             </FogotPassButton>
 
-            <LoginButton onPress={handleSubmit(handlerPost)}>
+            <LoginButton onPress={handleSubmit(onSubmit)}>
               {loading ? (
                 <ActivityIndicator color={theme.colors.background} />
               ) : (
                 <ButtonTitleLogin>Entrar</ButtonTitleLogin>
               )}
             </LoginButton>
+
+            {errorPost?.status === 409 &&
+              showMessage({
+                message: 'Simple message',
+                type: 'info',
+              })}
+            {console.log('OI', errorPost)}
 
             <WrapperRegister>
               <RegisterSimpleTitle>Não possui cadastro?</RegisterSimpleTitle>
@@ -114,6 +129,9 @@ export function Login() {
               <Text>{data.token}</Text>
               <Text>{data.type}</Text>
             </View>
+
+            {/* {errorPost?.status === 409 && Alert.alert('Usuario não encontrado')}
+            {console.log('OI', errorPost)} */}
           </Content>
           <FooterImage source={theme.images.footer} />
         </>
