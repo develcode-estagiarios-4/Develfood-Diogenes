@@ -1,18 +1,10 @@
-// import React from 'react';
+import React from 'react';
+import {Login} from '../../screens/Login';
+import {useAuth} from '../Context';
+import {Routes} from './routes.routes';
 
-// import {Splash} from '../global/Splash';
-// import {useState} from 'react';
-// import {Routes} from './routes.routes';
-// import {useEffect} from 'react';
+export function AppRoutes() {
+  const {token} = useAuth();
 
-// export function AppRoutes() {
-//   const [isLoading, setIsLoading] = useState(true);
-
-//   useEffect(() => {
-//     setTimeout(() => {
-//       setIsLoading(false);
-//     }, 3000);
-//   }, []);
-
-//   return isLoading ? <Splash /> : <Routes />;
-// }
+  return token ? <Routes /> : <Login />;
+}
