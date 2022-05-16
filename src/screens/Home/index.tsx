@@ -3,28 +3,15 @@ import React from 'react';
 import {Text, View, Button, FlatList, StatusBar} from 'react-native';
 import {useFetch} from '../../global/services/get';
 import {useDelete} from '../../global/services/delete';
-import {usePost} from '../../global/services/post';
 import {usePut} from '../../global/services/put';
 
 import {Container, Content, Header} from './styles';
+import {useAuth} from '../../global/Context';
 
 interface Data {
   name: string;
   email: string;
   gender: string;
-  status: string;
-}
-
-interface CreateUserRequest {
-  email: string;
-  gender: string;
-  name: string;
-  status: string;
-}
-interface UserData {
-  email: string;
-  gender: string;
-  name: string;
   status: string;
 }
 
@@ -51,26 +38,7 @@ interface UserDataDelete {
 export function Home() {
   const {data, loading} = useFetch<Data[]>('/public/v2/users');
 
-  const {
-    data: CreateUsers,
-    loading: isLoadingPost,
-    handlerPost,
-  } = usePost<CreateUserRequest, UserData>(
-    '/public/v2/users',
-    {
-      email: 'diogenes@develcode8016.com',
-      gender: 'male',
-      name: 'diogenes',
-      status: 'active',
-    },
-    {
-      headers: {
-        'Content-type': 'application/json',
-        Authorization:
-          'Bearer a4e3743577c2a9f43ef23ca81f710292e0158b333e74723043f685454876fda1',
-      },
-    },
-  );
+  const {token} = useAuth();
 
   const {
     data: ModifyUsers,
@@ -143,24 +111,13 @@ export function Home() {
                   </Text>
                 </View> */}
 
-            <Button title="Create New" onPress={() => handlerPost()} />
-
             <Button title="Delete" onPress={() => handlerDelete()} />
 
             <Button title="Put" onPress={() => handlerPut()} />
           </View>
         )}
 
-        {isLoadingPost ? (
-          <Text>Carregando Post</Text>
-        ) : (
-          <View>
-            <Text>{CreateUsers?.email}</Text>
-            <Text>{CreateUsers?.gender}</Text>
-            <Text>{CreateUsers?.name}</Text>
-            <Text>{CreateUsers?.status}</Text>
-          </View>
-        )}
+        <Text>{token}</Text>
 
         {isloadingPut ? (
           <Text>Carregando Put</Text>

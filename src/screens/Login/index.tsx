@@ -6,15 +6,13 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {useForm} from 'react-hook-form';
 import {Error} from '../../components/Input/styles';
 import {Input} from '../../components/Input';
-import {usePost} from '../../global/services/post';
+import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
+import {useAuth} from '../../global/Context';
 
 import {
   ActivityIndicator,
-  Alert,
   Keyboard,
-  Text,
   TouchableWithoutFeedback,
-  View,
 } from 'react-native';
 
 import {
@@ -33,17 +31,6 @@ import {
   RegisterButtonTitle,
   ButtonTitle,
 } from './styled';
-import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
-
-interface LoginRequest {
-  email: string;
-  password: string;
-}
-
-interface UserData {
-  token: string;
-  type: string;
-}
 
 const schema = Yup.object().shape({
   email: Yup.string().email().required('Email é obrigatório.'),
@@ -55,19 +42,16 @@ export function Login() {
     RNBootSplash.hide({fade: true});
   }, []);
 
-  const {data, loading, handlerPost} = usePost<LoginRequest, UserData>('/auth');
+  const theme = useTheme();
+
+  const {userLogin, loading} = useAuth();
 
   const onSubmit = (value: any) => {
-    handlerPost(
-      {
-        email: value.email,
-        password: value.password,
-      },
-      error => Alert.alert('Erro', error.response?.data.message),
-    );
+    userLogin({
+      email: value.email,
+      password: value.password,
+    });
   };
-
-  const theme = useTheme();
 
   const {
     control,
@@ -125,10 +109,10 @@ export function Login() {
               </RegisterButtonTitle>
             </WrapperRegister>
 
-            <View>
+            {/* <View>
               <Text>{data.token}</Text>
               <Text>{data.type}</Text>
-            </View>
+            </View> */}
           </Content>
           <FooterImage
             source={theme.images.footer}
