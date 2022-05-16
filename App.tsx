@@ -5,6 +5,7 @@ import {ThemeProvider} from 'styled-components';
 import theme from './src/global/styles/theme';
 import {Routes} from './src/global/Routes/routes.routes';
 import {useEffect} from 'react';
+import { Login } from './src/screens/Login';
 
 export default function App() {
   useEffect(() => {
@@ -13,9 +14,10 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <NavigationContainer>
+      <Login />
+      {/* <NavigationContainer>
         <Routes />
-      </NavigationContainer>
+      </NavigationContainer> */}
     </ThemeProvider>
   );
 }
