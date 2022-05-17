@@ -4,10 +4,10 @@ import RNBootSplash from 'react-native-bootsplash';
 import * as Yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useForm} from 'react-hook-form';
-import {Error} from '../../components/Input/styles';
-import {Input} from '../../components/Input';
+import {Input} from '../../../components/Input';
 import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
-import {useAuth} from '../../global/Context';
+import {useAuth} from '../../../global/Context';
+import {useNavigation} from '@react-navigation/native';
 
 import {
   ActivityIndicator,
@@ -33,8 +33,12 @@ import {
 } from './styled';
 
 const schema = Yup.object().shape({
-  email: Yup.string().email().required('Email é obrigatório.'),
-  password: Yup.string().typeError('Informe sua senha.').required(),
+  email: Yup.string()
+    .email('Digite um email válido.')
+    .required('Email é obrigatório.'),
+  password: Yup.string()
+    .min(6, 'Minimo de 6 caracteres.')
+    .required('Senha é obrigatória.'),
 });
 
 export function Login() {
@@ -43,6 +47,8 @@ export function Login() {
   }, []);
 
   const theme = useTheme();
+
+  const navigation = useNavigation();
 
   const {userLogin, loading} = useAuth();
 
@@ -79,14 +85,14 @@ export function Login() {
             <Input
               name="email"
               control={control}
-              error={errors.email && <Error>E-mail é obrigatório</Error>}
+              error={errors.email && errors.email.message}
               editable={!loading}
             />
 
             <Input
               name="password"
               control={control}
-              error={errors.password && <Error>Senha é obrigatório</Error>}
+              error={errors.password && errors.password.message}
               editable={!loading}
             />
 
@@ -104,15 +110,13 @@ export function Login() {
 
             <WrapperRegister>
               <RegisterSimpleTitle>Não possui cadastro?</RegisterSimpleTitle>
-              <RegisterButtonTitle>
+              <RegisterButtonTitle
+                onPress={() => {
+                  navigation.navigate('Register' as never);
+                }}>
                 <ButtonTitle> Cadastre-se aqui!</ButtonTitle>
               </RegisterButtonTitle>
             </WrapperRegister>
-
-            {/* <View>
-              <Text>{data.token}</Text>
-              <Text>{data.type}</Text>
-            </View> */}
           </Content>
           <FooterImage
             source={theme.images.footer}

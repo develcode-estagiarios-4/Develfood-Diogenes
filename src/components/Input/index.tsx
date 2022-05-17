@@ -44,7 +44,15 @@ export function Input({name, control, error, editable}: Props) {
               ? theme.icons.email
               : name === 'password'
               ? theme.icons.password
-              : null
+              : name === 'confirmPassword'
+              ? theme.icons.password
+              : name === 'name'
+              ? theme.icons.name
+              : name === 'phone'
+              ? theme.icons.phone
+              : name === 'cpf'
+              ? theme.icons.cpf
+              : theme.icons.locale
           }
         />
         <Controller
@@ -52,11 +60,37 @@ export function Input({name, control, error, editable}: Props) {
           rules={{required: true}}
           render={({field: {onChange, value}}) => (
             <InputLogin
-              placeholder={name === 'email' ? 'exemplo@email.com' : '********'}
+              placeholder={
+                name === 'email'
+                  ? 'exemplo@email.com'
+                  : name === 'password'
+                  ? 'senha'
+                  : name === 'confirmPassword'
+                  ? 'confirmar senha'
+                  : name === 'name'
+                  ? 'Nome'
+                  : name === 'phone'
+                  ? 'Telefone'
+                  : name === 'cpf'
+                  ? 'CPF'
+                  : name === 'city'
+                  ? 'Cidade'
+                  : name === 'street'
+                  ? 'Rua'
+                  : name === 'number'
+                  ? 'Número'
+                  : name === 'neighborhood'
+                  ? 'Bairro'
+                  : 'CEP'
+              }
               autoCapitalize="none"
               keyboardType={name === 'email' ? 'email-address' : 'default'}
               secureTextEntry={
-                name === 'password' ? data.secureTextEntry : false
+                name === 'password'
+                  ? data.secureTextEntry
+                  : name === 'confirmPassword'
+                  ? data.secureTextEntry
+                  : false
               }
               onChangeText={onChange}
               value={value}
@@ -66,7 +100,15 @@ export function Input({name, control, error, editable}: Props) {
           name={name}
         />
         <IconPassword onPress={() => updateSecureTextEntry()}>
-          <LogoHide source={name === 'password' ? theme.icons.eye : null} />
+          <LogoHide
+            source={
+              name === 'password'
+                ? theme.icons.eye
+                : name === 'confirmPassword'
+                ? theme.icons.eye
+                : null
+            }
+          />
         </IconPassword>
       </Container>
       {error && <Error>{error}</Error>}
