@@ -44,7 +44,7 @@ export function RegisterPessoalData() {
   const theme = useTheme();
 
   function handlerBackButton() {
-    navigation.navigate('RegisterLocale' as never);
+    navigation.navigate('Register' as never);
   }
 
   const {
