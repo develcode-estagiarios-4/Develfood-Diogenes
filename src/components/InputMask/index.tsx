@@ -28,7 +28,7 @@ export function InputMask({
 
         <TextMask
           type="cel-phone"
-          options={{maskType: 'BRL', withDDD: true, dddMask: '(99)'}}
+          options={{maskType: 'BRL', withDDD: true, dddMask: '(99) '}}
           placeholder={placeholder}
           autoCapitalize="none"
           onChangeText={onChangeText}
