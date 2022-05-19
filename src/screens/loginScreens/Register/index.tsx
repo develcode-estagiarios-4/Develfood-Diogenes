@@ -11,6 +11,7 @@ import {useState} from 'react';
 import {ContinueButton} from '../../../components/ContinueButton';
 
 import {
+  Alert,
   Image,
   Keyboard,
   StatusBar,
@@ -27,6 +28,7 @@ import {
   Circle,
   CenterCircle,
 } from './styles';
+import {usePost} from '../../../global/services/post';
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -40,10 +42,39 @@ const schema = Yup.object().shape({
     .required('Confirmação de senha é obrigatória.'),
 });
 
+interface CreateUser {
+  email: string;
+  password: string;
+}
+
 export function Register() {
   const navigation = useNavigation();
 
   const theme = useTheme();
+
+  const {data, handlerPost, loading} = usePost<CreateUser>('/user');
+
+  const loginError = (error: any) => {
+    Alert.alert(
+      'Erro',
+      error.response.data.status === 409
+        ? 'Usuário não encontrado'
+        : error.response.data.message,
+    );
+    console.log(error);
+  };
+
+  const onSubmit = (value: any) => {
+    handlerPost(
+      {
+        email: value.email,
+        password: value.password,
+      },
+      loginError,
+    );
+
+    navigation.navigate('RegisterPessoalData' as never);
+  };
 
   function handlerBackButton() {
     navigation.navigate('Login' as never);
@@ -56,8 +87,6 @@ export function Register() {
   } = useForm({
     resolver: yupResolver(schema),
   });
-
-  const onSubmit = () => navigation.navigate('RegisterPessoalData' as never);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setLoading] = useState(false);
@@ -94,7 +123,7 @@ export function Register() {
           render={({field: {onChange, value}}) => (
             <Input
               control={control}
-              editable={!isLoading}
+              editable={!loading}
               error={errors.email && errors.email.message}
               keyboardType="email-address"
               placeholder="exemplo@email.com"
@@ -113,7 +142,7 @@ export function Register() {
           render={({field: {onChange, value}}) => (
             <Input
               control={control}
-              editable={!isLoading}
+              editable={!loading}
               error={errors.password && errors.password.message}
               keyboardType="default"
               placeholder="senha"
@@ -133,7 +162,7 @@ export function Register() {
           render={({field: {onChange, value}}) => (
             <Input
               control={control}
-              editable={!isLoading}
+              editable={!loading}
               error={errors.confirmPassword && errors.confirmPassword.message}
               keyboardType="default"
               placeholder="comfirmar senha"
@@ -150,7 +179,7 @@ export function Register() {
         <ContinueButton
           title="Continuar"
           onPressed={handleSubmit(onSubmit)}
-          loading={isLoading}
+          loading={loading}
         />
       </Container>
     </TouchableWithoutFeedback>
