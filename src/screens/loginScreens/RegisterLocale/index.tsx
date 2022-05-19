@@ -7,8 +7,8 @@ import {Input} from '../../../components/Input';
 import * as Yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {Controller, useForm} from 'react-hook-form';
-import {useState} from 'react';
 import {ContinueButton} from '../../../components/ContinueButton';
+import {useCreateUser} from '../../../global/Context/createUserAuth';
 
 import {
   Image,
@@ -45,6 +45,8 @@ export function RegisterLocale() {
 
   const theme = useTheme();
 
+  const {handleSetPostData, loading} = useCreateUser();
+
   function handlerBackButton() {
     navigation.navigate('RegisterPessoalData' as never);
   }
@@ -57,10 +59,17 @@ export function RegisterLocale() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = () => navigation.navigate('RegisterSuccess' as never);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isLoading, setLoading] = useState(false);
+  const onSubmit = (value: any) => {
+    handleSetPostData({
+      street: value.street,
+      number: value.number,
+      neighborhood: value.neighborhood,
+      zipCode: value.zipCode,
+      state: '',
+      nickname: '',
+    });
+    navigation.navigate('RegisterSuccess' as never);
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -94,7 +103,7 @@ export function RegisterLocale() {
           render={({field: {onChange, value}}) => (
             <Input
               control={control}
-              editable={!isLoading}
+              editable={!loading}
               error={errors.street && errors.street.message}
               keyboardType="email-address"
               placeholder="Rua"
@@ -113,7 +122,7 @@ export function RegisterLocale() {
           render={({field: {onChange, value}}) => (
             <Input
               control={control}
-              editable={!isLoading}
+              editable={!loading}
               error={errors.city && errors.city.message}
               keyboardType="email-address"
               placeholder="Cidade"
@@ -132,7 +141,7 @@ export function RegisterLocale() {
           render={({field: {onChange, value}}) => (
             <Input
               control={control}
-              editable={!isLoading}
+              editable={!loading}
               error={errors.neighborhood && errors.neighborhood.message}
               keyboardType="email-address"
               placeholder="Bairro"
@@ -151,7 +160,7 @@ export function RegisterLocale() {
           render={({field: {onChange, value}}) => (
             <Input
               control={control}
-              editable={!isLoading}
+              editable={!loading}
               error={errors.number && errors.number.message}
               keyboardType="email-address"
               placeholder="Numero"
@@ -170,7 +179,7 @@ export function RegisterLocale() {
           render={({field: {onChange, value}}) => (
             <Input
               control={control}
-              editable={!isLoading}
+              editable={!loading}
               error={errors.cep && errors.cep.message}
               keyboardType="email-address"
               placeholder="CEP"
@@ -187,7 +196,7 @@ export function RegisterLocale() {
         <ContinueButton
           title="Continuar"
           onPressed={handleSubmit(onSubmit)}
-          loading={isLoading}
+          loading={loading}
         />
       </Container>
     </TouchableWithoutFeedback>

@@ -7,9 +7,10 @@ import {Input} from '../../../components/Input';
 import * as Yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {Controller, useForm} from 'react-hook-form';
-import {useState} from 'react';
 import {ContinueButton} from '../../../components/ContinueButton';
 import {cpf} from 'cpf-cnpj-validator';
+import {InputMask} from '../../../components/InputMask';
+import {useCreateUser} from '../../../global/Context/createUserAuth';
 
 import {
   Image,
@@ -28,7 +29,6 @@ import {
   Circle,
   CenterCircle,
 } from './styles';
-import {InputMask} from '../../../components/InputMask';
 
 const schema = Yup.object().shape({
   name: Yup.string().required('Nome é obrigatório.'),
@@ -43,6 +43,8 @@ export function RegisterPessoalData() {
 
   const theme = useTheme();
 
+  const {handleSetPostData, loading} = useCreateUser();
+
   function handlerBackButton() {
     navigation.navigate('Register' as never);
   }
@@ -55,10 +57,17 @@ export function RegisterPessoalData() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = () => navigation.navigate('RegisterLocale' as never);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isLoading, setLoading] = useState(false);
+  const onSubmit = (value: any) => {
+    console.log('==>', value);
+    handleSetPostData({
+      firstName: value.name,
+      lastName: '',
+      cpf: value.cpf,
+      phone: value.phone,
+      photo: '',
+    });
+    navigation.navigate('RegisterLocale' as never);
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -92,7 +101,7 @@ export function RegisterPessoalData() {
           render={({field: {onChange, value}}) => (
             <Input
               control={control}
-              editable={!isLoading}
+              editable={!loading}
               error={errors.name && errors.name.message}
               keyboardType="email-address"
               placeholder="Nome"
@@ -111,7 +120,7 @@ export function RegisterPessoalData() {
           render={({field: {onChange, value}}) => (
             <Input
               control={control}
-              editable={!isLoading}
+              editable={!loading}
               error={errors.cpf && errors.cpf.message}
               keyboardType="email-address"
               placeholder="CPF"
@@ -132,23 +141,11 @@ export function RegisterPessoalData() {
             <InputMask
               source={theme.icons.phone}
               error={errors.phone && errors.phone.message}
-              editable={!isLoading}
+              editable={!loading}
               onChangeText={onChange}
               value={value}
               placeholder="Telefone"
             />
-            // <Input
-            //   control={control}
-            //   editable={!isLoading}
-            //   error={errors.phone && errors.phone.message}
-            //   keyboardType="email-address"
-            //   placeholder="Telefone"
-            //   source={theme.icons.phone}
-            //   name="phone"
-            //   onChangeText={onChange}
-            //   value={value}
-            //   maxLength={11}
-            // />
           )}
           name="phone"
         />
@@ -156,7 +153,7 @@ export function RegisterPessoalData() {
         <ContinueButton
           title="Continuar"
           onPressed={handleSubmit(onSubmit)}
-          loading={isLoading}
+          loading={loading}
         />
       </Container>
     </TouchableWithoutFeedback>

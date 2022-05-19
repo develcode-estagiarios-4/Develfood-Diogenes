@@ -7,11 +7,10 @@ import {Input} from '../../../components/Input';
 import * as Yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {Controller, useForm} from 'react-hook-form';
-import {useState} from 'react';
 import {ContinueButton} from '../../../components/ContinueButton';
+import {useCreateUser} from '../../../global/Context/createUserAuth';
 
 import {
-  Alert,
   Image,
   Keyboard,
   StatusBar,
@@ -28,7 +27,6 @@ import {
   Circle,
   CenterCircle,
 } from './styles';
-import {usePost} from '../../../global/services/post';
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -42,39 +40,12 @@ const schema = Yup.object().shape({
     .required('Confirmação de senha é obrigatória.'),
 });
 
-interface CreateUser {
-  email: string;
-  password: string;
-}
-
 export function Register() {
   const navigation = useNavigation();
 
   const theme = useTheme();
 
-  const {data, handlerPost, loading} = usePost<CreateUser>('/user');
-
-  const loginError = (error: any) => {
-    Alert.alert(
-      'Erro',
-      error.response.data.status === 409
-        ? 'Usuário não encontrado'
-        : error.response.data.message,
-    );
-    console.log(error);
-  };
-
-  const onSubmit = (value: any) => {
-    handlerPost(
-      {
-        email: value.email,
-        password: value.password,
-      },
-      loginError,
-    );
-
-    navigation.navigate('RegisterPessoalData' as never);
-  };
+  const {handleSetPostData, loading} = useCreateUser();
 
   function handlerBackButton() {
     navigation.navigate('Login' as never);
@@ -88,8 +59,15 @@ export function Register() {
     resolver: yupResolver(schema),
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isLoading, setLoading] = useState(false);
+  const onSubmit = (value: any) => {
+    console.log('==>', value);
+    handleSetPostData({
+      email: value.email,
+      password: value.password,
+      creationDate: new Date(),
+    });
+    navigation.navigate('RegisterPessoalData' as never);
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
