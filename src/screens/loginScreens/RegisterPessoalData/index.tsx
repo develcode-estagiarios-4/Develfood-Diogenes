@@ -28,13 +28,14 @@ import {
   Circle,
   CenterCircle,
 } from './styles';
+import {InputMask} from '../../../components/InputMask';
 
 const schema = Yup.object().shape({
   name: Yup.string().required('Nome é obrigatório.'),
   cpf: Yup.string().test('is-cpf', 'CPF inválido.', (value: any) =>
     cpf.isValid(value),
   ),
-  phone: Yup.number().required('Telefone é obrigatório.'),
+  phone: Yup.string().required('Telefone é obrigatório.'),
 });
 
 export function RegisterPessoalData() {
@@ -128,18 +129,26 @@ export function RegisterPessoalData() {
           control={control}
           rules={{required: true}}
           render={({field: {onChange, value}}) => (
-            <Input
-              control={control}
-              editable={!isLoading}
-              error={errors.phone && errors.phone.message}
-              keyboardType="email-address"
-              placeholder="Telefone"
+            <InputMask
               source={theme.icons.phone}
-              name="phone"
+              error={errors.phone && errors.phone.message}
+              editable={!isLoading}
               onChangeText={onChange}
               value={value}
-              maxLength={11}
+              placeholder="Telefone"
             />
+            // <Input
+            //   control={control}
+            //   editable={!isLoading}
+            //   error={errors.phone && errors.phone.message}
+            //   keyboardType="email-address"
+            //   placeholder="Telefone"
+            //   source={theme.icons.phone}
+            //   name="phone"
+            //   onChangeText={onChange}
+            //   value={value}
+            //   maxLength={11}
+            // />
           )}
           name="phone"
         />
