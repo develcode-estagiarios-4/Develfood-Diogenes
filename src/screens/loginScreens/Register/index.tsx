@@ -6,7 +6,7 @@ import {BackButton} from '../../../components/BackButton';
 import {Input} from '../../../components/Input';
 import * as Yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {useForm} from 'react-hook-form';
+import {Controller, useForm} from 'react-hook-form';
 import {useState} from 'react';
 import {ContinueButton} from '../../../components/ContinueButton';
 
@@ -87,24 +87,66 @@ export function Register() {
           </CircleAdjust>
         </CircleWrapper>
         <Image source={theme.icons.womanleft} style={{marginTop: RFValue(6)}} />
-        <Input
+
+        <Controller
+          control={control}
+          rules={{required: true}}
+          render={({field: {onChange, value}}) => (
+            <Input
+              control={control}
+              editable={!isLoading}
+              error={errors.email && errors.email.message}
+              keyboardType="email-address"
+              placeholder="exemplo@email.com"
+              source={theme.icons.email}
+              name="email"
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
           name="email"
-          control={control}
-          error={errors.email && errors.email.message}
-          editable={!isLoading}
         />
-        <Input
+
+        <Controller
+          control={control}
+          rules={{required: true}}
+          render={({field: {onChange, value}}) => (
+            <Input
+              control={control}
+              editable={!isLoading}
+              error={errors.password && errors.password.message}
+              keyboardType="default"
+              placeholder="senha"
+              source={theme.icons.password}
+              name="password"
+              onChangeText={onChange}
+              value={value}
+              sourcePassword={theme.icons.eye}
+            />
+          )}
           name="password"
-          control={control}
-          error={errors.password && errors.password.message}
-          editable={!isLoading}
         />
-        <Input
+
+        <Controller
+          control={control}
+          rules={{required: true}}
+          render={({field: {onChange, value}}) => (
+            <Input
+              control={control}
+              editable={!isLoading}
+              error={errors.confirmPassword && errors.confirmPassword.message}
+              keyboardType="default"
+              placeholder="comfirmar senha"
+              source={theme.icons.password}
+              name="password"
+              onChangeText={onChange}
+              value={value}
+              sourcePassword={theme.icons.eye}
+            />
+          )}
           name="confirmPassword"
-          control={control}
-          error={errors.confirmPassword && errors.confirmPassword.message}
-          editable={!isLoading}
         />
+
         <ContinueButton
           title="Continuar"
           onPressed={handleSubmit(onSubmit)}

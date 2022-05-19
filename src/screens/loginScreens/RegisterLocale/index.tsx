@@ -6,7 +6,7 @@ import {BackButton} from '../../../components/BackButton';
 import {Input} from '../../../components/Input';
 import * as Yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {useForm} from 'react-hook-form';
+import {Controller, useForm} from 'react-hook-form';
 import {useState} from 'react';
 import {ContinueButton} from '../../../components/ContinueButton';
 
@@ -87,36 +87,103 @@ export function RegisterLocale() {
           </CircleAdjust>
         </CircleWrapper>
         <Image source={theme.icons.woman} style={{marginTop: RFValue(6)}} />
-        <Input
+
+        <Controller
+          control={control}
+          rules={{required: true}}
+          render={({field: {onChange, value}}) => (
+            <Input
+              control={control}
+              editable={!isLoading}
+              error={errors.street && errors.street.message}
+              keyboardType="email-address"
+              placeholder="Rua"
+              source={theme.icons.locale}
+              name="street"
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
           name="street"
-          control={control}
-          error={errors.street && errors.street.message}
-          editable={!isLoading}
         />
-        <Input
+
+        <Controller
+          control={control}
+          rules={{required: true}}
+          render={({field: {onChange, value}}) => (
+            <Input
+              control={control}
+              editable={!isLoading}
+              error={errors.city && errors.city.message}
+              keyboardType="email-address"
+              placeholder="Cidade"
+              source={theme.icons.locale}
+              name="city"
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
           name="city"
-          control={control}
-          error={errors.city && errors.city.message}
-          editable={!isLoading}
         />
-        <Input
+
+        <Controller
+          control={control}
+          rules={{required: true}}
+          render={({field: {onChange, value}}) => (
+            <Input
+              control={control}
+              editable={!isLoading}
+              error={errors.neighborhood && errors.neighborhood.message}
+              keyboardType="email-address"
+              placeholder="Bairro"
+              source={theme.icons.locale}
+              name="neighborhood"
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
           name="neighborhood"
-          control={control}
-          error={errors.neighborhood && errors.neighborhood.message}
-          editable={!isLoading}
         />
-        <Input
+
+        <Controller
+          control={control}
+          rules={{required: true}}
+          render={({field: {onChange, value}}) => (
+            <Input
+              control={control}
+              editable={!isLoading}
+              error={errors.number && errors.number.message}
+              keyboardType="email-address"
+              placeholder="Numero"
+              source={theme.icons.locale}
+              name="number"
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
           name="number"
-          control={control}
-          error={errors.number && errors.number.message}
-          editable={!isLoading}
         />
-        <Input
-          name="CEP"
+
+        <Controller
           control={control}
-          error={errors.cep && errors.cep.message}
-          editable={!isLoading}
+          rules={{required: true}}
+          render={({field: {onChange, value}}) => (
+            <Input
+              control={control}
+              editable={!isLoading}
+              error={errors.cep && errors.cep.message}
+              keyboardType="email-address"
+              placeholder="CEP"
+              source={theme.icons.locale}
+              name="cep"
+              onChangeText={onChange}
+              value={value}
+              maxLength={8}
+            />
+          )}
+          name="cep"
         />
+
         <ContinueButton
           title="Continuar"
           onPressed={handleSubmit(onSubmit)}

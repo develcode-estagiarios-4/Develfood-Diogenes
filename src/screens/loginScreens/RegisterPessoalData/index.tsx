@@ -6,9 +6,10 @@ import {BackButton} from '../../../components/BackButton';
 import {Input} from '../../../components/Input';
 import * as Yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {useForm} from 'react-hook-form';
+import {Controller, useForm} from 'react-hook-form';
 import {useState} from 'react';
 import {ContinueButton} from '../../../components/ContinueButton';
+import {cpf} from 'cpf-cnpj-validator';
 
 import {
   Image,
@@ -30,11 +31,9 @@ import {
 
 const schema = Yup.object().shape({
   name: Yup.string().required('Nome é obrigatório.'),
-  cpf: Yup.number()
-    .positive('Apenas numeros positivos.')
-    .integer('Apenas numeros inteiros.')
-    .required('CPF é obrigatória.')
-    .typeError('CPF inválido.'),
+  cpf: Yup.string().test('is-cpf', 'CPF inválido.', (value: any) =>
+    cpf.isValid(value),
+  ),
   phone: Yup.number().required('Telefone é obrigatório.'),
 });
 
@@ -85,24 +84,66 @@ export function RegisterPessoalData() {
           </CircleAdjust>
         </CircleWrapper>
         <Image source={theme.icons.womanup} style={{marginTop: RFValue(6)}} />
-        <Input
+
+        <Controller
+          control={control}
+          rules={{required: true}}
+          render={({field: {onChange, value}}) => (
+            <Input
+              control={control}
+              editable={!isLoading}
+              error={errors.name && errors.name.message}
+              keyboardType="email-address"
+              placeholder="Nome"
+              source={theme.icons.name}
+              name="name"
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
           name="name"
-          control={control}
-          error={errors.name && errors.name.message}
-          editable={!isLoading}
         />
-        <Input
+
+        <Controller
+          control={control}
+          rules={{required: true}}
+          render={({field: {onChange, value}}) => (
+            <Input
+              control={control}
+              editable={!isLoading}
+              error={errors.cpf && errors.cpf.message}
+              keyboardType="email-address"
+              placeholder="CPF"
+              source={theme.icons.cpf}
+              name="cpf"
+              onChangeText={onChange}
+              value={cpf.format(value)}
+              maxLength={14}
+            />
+          )}
           name="cpf"
-          control={control}
-          error={errors.cpf && errors.cpf.message}
-          editable={!isLoading}
         />
-        <Input
+
+        <Controller
+          control={control}
+          rules={{required: true}}
+          render={({field: {onChange, value}}) => (
+            <Input
+              control={control}
+              editable={!isLoading}
+              error={errors.phone && errors.phone.message}
+              keyboardType="email-address"
+              placeholder="Telefone"
+              source={theme.icons.phone}
+              name="phone"
+              onChangeText={onChange}
+              value={value}
+              maxLength={11}
+            />
+          )}
           name="phone"
-          control={control}
-          error={errors.phone && errors.phone.message}
-          editable={!isLoading}
         />
+
         <ContinueButton
           title="Continuar"
           onPressed={handleSubmit(onSubmit)}

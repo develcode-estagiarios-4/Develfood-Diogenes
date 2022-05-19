@@ -3,11 +3,11 @@ import {useTheme} from 'styled-components';
 import RNBootSplash from 'react-native-bootsplash';
 import * as Yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {useForm} from 'react-hook-form';
-import {Input} from '../../../components/Input';
+import {Controller, useForm} from 'react-hook-form';
 import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 import {useAuth} from '../../../global/Context';
 import {useNavigation} from '@react-navigation/native';
+import {Input} from '../../../components/Input';
 
 import {
   ActivityIndicator,
@@ -52,13 +52,6 @@ export function Login() {
 
   const {userLogin, loading} = useAuth();
 
-  const onSubmit = (value: any) => {
-    userLogin({
-      email: value.email,
-      password: value.password,
-    });
-  };
-
   const {
     control,
     handleSubmit,
@@ -66,6 +59,13 @@ export function Login() {
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  const onSubmit = (value: any) => {
+    userLogin({
+      email: value.email,
+      password: value.password,
+    });
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -81,25 +81,47 @@ export function Login() {
           />
           <Content>
             <LogoImage source={theme.images.develfood} />
-
-            <Input
+            <Controller
+              control={control}
+              rules={{required: true}}
+              render={({field: {onChange, value}}) => (
+                <Input
+                  control={control}
+                  editable={!loading}
+                  error={errors.email && errors.email.message}
+                  keyboardType="email-address"
+                  placeholder="exemplo@email.com"
+                  source={theme.icons.email}
+                  name="email"
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
               name="email"
-              control={control}
-              error={errors.email && errors.email.message}
-              editable={!loading}
             />
 
-            <Input
+            <Controller
+              control={control}
+              rules={{required: true}}
+              render={({field: {onChange, value}}) => (
+                <Input
+                  control={control}
+                  editable={!loading}
+                  error={errors.password && errors.password.message}
+                  keyboardType="default"
+                  placeholder="senha"
+                  source={theme.icons.password}
+                  name="password"
+                  onChangeText={onChange}
+                  value={value}
+                  sourcePassword={theme.icons.eye}
+                />
+              )}
               name="password"
-              control={control}
-              error={errors.password && errors.password.message}
-              editable={!loading}
             />
-
             <FogotPassButton>
               <ForgotPass>Esqueci minha senha</ForgotPass>
             </FogotPassButton>
-
             <LoginButton onPress={handleSubmit(onSubmit)}>
               {loading ? (
                 <ActivityIndicator color={theme.colors.background} />
@@ -107,7 +129,6 @@ export function Login() {
                 <ButtonTitleLogin>Entrar</ButtonTitleLogin>
               )}
             </LoginButton>
-
             <WrapperRegister>
               <RegisterSimpleTitle>Não possui cadastro?</RegisterSimpleTitle>
               <RegisterButtonTitle

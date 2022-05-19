@@ -22,6 +22,7 @@ export const LoginIcon = styled.Image`
 
 export const InputLogin = styled.TextInput`
   margin-left: ${RFValue(14)}px;
+  width: ${RFValue(250)}px;
 `;
 
 export const IconPassword = styled.TouchableOpacity`
