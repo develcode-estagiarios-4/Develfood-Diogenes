@@ -43,14 +43,8 @@ function AuthProvider({children}: AuthProviderProps) {
     );
   };
 
-  async function userLogin({email, password}: LoginRequest) {
-    await handlerPost(
-      {
-        email: email,
-        password: password,
-      },
-      loginError,
-    );
+  async function userLogin(request: LoginRequest) {
+    await handlerPost(request, loginError);
     setToken(data.token);
   }
 

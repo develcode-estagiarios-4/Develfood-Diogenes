@@ -30,6 +30,7 @@ import {
   RegisterSimpleTitle,
   RegisterButtonTitle,
   ButtonTitle,
+  InputWrapper,
 } from './styled';
 
 const schema = Yup.object().shape({
@@ -81,47 +82,51 @@ export function Login() {
           />
           <Content>
             <LogoImage source={theme.images.develfood} />
-            <Controller
-              control={control}
-              rules={{required: true}}
-              render={({field: {onChange, value}}) => (
-                <Input
-                  control={control}
-                  editable={!loading}
-                  error={errors.email && errors.email.message}
-                  keyboardType="email-address"
-                  placeholder="exemplo@email.com"
-                  source={theme.icons.email}
-                  name="email"
-                  onChangeText={onChange}
-                  value={value}
-                />
-              )}
-              name="email"
-            />
 
-            <Controller
-              control={control}
-              rules={{required: true}}
-              render={({field: {onChange, value}}) => (
-                <Input
-                  control={control}
-                  editable={!loading}
-                  error={errors.password && errors.password.message}
-                  keyboardType="default"
-                  placeholder="senha"
-                  source={theme.icons.password}
-                  name="password"
-                  onChangeText={onChange}
-                  value={value}
-                  sourcePassword={theme.icons.eye}
-                />
-              )}
-              name="password"
-            />
-            <FogotPassButton>
-              <ForgotPass>Esqueci minha senha</ForgotPass>
-            </FogotPassButton>
+            <InputWrapper>
+              <Controller
+                control={control}
+                rules={{required: true}}
+                render={({field: {onChange, value}}) => (
+                  <Input
+                    control={control}
+                    editable={!loading}
+                    error={errors.email && errors.email.message}
+                    keyboardType="email-address"
+                    placeholder="exemplo@email.com"
+                    source={theme.icons.email}
+                    name="email"
+                    onChangeText={onChange}
+                    value={value}
+                  />
+                )}
+                name="email"
+              />
+
+              <Controller
+                control={control}
+                rules={{required: true}}
+                render={({field: {onChange, value}}) => (
+                  <Input
+                    control={control}
+                    editable={!loading}
+                    error={errors.password && errors.password.message}
+                    keyboardType="default"
+                    placeholder="senha"
+                    source={theme.icons.password}
+                    name="password"
+                    onChangeText={onChange}
+                    value={value}
+                    sourcePassword={theme.icons.eye}
+                  />
+                )}
+                name="password"
+              />
+
+              <FogotPassButton>
+                <ForgotPass>Esqueci minha senha</ForgotPass>
+              </FogotPassButton>
+            </InputWrapper>
             <LoginButton onPress={handleSubmit(onSubmit)}>
               {loading ? (
                 <ActivityIndicator color={theme.colors.background} />

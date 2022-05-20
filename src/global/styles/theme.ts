@@ -47,6 +47,7 @@ export default {
     name: require('../assets/loginIcons/Name.png'),
     locale: require('../assets/loginIcons/Locale.png'),
     exit: require('../assets/loginIcons/Exit.png'),
+    womansuccess: require('../assets/loginIcons/womansuccess.png'),
   },
 
   images: {

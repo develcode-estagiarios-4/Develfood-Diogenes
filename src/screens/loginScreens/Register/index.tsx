@@ -26,6 +26,7 @@ import {
   CircleAdjust,
   Circle,
   CenterCircle,
+  InputWrapper,
 } from './styles';
 
 const schema = Yup.object().shape({
@@ -66,7 +67,7 @@ export function Register() {
       password: value.password,
       creationDate: new Date(),
     });
-    navigation.navigate('RegisterPessoalData' as never);
+    navigation.navigate('RegisterPersonalData' as never);
   };
 
   return (
@@ -95,64 +96,66 @@ export function Register() {
         </CircleWrapper>
         <Image source={theme.icons.womanleft} style={{marginTop: RFValue(6)}} />
 
-        <Controller
-          control={control}
-          rules={{required: true}}
-          render={({field: {onChange, value}}) => (
-            <Input
-              control={control}
-              editable={!loading}
-              error={errors.email && errors.email.message}
-              keyboardType="email-address"
-              placeholder="exemplo@email.com"
-              source={theme.icons.email}
-              name="email"
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-          name="email"
-        />
+        <InputWrapper>
+          <Controller
+            control={control}
+            rules={{required: true}}
+            render={({field: {onChange, value}}) => (
+              <Input
+                control={control}
+                editable={!loading}
+                error={errors.email && errors.email.message}
+                keyboardType="email-address"
+                placeholder="exemplo@email.com"
+                source={theme.icons.email}
+                name="email"
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+            name="email"
+          />
 
-        <Controller
-          control={control}
-          rules={{required: true}}
-          render={({field: {onChange, value}}) => (
-            <Input
-              control={control}
-              editable={!loading}
-              error={errors.password && errors.password.message}
-              keyboardType="default"
-              placeholder="senha"
-              source={theme.icons.password}
-              name="password"
-              onChangeText={onChange}
-              value={value}
-              sourcePassword={theme.icons.eye}
-            />
-          )}
-          name="password"
-        />
+          <Controller
+            control={control}
+            rules={{required: true}}
+            render={({field: {onChange, value}}) => (
+              <Input
+                control={control}
+                editable={!loading}
+                error={errors.password && errors.password.message}
+                keyboardType="default"
+                placeholder="senha"
+                source={theme.icons.password}
+                name="password"
+                onChangeText={onChange}
+                value={value}
+                sourcePassword={theme.icons.eye}
+              />
+            )}
+            name="password"
+          />
 
-        <Controller
-          control={control}
-          rules={{required: true}}
-          render={({field: {onChange, value}}) => (
-            <Input
-              control={control}
-              editable={!loading}
-              error={errors.confirmPassword && errors.confirmPassword.message}
-              keyboardType="default"
-              placeholder="comfirmar senha"
-              source={theme.icons.password}
-              name="password"
-              onChangeText={onChange}
-              value={value}
-              sourcePassword={theme.icons.eye}
-            />
-          )}
-          name="confirmPassword"
-        />
+          <Controller
+            control={control}
+            rules={{required: true}}
+            render={({field: {onChange, value}}) => (
+              <Input
+                control={control}
+                editable={!loading}
+                error={errors.confirmPassword && errors.confirmPassword.message}
+                keyboardType="default"
+                placeholder="comfirmar senha"
+                source={theme.icons.password}
+                name="password"
+                onChangeText={onChange}
+                value={value}
+                sourcePassword={theme.icons.eye}
+              />
+            )}
+            name="confirmPassword"
+          />
+        </InputWrapper>
 
         <ContinueButton
           title="Continuar"

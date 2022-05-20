@@ -51,3 +51,33 @@ export const Circle = styled.Image``;
 export const CenterCircle = styled.Image`
   position: absolute;
 `;
+
+export const InputWrapper = styled.ScrollView`
+  width: ${RFValue(300)}px;
+  margin: 0 ${RFValue(40)}px;
+`;
+
+export const Wrapper = styled.View`
+  flex-direction: row;
+`;
+
+export const HalfInput = styled.View`
+  margin-right: 20px;
+  width: ${RFValue(160)}px;
+`;
+
+export const HalfInputTwo = styled.View`
+  margin-right: 20px;
+  width: ${RFValue(121)}px;
+`;
+export const WrapperTwo = styled.View`
+  flex-direction: row;
+`;
+export const HalfInputThree = styled.View`
+  margin-right: 20px;
+  width: ${RFValue(140.5)}px;
+`;
+export const HalfInputFour = styled.View`
+  margin-right: 20px;
+  width: ${RFValue(140.5)}px;
+`;

@@ -51,3 +51,8 @@ export const Circle = styled.Image``;
 export const CenterCircle = styled.Image`
   position: absolute;
 `;
+
+export const InputWrapper = styled.ScrollView`
+  width: ${RFValue(295)}px;
+  margin: 0 ${RFValue(40)}px;
+`;

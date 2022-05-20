@@ -26,6 +26,13 @@ import {
   CircleAdjust,
   Circle,
   CenterCircle,
+  InputWrapper,
+  Wrapper,
+  HalfInput,
+  HalfInputTwo,
+  WrapperTwo,
+  HalfInputThree,
+  HalfInputFour,
 } from './styles';
 
 const schema = Yup.object().shape({
@@ -38,6 +45,8 @@ const schema = Yup.object().shape({
   cep: Yup.number()
     .required('CEP é obrigatório.')
     .typeError('Apenas numeros são aceitos'),
+  state: Yup.string().required('Estado é obrigatório.').uppercase(),
+  nickname: Yup.string().required('Apelido é obrigatório.'),
 });
 
 export function RegisterLocale() {
@@ -45,10 +54,10 @@ export function RegisterLocale() {
 
   const theme = useTheme();
 
-  const {handleSetPostData, loading} = useCreateUser();
+  const {handleSetPostData, loading, createUserAccount} = useCreateUser();
 
   function handlerBackButton() {
-    navigation.navigate('RegisterPessoalData' as never);
+    navigation.navigate('RegisterPersonalData' as never);
   }
 
   const {
@@ -64,10 +73,11 @@ export function RegisterLocale() {
       street: value.street,
       number: value.number,
       neighborhood: value.neighborhood,
-      zipCode: value.zipCode,
-      state: '',
-      nickname: '',
+      zipCode: value.cep,
+      state: value.state,
+      nickname: value.nickname,
     });
+    createUserAccount(value);
     navigation.navigate('RegisterSuccess' as never);
   };
 
@@ -97,107 +107,159 @@ export function RegisterLocale() {
         </CircleWrapper>
         <Image source={theme.icons.woman} style={{marginTop: RFValue(6)}} />
 
-        <Controller
-          control={control}
-          rules={{required: true}}
-          render={({field: {onChange, value}}) => (
-            <Input
-              control={control}
-              editable={!loading}
-              error={errors.street && errors.street.message}
-              keyboardType="email-address"
-              placeholder="Rua"
-              source={theme.icons.locale}
-              name="street"
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-          name="street"
-        />
+        <InputWrapper showsVerticalScrollIndicator={false}>
+          <Wrapper>
+            <HalfInput>
+              <Controller
+                control={control}
+                rules={{required: true}}
+                render={({field: {onChange, value}}) => (
+                  <Input
+                    control={control}
+                    editable={!loading}
+                    error={errors.nickname && errors.nickname.message}
+                    keyboardType="email-address"
+                    placeholder="Apelido do End."
+                    source={theme.icons.locale}
+                    name="nickname"
+                    onChangeText={onChange}
+                    value={value}
+                    maxLength={8}
+                  />
+                )}
+                name="nickname"
+              />
+            </HalfInput>
 
-        <Controller
-          control={control}
-          rules={{required: true}}
-          render={({field: {onChange, value}}) => (
-            <Input
-              control={control}
-              editable={!loading}
-              error={errors.city && errors.city.message}
-              keyboardType="email-address"
-              placeholder="Cidade"
-              source={theme.icons.locale}
-              name="city"
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-          name="city"
-        />
+            <HalfInputTwo>
+              <Controller
+                control={control}
+                rules={{required: true}}
+                render={({field: {onChange, value}}) => (
+                  <Input
+                    control={control}
+                    editable={!loading}
+                    error={errors.cep && errors.cep.message}
+                    keyboardType="email-address"
+                    placeholder="CEP"
+                    source={theme.icons.locale}
+                    name="cep"
+                    onChangeText={onChange}
+                    value={value}
+                    maxLength={8}
+                  />
+                )}
+                name="cep"
+              />
+            </HalfInputTwo>
+          </Wrapper>
 
-        <Controller
-          control={control}
-          rules={{required: true}}
-          render={({field: {onChange, value}}) => (
-            <Input
-              control={control}
-              editable={!loading}
-              error={errors.neighborhood && errors.neighborhood.message}
-              keyboardType="email-address"
-              placeholder="Bairro"
-              source={theme.icons.locale}
-              name="neighborhood"
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-          name="neighborhood"
-        />
+          <Controller
+            control={control}
+            rules={{required: true}}
+            render={({field: {onChange, value}}) => (
+              <Input
+                control={control}
+                editable={!loading}
+                error={errors.street && errors.street.message}
+                keyboardType="email-address"
+                placeholder="Rua"
+                source={theme.icons.locale}
+                name="street"
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+            name="street"
+          />
 
-        <Controller
-          control={control}
-          rules={{required: true}}
-          render={({field: {onChange, value}}) => (
-            <Input
-              control={control}
-              editable={!loading}
-              error={errors.number && errors.number.message}
-              keyboardType="email-address"
-              placeholder="Numero"
-              source={theme.icons.locale}
-              name="number"
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-          name="number"
-        />
+          <Controller
+            control={control}
+            rules={{required: true}}
+            render={({field: {onChange, value}}) => (
+              <Input
+                control={control}
+                editable={!loading}
+                error={errors.city && errors.city.message}
+                keyboardType="email-address"
+                placeholder="Cidade"
+                source={theme.icons.locale}
+                name="city"
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+            name="city"
+          />
 
-        <Controller
-          control={control}
-          rules={{required: true}}
-          render={({field: {onChange, value}}) => (
-            <Input
-              control={control}
-              editable={!loading}
-              error={errors.cep && errors.cep.message}
-              keyboardType="email-address"
-              placeholder="CEP"
-              source={theme.icons.locale}
-              name="cep"
-              onChangeText={onChange}
-              value={value}
-              maxLength={8}
-            />
-          )}
-          name="cep"
-        />
+          <Controller
+            control={control}
+            rules={{required: true}}
+            render={({field: {onChange, value}}) => (
+              <Input
+                control={control}
+                editable={!loading}
+                error={errors.neighborhood && errors.neighborhood.message}
+                keyboardType="email-address"
+                placeholder="Bairro"
+                source={theme.icons.locale}
+                name="neighborhood"
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+            name="neighborhood"
+          />
+          <WrapperTwo>
+            <HalfInputThree>
+              <Controller
+                control={control}
+                rules={{required: true}}
+                render={({field: {onChange, value}}) => (
+                  <Input
+                    control={control}
+                    editable={!loading}
+                    error={errors.state && errors.state.message}
+                    keyboardType="email-address"
+                    placeholder="Estado"
+                    source={theme.icons.locale}
+                    name="state"
+                    onChangeText={onChange}
+                    value={value}
+                    maxLength={2}
+                  />
+                )}
+                name="state"
+              />
+            </HalfInputThree>
+            <HalfInputFour>
+              <Controller
+                control={control}
+                rules={{required: true}}
+                render={({field: {onChange, value}}) => (
+                  <Input
+                    control={control}
+                    editable={!loading}
+                    error={errors.number && errors.number.message}
+                    keyboardType="email-address"
+                    placeholder="Numero"
+                    source={theme.icons.locale}
+                    name="number"
+                    onChangeText={onChange}
+                    value={value}
+                  />
+                )}
+                name="number"
+              />
+            </HalfInputFour>
+          </WrapperTwo>
 
-        <ContinueButton
-          title="Continuar"
-          onPressed={handleSubmit(onSubmit)}
-          loading={loading}
-        />
+          <ContinueButton
+            title="Continuar"
+            onPressed={handleSubmit(onSubmit)}
+            loading={loading}
+          />
+        </InputWrapper>
       </Container>
     </TouchableWithoutFeedback>
   );

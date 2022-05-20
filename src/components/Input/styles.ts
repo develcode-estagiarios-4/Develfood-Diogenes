@@ -2,18 +2,15 @@ import styled from 'styled-components/native';
 import {RFValue} from 'react-native-responsive-fontsize';
 
 export const Container = styled.View`
-  width: ${RFValue(295)}px;
+  width: 100%;
   height: ${RFValue(50)}px;
   align-self: center;
   align-items: center;
   flex-direction: row;
-  margin-top: ${RFValue(12)}px;
-  border: 1px;
-  border-radius: 10px;
+  margin-top: ${RFValue(13)}px;
+  border: ${RFValue(2)}px;
+  border-radius: ${RFValue(10)}px;
   border-color: ${({theme}) => theme.colors.text_gray};
-  background-color: transparent;
-  font-size: ${RFValue(14)}px;
-  font-family: ${({theme}) => theme.fonts.primaryReg};
 `;
 
 export const LoginIcon = styled.Image`
@@ -22,7 +19,7 @@ export const LoginIcon = styled.Image`
 
 export const InputLogin = styled.TextInput`
   margin-left: ${RFValue(14)}px;
-  width: ${RFValue(250)}px;
+  width: ${RFValue(200)}px;
 `;
 
 export const IconPassword = styled.TouchableOpacity`
