@@ -1,4 +1,4 @@
-import React, {createContext, useEffect, useState} from 'react';
+import React, {createContext, useState} from 'react';
 import {useContext} from 'react';
 import {Alert} from 'react-native';
 import {usePost} from '../services/post';
