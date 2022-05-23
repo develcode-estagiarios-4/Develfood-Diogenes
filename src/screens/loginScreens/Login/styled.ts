@@ -36,7 +36,7 @@ export const LogoImage = styled.Image`
 
 export const FogotPassButton = styled.TouchableOpacity`
   margin-top: ${RFValue(12)}px;
-  margin-left: ${RFValue(160)}px;
+  margin-left: ${RFValue(165)}px;
   bottom: 0;
 `;
 

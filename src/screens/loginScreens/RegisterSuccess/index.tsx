@@ -4,7 +4,6 @@ import {useForm} from 'react-hook-form';
 import {useTheme} from 'styled-components';
 import {BackButton} from '../../../components/BackButton';
 import {ContinueButton} from '../../../components/ContinueButton';
-import {useCreateUser} from '../../../global/Context/createUserAuth';
 import {
   Container,
   Header,
@@ -23,16 +22,13 @@ export function RegisterSuccess() {
 
   const theme = useTheme();
 
-  const {createUserAccount, loading} = useCreateUser();
-
   function handlerBackButton() {
     navigation.navigate('Login' as never);
   }
 
   const {handleSubmit} = useForm();
 
-  const onSubmit = (value: any) => {
-    createUserAccount(value);
+  const onSubmit = () => {
     navigation.navigate('Login' as never);
   };
 
@@ -63,7 +59,7 @@ export function RegisterSuccess() {
       <ContinueButton
         title="Continuar"
         onPressed={handleSubmit(onSubmit)}
-        loading={loading}
+        loading={false}
       />
     </Container>
   );

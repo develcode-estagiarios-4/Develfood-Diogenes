@@ -77,8 +77,7 @@ export function RegisterLocale() {
       state: value.state,
       nickname: value.nickname,
     });
-    createUserAccount(value);
-    navigation.navigate('RegisterSuccess' as never);
+    createUserAccount(navigation.navigate('RegisterSuccess' as never));
   };
 
   return (

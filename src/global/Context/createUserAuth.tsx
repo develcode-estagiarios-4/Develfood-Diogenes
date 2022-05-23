@@ -59,17 +59,32 @@ function CreateUserProvider({children}: AuthProviderProps) {
     console.log(dataPost);
   }
 
-  const loginError = (error: any) => {
+  const createUserError = (error: any) => {
     Alert.alert(
       'Erro',
       error.response.data.status === 409
-        ? 'Usuário não encontrado'
+        ? 'Dados inválidos'
         : error.response.data.message,
     );
   };
 
-  async function createUserAccount(request: CreateUserPost) {
-    await handlerPost(request, loginError);
+  async function createUserAccount(success: () => void) {
+    console.log('==>', postData);
+    const createUserRequest: CreateUserPost = {
+      email: postData.email,
+      password: postData.password,
+      creationDate: postData.creationDate,
+      role: {id: 2},
+      costumer: {
+        firstName: '',
+        lastName: '',
+        cpf: '',
+        phone: '',
+        photo: '',
+        address: [],
+      },
+    };
+    await handlerPost(createUserRequest, createUserError, success);
   }
 
   return (
