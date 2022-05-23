@@ -45,7 +45,7 @@ export function RegisterPersonalData() {
 
   const theme = useTheme();
 
-  const {handleSetPostData, loading} = useCreateUser();
+  const {handleSetPostData, loading, postData} = useCreateUser();
 
   function handlerBackButton() {
     navigation.navigate('Register' as never);
@@ -62,11 +62,15 @@ export function RegisterPersonalData() {
   const onSubmit = (value: any) => {
     console.log('==>', value);
     handleSetPostData({
-      firstName: value.name,
-      lastName: value.lastName,
-      cpf: value.cpf,
-      phone: value.phone,
-      photo: '',
+      ...postData,
+      costumer: {
+        ...postData.costumer,
+        firstName: value.name,
+        lastName: value.lastName,
+        cpf: value.cpf,
+        phone: value.phone,
+        photo: '',
+      },
     });
     navigation.navigate('RegisterLocale' as never);
   };

@@ -54,7 +54,8 @@ export function RegisterLocale() {
 
   const theme = useTheme();
 
-  const {handleSetPostData, loading, createUserAccount} = useCreateUser();
+  const {handleSetPostData, loading, createUserAccount, postData} =
+    useCreateUser();
 
   function handlerBackButton() {
     navigation.navigate('RegisterPersonalData' as never);
@@ -68,16 +69,29 @@ export function RegisterLocale() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (value: any) => {
+  const onSubmit = async (value: any) => {
     handleSetPostData({
-      street: value.street,
-      number: value.number,
-      neighborhood: value.neighborhood,
-      zipCode: value.cep,
-      state: value.state,
-      nickname: value.nickname,
+      ...postData,
+      costumer: {
+        ...postData.costumer,
+        address: [
+          {
+            street: value.street,
+            city: value.city,
+            number: value.number,
+            neighborhood: value.neighborhood,
+            zipCode: value.cep,
+            state: value.state,
+            nickname: value.nickname,
+          },
+        ],
+      },
     });
-    createUserAccount(navigation.navigate('RegisterSuccess' as never));
+    console.log('postData na View', postData);
+    function createUserSuccess(data: any) {
+      data && navigation.navigate('RegisterSuccess' as never);
+    }
+    await createUserAccount(createUserSuccess, postData);
   };
 
   return (

@@ -19,7 +19,7 @@ export const usePost = <T = unknown, TResponse = unknown>(url: string) => {
       setLoading(true);
       const response = await api.post(url, body, options);
       setData(response.data);
-      onSuccess && onSuccess(response.data);
+      response.data && onSuccess && onSuccess(response.data);
     } catch (error: AxiosError<any, any> | any) {
       error && onError(error);
       console.log(error.response.data);

@@ -10,7 +10,8 @@ interface AuthProviderProps {
 interface Props {
   createUserAccount: Function;
   loading: boolean;
-  handleSetPostData: Function;
+  handleSetPostData: (_postData: CreateUserPost) => void;
+  postData: CreateUserPost;
 }
 
 interface CreateUserAddress {
@@ -26,24 +27,25 @@ interface CreateUserAddress {
 interface CreateUserPost {
   email: string;
   password: string;
-  creationDate: string;
-  role: {
+  creationDate: Date;
+  role?: {
     id: number;
   };
-  costumer: {
-    firstName: string;
-    lastName: string;
-    cpf: string;
-    phone: string;
-    photo: string;
-    address: CreateUserAddress[];
+  costumer?: {
+    firstName?: string;
+    lastName?: string;
+    cpf?: string;
+    phone?: string;
+    photo?: string;
+    address?: CreateUserAddress[];
   };
 }
 
 const createUser = createContext({
   loading: false,
   createUserAccount: () => {},
-  handleSetPostData: () => {},
+  handleSetPostData: (_postData: Partial<CreateUserPost>) => {},
+  postData: {} as CreateUserPost,
 } as Props);
 
 function CreateUserProvider({children}: AuthProviderProps) {
@@ -54,9 +56,10 @@ function CreateUserProvider({children}: AuthProviderProps) {
   );
 
   function handleSetPostData(dataPost: CreateUserPost) {
-    setPostData({...dataPost, ...postData});
+    setPostData({...postData, ...dataPost});
     console.log('-------------');
     console.log(dataPost);
+    console.log('postData => ', postData);
   }
 
   const createUserError = (error: any) => {
@@ -68,28 +71,21 @@ function CreateUserProvider({children}: AuthProviderProps) {
     );
   };
 
-  async function createUserAccount(success: () => void) {
-    console.log('==>', postData);
+  async function createUserAccount(
+    createUserSuccess: () => void,
+    requestData: CreateUserPost,
+  ) {
+    console.log('==>', requestData);
     const createUserRequest: CreateUserPost = {
-      email: postData.email,
-      password: postData.password,
-      creationDate: postData.creationDate,
+      ...requestData,
       role: {id: 2},
-      costumer: {
-        firstName: '',
-        lastName: '',
-        cpf: '',
-        phone: '',
-        photo: '',
-        address: [],
-      },
     };
-    await handlerPost(createUserRequest, createUserError, success);
+    await handlerPost(createUserRequest, createUserError, createUserSuccess);
   }
 
   return (
     <createUser.Provider
-      value={{createUserAccount, loading, handleSetPostData}}>
+      value={{createUserAccount, loading, handleSetPostData, postData}}>
       {children}
     </createUser.Provider>
   );
