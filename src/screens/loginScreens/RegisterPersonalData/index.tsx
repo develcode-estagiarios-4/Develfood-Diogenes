@@ -62,16 +62,14 @@ export function RegisterPersonalData() {
   const onSubmit = (value: any) => {
     handleSetPostData({
       ...postData,
-      costumer: [
-        {
-          ...postData.costumer,
-          firstName: value.name,
-          lastName: value.lastName,
-          cpf: value.cpf,
-          phone: value.phone,
-          photo: '',
-        },
-      ],
+      costumer: {
+        ...postData.costumer,
+        firstName: value.name,
+        lastName: value.lastName,
+        cpf: value.cpf,
+        phone: value.phone,
+        photo: '',
+      },
     });
     navigation.navigate('RegisterLocale' as never);
   };

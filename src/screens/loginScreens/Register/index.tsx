@@ -61,7 +61,6 @@ export function Register() {
   });
 
   const onSubmit = (value: any) => {
-    console.log('==>', value);
     handleSetPostData({
       email: value.email,
       password: value.password,
