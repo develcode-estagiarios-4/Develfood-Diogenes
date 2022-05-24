@@ -10,15 +10,12 @@ export const Container = styled.View`
 export const Header = styled.View`
   width: 100%;
   height: ${RFValue(97)}px;
-
   flex-direction: row;
-
   align-items: center;
 `;
 
 export const TittleWrapper = styled.View`
   width: ${RFValue(215)}px;
-
   align-items: center;
 `;
 

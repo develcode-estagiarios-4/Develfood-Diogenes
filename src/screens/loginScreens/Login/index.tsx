@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTheme} from 'styled-components';
 import RNBootSplash from 'react-native-bootsplash';
 import * as Yup from 'yup';

@@ -10,15 +10,12 @@ export const Container = styled.View`
 export const Header = styled.View`
   width: 100%;
   height: ${RFValue(97)}px;
-
   flex-direction: row;
-
   align-items: center;
 `;
 
 export const TittleWrapper = styled.View`
   width: ${RFValue(215)}px;
-
   align-items: center;
 `;
 
@@ -32,17 +29,14 @@ export const Title = styled.Text`
 export const CircleWrapper = styled.View`
   width: 100%;
   height: ${RFValue(50)}px;
-
   flex-direction: row;
 `;
 
 export const CircleAdjust = styled.View`
   width: ${RFValue(50)}px;
   height: ${RFValue(50)}px;
-
   align-items: center;
   justify-content: center;
-
   margin-left: ${RFValue(54)}px;
 `;
 

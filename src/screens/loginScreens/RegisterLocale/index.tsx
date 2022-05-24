@@ -72,22 +72,23 @@ export function RegisterLocale() {
   const onSubmit = async (value: any) => {
     handleSetPostData({
       ...postData,
-      costumer: {
-        ...postData.costumer,
-        address: [
-          {
-            street: value.street,
-            city: value.city,
-            number: value.number,
-            neighborhood: value.neighborhood,
-            zipCode: value.cep,
-            state: value.state,
-            nickname: value.nickname,
-          },
-        ],
-      },
+      costumer: [
+        {
+          ...postData.costumer,
+          address: [
+            {
+              street: value.street,
+              city: value.city,
+              number: value.number,
+              neighborhood: value.neighborhood,
+              zipCode: value.cep,
+              state: value.state,
+              nickname: value.nickname,
+            },
+          ],
+        },
+      ],
     });
-    console.log('postData na View', postData);
     function createUserSuccess(data: any) {
       data && navigation.navigate('RegisterSuccess' as never);
     }

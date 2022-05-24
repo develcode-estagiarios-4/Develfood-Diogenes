@@ -24,6 +24,15 @@ interface CreateUserAddress {
   nickname: string;
 }
 
+interface CreateCostumerData {
+  firstName?: string;
+  lastName?: string;
+  cpf?: string;
+  phone?: string;
+  photo?: string;
+  address?: CreateUserAddress[];
+}
+
 interface CreateUserPost {
   email: string;
   password: string;
@@ -31,14 +40,7 @@ interface CreateUserPost {
   role?: {
     id: number;
   };
-  costumer?: {
-    firstName?: string;
-    lastName?: string;
-    cpf?: string;
-    phone?: string;
-    photo?: string;
-    address?: CreateUserAddress[];
-  };
+  costumer?: CreateCostumerData[];
 }
 
 const createUser = createContext({
@@ -58,8 +60,6 @@ function CreateUserProvider({children}: AuthProviderProps) {
   function handleSetPostData(dataPost: CreateUserPost) {
     setPostData({...postData, ...dataPost});
     console.log('-------------');
-    console.log(dataPost);
-    console.log('postData => ', postData);
   }
 
   const createUserError = (error: any) => {
