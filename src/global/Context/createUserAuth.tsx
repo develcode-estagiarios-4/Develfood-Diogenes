@@ -24,8 +24,6 @@ interface CreateUserAddress {
   nickname: string;
 }
 
-interface CreateCostumerData {}
-
 interface CreateUserPost {
   email: string;
   password: string;
