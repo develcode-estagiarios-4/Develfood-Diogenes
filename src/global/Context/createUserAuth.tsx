@@ -72,7 +72,6 @@ function CreateUserProvider({children}: AuthProviderProps) {
     createUserSuccess: () => void,
     requestData: CreateUserPost,
   ) {
-    console.log('==>', requestData);
     const createUserRequest: CreateUserPost = {
       ...requestData,
       role: {id: 2},
