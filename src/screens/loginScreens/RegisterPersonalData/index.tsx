@@ -37,7 +37,9 @@ const schema = Yup.object().shape({
   cpf: Yup.string().test('is-cpf', 'CPF inválido.', (value: any) =>
     cpf.isValid(value),
   ),
-  phone: Yup.string().required('Telefone é obrigatório.'),
+  phone: Yup.string()
+    .required('Telefone é obrigatório.')
+    .min(15, 'Telefone inválido.'),
 });
 
 export function RegisterPersonalData() {
