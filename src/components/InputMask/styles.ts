@@ -1,30 +1,29 @@
 import styled from 'styled-components/native';
 import {RFValue} from 'react-native-responsive-fontsize';
+import {TextInputMask} from 'react-native-masked-text';
 
 export const Container = styled.View`
-  width: 100%;
+  width: ${RFValue(295)}px;
   height: ${RFValue(50)}px;
   align-self: center;
   align-items: center;
   flex-direction: row;
-  margin-top: ${RFValue(13)}px;
-  border: ${RFValue(2)}px;
-  border-radius: ${RFValue(10)}px;
+  margin-top: ${RFValue(12)}px;
+  border: 2px;
+  border-radius: 10px;
   border-color: ${({theme}) => theme.colors.text_gray};
+  background-color: transparent;
+  font-size: ${RFValue(14)}px;
+  font-family: ${({theme}) => theme.fonts.primaryReg};
 `;
 
 export const LoginIcon = styled.Image`
   margin-left: ${RFValue(18)}px;
 `;
 
-export const InputLogin = styled.TextInput`
+export const TextMask = styled(TextInputMask)`
   margin-left: ${RFValue(14)}px;
-  width: ${RFValue(200)}px;
-`;
-
-export const IconPassword = styled.TouchableOpacity`
-  position: absolute;
-  right: 18;
+  width: ${RFValue(250)}px;
 `;
 
 export const Error = styled.Text`
@@ -34,5 +33,3 @@ export const Error = styled.Text`
   font-size: 15px;
   color: ${({theme}) => theme.colors.background_red};
 `;
-
-export const LogoHide = styled.Image``;

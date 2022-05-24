@@ -6,6 +6,7 @@ import theme from './src/global/styles/theme';
 import {useEffect} from 'react';
 import {AuthProvider} from './src/global/Context';
 import {AppRoutes} from './src/global/Routes';
+import {CreateUserProvider} from './src/global/Context/createUserAuth';
 
 export default function App() {
   useEffect(() => {
@@ -14,11 +15,13 @@ export default function App() {
 
   return (
     <AuthProvider>
-      <ThemeProvider theme={theme}>
-        <NavigationContainer>
-          <AppRoutes />
-        </NavigationContainer>
-      </ThemeProvider>
+      <CreateUserProvider>
+        <ThemeProvider theme={theme}>
+          <NavigationContainer>
+            <AppRoutes />
+          </NavigationContainer>
+        </ThemeProvider>
+      </CreateUserProvider>
     </AuthProvider>
   );
 }

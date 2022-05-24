@@ -27,6 +27,7 @@ export const Content = styled.View`
   margin-top: ${RFValue(190)}px;
   background-color: transparent;
   z-index: 1;
+  align-items: center;
 `;
 
 export const LogoImage = styled.Image`
@@ -35,7 +36,7 @@ export const LogoImage = styled.Image`
 
 export const FogotPassButton = styled.TouchableOpacity`
   margin-top: ${RFValue(12)}px;
-  margin-left: ${RFValue(200)}px;
+  margin-left: ${RFValue(165)}px;
   bottom: 0;
 `;
 
@@ -49,7 +50,6 @@ export const LoginButton = styled.TouchableOpacity`
   height: ${RFValue(50)}px;
   align-items: center;
   justify-content: center;
-  margin-left: ${RFValue(40)}px;
   margin-top: ${RFValue(22)}px;
   border-radius: ${RFValue(10)}px;
   background-color: ${({theme}) => theme.colors.background_red};
@@ -86,4 +86,8 @@ export const ButtonTitle = styled.Text`
 export const FooterImage = styled.Image`
   position: absolute;
   bottom: 0;
+`;
+
+export const InputWrapper = styled.View`
+  width: ${RFValue(295)}px;
 `;

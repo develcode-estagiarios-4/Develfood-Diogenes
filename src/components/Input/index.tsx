@@ -1,7 +1,6 @@
 import React from 'react';
 import {useState} from 'react';
-import {useTheme} from 'styled-components';
-import {Control, Controller} from 'react-hook-form';
+import {Control} from 'react-hook-form';
 
 import {
   Container,
@@ -12,62 +11,60 @@ import {
   LogoHide,
 } from './styles';
 
-interface Props {
+import {KeyboardType, TextInputProps} from 'react-native';
+
+interface Props extends TextInputProps {
   name: string;
   control: Control;
   error: string;
   editable: boolean;
+  source: any;
+  placeholder: string;
+  keyboardType: KeyboardType;
+  sourcePassword?: any;
+  onChangeText: (value: string) => void;
+  value: string;
+  maxLength?: number;
 }
 
-export function Input({name, control, error, editable}: Props) {
-  const theme = useTheme();
+export function Input({
+  error,
+  editable,
+  source,
+  placeholder,
+  keyboardType,
+  sourcePassword,
+  onChangeText,
+  value,
+  maxLength,
+}: Props) {
+  const [isClicked, setIsClicked] = useState(false);
 
-  const [data, setData] = useState({
-    secureTextEntry: true,
-    isValidEmail: true,
-    isValidPassword: true,
-  });
-
-  const updateSecureTextEntry = () => {
-    setData({
-      ...data,
-      secureTextEntry: !data.secureTextEntry,
-    });
-  };
+  function updateSecureTextEntry() {
+    setIsClicked(!isClicked);
+  }
 
   return (
     <>
       <Container>
-        <LoginIcon
-          source={
-            name === 'email'
-              ? theme.icons.email
-              : name === 'password'
-              ? theme.icons.password
-              : null
-          }
+        <LoginIcon source={source} />
+
+        <InputLogin
+          placeholder={placeholder}
+          autoCapitalize="none"
+          keyboardType={keyboardType}
+          secureTextEntry={!isClicked}
+          onChangeText={onChangeText}
+          value={value}
+          editable={editable}
+          maxLength={maxLength}
         />
-        <Controller
-          control={control}
-          rules={{required: true}}
-          render={({field: {onChange, value}}) => (
-            <InputLogin
-              placeholder={name === 'email' ? 'exemplo@email.com' : '********'}
-              autoCapitalize="none"
-              keyboardType={name === 'email' ? 'email-address' : 'default'}
-              secureTextEntry={
-                name === 'password' ? data.secureTextEntry : false
-              }
-              onChangeText={onChange}
-              value={value}
-              editable={editable}
-            />
-          )}
-          name={name}
-        />
-        <IconPassword onPress={() => updateSecureTextEntry()}>
-          <LogoHide source={name === 'password' ? theme.icons.eye : null} />
-        </IconPassword>
+
+        {sourcePassword && (
+          <IconPassword onPress={() => updateSecureTextEntry()}>
+            <LogoHide source={sourcePassword} />
+          </IconPassword>
+        )}
       </Container>
       {error && <Error>{error}</Error>}
     </>
