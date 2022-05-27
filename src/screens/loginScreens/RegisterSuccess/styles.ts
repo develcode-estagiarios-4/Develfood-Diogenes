@@ -54,7 +54,6 @@ export const Content = styled.View`
   width: 100%;
   padding: 0 ${RFValue(50)}px;
   margin-bottom: ${RFValue(70)}px;
-  background-color: blue;
 `;
 
 export const WomanImage = styled.Image`

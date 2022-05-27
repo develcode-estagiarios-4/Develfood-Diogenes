@@ -148,7 +148,7 @@ export function Register() {
                 editable={!loading}
                 error={errors.confirmPassword && errors.confirmPassword.message}
                 keyboardType="default"
-                placeholder="comfirmar senha"
+                placeholder="confirmar senha"
                 source={theme.icons.password}
                 name="password"
                 onChangeText={onChange}
