@@ -7,31 +7,32 @@ export const Container = styled.View`
   align-self: center;
   align-items: center;
   flex-direction: row;
-  margin-top: ${RFValue(13)}px;
+  margin-bottom: ${RFValue(12)}px;
   border: ${RFValue(2)}px;
   border-radius: ${RFValue(10)}px;
   border-color: ${({theme}) => theme.colors.text_gray};
 `;
 
 export const LoginIcon = styled.Image`
-  margin-left: ${RFValue(18)}px;
+  margin-left: ${RFValue(3)}px;
 `;
 
 export const InputLogin = styled.TextInput`
-  margin-left: ${RFValue(14)}px;
-  width: ${RFValue(200)}px;
+  margin-left: ${RFValue(5)}px;
+  width: 88%;
+  font-size: ${RFValue(14)}px;
 `;
 
 export const IconPassword = styled.TouchableOpacity`
   position: absolute;
-  right: 18;
+  right: ${RFValue(22)}px;
 `;
 
 export const Error = styled.Text`
   align-self: center;
-  margin-top: 8px;
+  margin-bottom: ${RFValue(8)}px;
   font-family: ${({theme}) => theme.fonts.secondaryBold};
-  font-size: 15px;
+  font-size: ${RFValue(14)}px;
   color: ${({theme}) => theme.colors.background_red};
 `;
 

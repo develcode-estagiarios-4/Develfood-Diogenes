@@ -9,16 +9,14 @@ export const Container = styled.View`
 
 export const Header = styled.View`
   width: 100%;
-  height: ${RFValue(60)}px;
   flex-direction: row;
   align-items: center;
+  height: ${RFValue(56)}px;
 `;
 
 export const TittleWrapper = styled.View`
-  width: ${RFValue(215)}px;
-  align-items: center;
+  margin-left: ${RFValue(75)}px;
 `;
-
 export const Title = styled.Text`
   font-family: ${({theme}) => theme.fonts.primaryMed};
   font-size: ${RFValue(17)}px;
@@ -28,50 +26,52 @@ export const Title = styled.Text`
 
 export const CircleWrapper = styled.View`
   width: 100%;
-  height: ${RFValue(50)}px;
   flex-direction: row;
+  justify-content: space-around;
 `;
 
 export const CircleAdjust = styled.View`
-  width: ${RFValue(50)}px;
-  height: ${RFValue(50)}px;
   align-items: center;
-  justify-content: center;
-  margin-left: ${RFValue(54)}px;
+  justify-content: space-around;
 `;
 
 export const Circle = styled.Image``;
 
 export const CenterCircle = styled.Image`
   position: absolute;
-`;
-
-export const InputWrapper = styled.ScrollView`
-  width: ${RFValue(300)}px;
-  margin: 0 ${RFValue(40)}px;
+  top: ${RFValue(4)}px;
 `;
 
 export const Wrapper = styled.View`
+  padding: 0 ${RFValue(30)}px;
+  z-index: 1;
+`;
+
+export const RowView = styled.View`
   flex-direction: row;
 `;
 
-export const HalfInput = styled.View`
-  margin-right: 20px;
-  width: ${RFValue(160)}px;
+export const NicknameWrapper = styled.View`
+  width: 54%;
+  margin-right: 2%;
 `;
 
-export const HalfInputTwo = styled.View`
-  margin-right: 20px;
-  width: ${RFValue(121)}px;
+export const CepWrapper = styled.View`
+  width: 42%;
 `;
-export const WrapperTwo = styled.View`
-  flex-direction: row;
+
+export const StateWrapper = styled.View`
+  width: 48%;
+  margin-right: 2%;
 `;
-export const HalfInputThree = styled.View`
-  margin-right: 20px;
-  width: ${RFValue(140.5)}px;
+
+export const NumberWrapper = styled.View`
+  width: 48%;
+  margin-left: 2%;
 `;
-export const HalfInputFour = styled.View`
-  margin-right: 20px;
-  width: ${RFValue(140.5)}px;
+
+export const ButtonWrapper = styled.View`
+  width: 100%;
+  padding: 0 ${RFValue(30)}px;
+  margin-top: ${RFValue(-10)}px;
 `;

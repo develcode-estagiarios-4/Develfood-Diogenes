@@ -2,7 +2,7 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 
 export const Container = styled.TouchableOpacity`
-  width: ${RFValue(295)}px;
+  width: 100%;
   height: ${RFValue(50)}px;
   background-color: ${({theme}) => theme.colors.background_red};
   align-items: center;

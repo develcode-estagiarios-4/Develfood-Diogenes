@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useTheme} from 'styled-components';
 import RNBootSplash from 'react-native-bootsplash';
 import * as Yup from 'yup';
@@ -9,11 +9,7 @@ import {useAuth} from '../../../global/Context';
 import {useNavigation} from '@react-navigation/native';
 import {Input} from '../../../components/Input';
 
-import {
-  ActivityIndicator,
-  Keyboard,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import {Keyboard, TouchableWithoutFeedback} from 'react-native';
 
 import {
   Container,
@@ -24,14 +20,12 @@ import {
   LogoImage,
   FogotPassButton,
   ForgotPass,
-  LoginButton,
-  ButtonTitleLogin,
   WrapperRegister,
   RegisterSimpleTitle,
   RegisterButtonTitle,
   ButtonTitle,
-  InputWrapper,
 } from './styled';
+import {ContinueButton} from '../../../components/ContinueButton';
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -83,57 +77,55 @@ export function Login() {
           <Content>
             <LogoImage source={theme.images.develfood} />
 
-            <InputWrapper>
-              <Controller
-                control={control}
-                rules={{required: true}}
-                render={({field: {onChange, value}}) => (
-                  <Input
-                    control={control}
-                    editable={!loading}
-                    error={errors.email && errors.email.message}
-                    keyboardType="email-address"
-                    placeholder="exemplo@email.com"
-                    source={theme.icons.email}
-                    name="email"
-                    onChangeText={onChange}
-                    value={value}
-                  />
-                )}
-                name="email"
-              />
-
-              <Controller
-                control={control}
-                rules={{required: true}}
-                render={({field: {onChange, value}}) => (
-                  <Input
-                    control={control}
-                    editable={!loading}
-                    error={errors.password && errors.password.message}
-                    keyboardType="default"
-                    placeholder="senha"
-                    source={theme.icons.password}
-                    name="password"
-                    onChangeText={onChange}
-                    value={value}
-                    sourcePassword={theme.icons.eye}
-                  />
-                )}
-                name="password"
-              />
-
-              <FogotPassButton>
-                <ForgotPass>Esqueci minha senha</ForgotPass>
-              </FogotPassButton>
-            </InputWrapper>
-            <LoginButton onPress={handleSubmit(onSubmit)}>
-              {loading ? (
-                <ActivityIndicator color={theme.colors.background} />
-              ) : (
-                <ButtonTitleLogin>Entrar</ButtonTitleLogin>
+            <Controller
+              control={control}
+              rules={{required: true}}
+              render={({field: {onChange, value}}) => (
+                <Input
+                  control={control}
+                  editable={!loading}
+                  error={errors.email && errors.email.message}
+                  keyboardType="email-address"
+                  placeholder="exemplo@email.com"
+                  source={theme.icons.email}
+                  name="email"
+                  onChangeText={onChange}
+                  value={value}
+                />
               )}
-            </LoginButton>
+              name="email"
+            />
+
+            <Controller
+              control={control}
+              rules={{required: true}}
+              render={({field: {onChange, value}}) => (
+                <Input
+                  control={control}
+                  editable={!loading}
+                  error={errors.password && errors.password.message}
+                  keyboardType="default"
+                  placeholder="senha"
+                  source={theme.icons.password}
+                  name="password"
+                  onChangeText={onChange}
+                  value={value}
+                  sourcePassword={theme.icons.eye}
+                />
+              )}
+              name="password"
+            />
+
+            <FogotPassButton>
+              <ForgotPass>Esqueci minha senha</ForgotPass>
+            </FogotPassButton>
+
+            <ContinueButton
+              onPressed={handleSubmit(onSubmit)}
+              loading={loading}
+              title="Entrar"
+            />
+
             <WrapperRegister>
               <RegisterSimpleTitle>Não possui cadastro?</RegisterSimpleTitle>
               <RegisterButtonTitle

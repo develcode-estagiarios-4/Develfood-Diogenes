@@ -26,13 +26,13 @@ import {
   CircleAdjust,
   Circle,
   CenterCircle,
-  InputWrapper,
   Wrapper,
-  HalfInput,
-  HalfInputTwo,
-  WrapperTwo,
-  HalfInputThree,
-  HalfInputFour,
+  RowView,
+  NicknameWrapper,
+  CepWrapper,
+  StateWrapper,
+  NumberWrapper,
+  ButtonWrapper,
 } from './styles';
 
 const schema = Yup.object().shape({
@@ -117,11 +117,15 @@ export function RegisterLocale() {
             <CenterCircle source={theme.icons.blankcircle} />
           </CircleAdjust>
         </CircleWrapper>
-        <Image source={theme.icons.woman} style={{marginTop: RFValue(6)}} />
 
-        <InputWrapper showsVerticalScrollIndicator={false}>
-          <Wrapper>
-            <HalfInput>
+        <Image
+          source={theme.icons.woman}
+          style={{marginTop: RFValue(6), marginBottom: RFValue(20)}}
+        />
+
+        <Wrapper>
+          <RowView>
+            <NicknameWrapper>
               <Controller
                 control={control}
                 rules={{required: true}}
@@ -141,9 +145,9 @@ export function RegisterLocale() {
                 )}
                 name="nickname"
               />
-            </HalfInput>
+            </NicknameWrapper>
 
-            <HalfInputTwo>
+            <CepWrapper>
               <Controller
                 control={control}
                 rules={{required: true}}
@@ -163,8 +167,8 @@ export function RegisterLocale() {
                 )}
                 name="cep"
               />
-            </HalfInputTwo>
-          </Wrapper>
+            </CepWrapper>
+          </RowView>
 
           <Controller
             control={control}
@@ -222,8 +226,9 @@ export function RegisterLocale() {
             )}
             name="neighborhood"
           />
-          <WrapperTwo>
-            <HalfInputThree>
+
+          <RowView>
+            <StateWrapper>
               <Controller
                 control={control}
                 rules={{required: true}}
@@ -243,8 +248,8 @@ export function RegisterLocale() {
                 )}
                 name="state"
               />
-            </HalfInputThree>
-            <HalfInputFour>
+            </StateWrapper>
+            <NumberWrapper>
               <Controller
                 control={control}
                 rules={{required: true}}
@@ -263,15 +268,17 @@ export function RegisterLocale() {
                 )}
                 name="number"
               />
-            </HalfInputFour>
-          </WrapperTwo>
+            </NumberWrapper>
+          </RowView>
+        </Wrapper>
 
+        <ButtonWrapper>
           <ContinueButton
             title="Continuar"
             onPressed={handleSubmit(onSubmit)}
             loading={loading}
           />
-        </InputWrapper>
+        </ButtonWrapper>
       </Container>
     </TouchableWithoutFeedback>
   );

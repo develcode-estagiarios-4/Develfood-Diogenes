@@ -54,13 +54,13 @@ export function RegisterSuccess() {
             economizar com super cupons Develfood.
           </Text>
         </WrapperText>
-      </Content>
 
-      <ContinueButton
-        title="Continuar"
-        onPressed={handleSubmit(onSubmit)}
-        loading={false}
-      />
+        <ContinueButton
+          title="Continuar"
+          onPressed={handleSubmit(onSubmit)}
+          loading={false}
+        />
+      </Content>
     </Container>
   );
 }
