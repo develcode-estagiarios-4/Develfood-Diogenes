@@ -9,17 +9,13 @@ export const Container = styled.View`
 
 export const Header = styled.View`
   width: 100%;
-  height: ${RFValue(97)}px;
-
   flex-direction: row;
-
   align-items: center;
+  height: ${RFValue(56)}px;
 `;
 
 export const TittleWrapper = styled.View`
-  width: ${RFValue(215)}px;
-
-  align-items: center;
+  margin-left: ${RFValue(75)}px;
 `;
 
 export const Title = styled.Text`
@@ -31,28 +27,27 @@ export const Title = styled.Text`
 
 export const CircleWrapper = styled.View`
   width: 100%;
-  height: ${RFValue(50)}px;
-
   flex-direction: row;
+  justify-content: space-around;
 `;
 
 export const CircleAdjust = styled.View`
-  width: ${RFValue(50)}px;
-  height: ${RFValue(50)}px;
-
   align-items: center;
-  justify-content: center;
-
-  margin-left: ${RFValue(54)}px;
+  justify-content: space-around;
 `;
 
 export const Circle = styled.Image``;
 
 export const CenterCircle = styled.Image`
   position: absolute;
+  top: ${RFValue(4)}px;
 `;
 
 export const InputWrapper = styled.View`
-  width: ${RFValue(295)}px;
-  margin: 0 ${RFValue(40)}px;
+  padding: 0 ${RFValue(30)}px;
+`;
+
+export const ButtonWrapper = styled.View`
+  width: 100%;
+  padding: 0 ${RFValue(32)}px;
 `;

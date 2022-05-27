@@ -29,6 +29,7 @@ import {
   Circle,
   CenterCircle,
   InputWrapper,
+  Wrapper,
 } from './styles';
 
 const schema = Yup.object().shape({
@@ -100,89 +101,93 @@ export function RegisterPersonalData() {
             <CenterCircle source={theme.icons.blankcircle} />
           </CircleAdjust>
         </CircleWrapper>
-        <Image source={theme.icons.womanup} style={{marginTop: RFValue(6)}} />
+        <Image
+          source={theme.icons.womanup}
+          style={{marginTop: RFValue(6), marginBottom: RFValue(20)}}
+        />
+        <Wrapper>
+          <InputWrapper>
+            <Controller
+              control={control}
+              rules={{required: true}}
+              render={({field: {onChange, value}}) => (
+                <Input
+                  control={control}
+                  editable={!loading}
+                  error={errors.name && errors.name.message}
+                  keyboardType="email-address"
+                  placeholder="Nome"
+                  source={theme.icons.name}
+                  name="name"
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
+              name="name"
+            />
 
-        <InputWrapper showsVerticalScrollIndicator={false}>
-          <Controller
-            control={control}
-            rules={{required: true}}
-            render={({field: {onChange, value}}) => (
-              <Input
-                control={control}
-                editable={!loading}
-                error={errors.name && errors.name.message}
-                keyboardType="email-address"
-                placeholder="Nome"
-                source={theme.icons.name}
-                name="name"
-                onChangeText={onChange}
-                value={value}
-              />
-            )}
-            name="name"
-          />
+            <Controller
+              control={control}
+              rules={{required: true}}
+              render={({field: {onChange, value}}) => (
+                <Input
+                  control={control}
+                  editable={!loading}
+                  error={errors.lastName && errors.lastName.message}
+                  keyboardType="email-address"
+                  placeholder="Sobrenome"
+                  source={theme.icons.name}
+                  name="lastName"
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
+              name="lastName"
+            />
 
-          <Controller
-            control={control}
-            rules={{required: true}}
-            render={({field: {onChange, value}}) => (
-              <Input
-                control={control}
-                editable={!loading}
-                error={errors.lastName && errors.lastName.message}
-                keyboardType="email-address"
-                placeholder="Sobrenome"
-                source={theme.icons.name}
-                name="lastName"
-                onChangeText={onChange}
-                value={value}
-              />
-            )}
-            name="lastName"
-          />
+            <Controller
+              control={control}
+              rules={{required: true}}
+              render={({field: {onChange, value}}) => (
+                <Input
+                  control={control}
+                  editable={!loading}
+                  error={errors.cpf && errors.cpf.message}
+                  keyboardType="email-address"
+                  placeholder="CPF"
+                  source={theme.icons.cpf}
+                  name="cpf"
+                  onChangeText={onChange}
+                  value={cpf.format(value)}
+                  maxLength={14}
+                />
+              )}
+              name="cpf"
+            />
 
-          <Controller
-            control={control}
-            rules={{required: true}}
-            render={({field: {onChange, value}}) => (
-              <Input
-                control={control}
-                editable={!loading}
-                error={errors.cpf && errors.cpf.message}
-                keyboardType="email-address"
-                placeholder="CPF"
-                source={theme.icons.cpf}
-                name="cpf"
-                onChangeText={onChange}
-                value={cpf.format(value)}
-                maxLength={14}
-              />
-            )}
-            name="cpf"
-          />
+            <Controller
+              control={control}
+              rules={{required: true}}
+              render={({field: {onChange, value}}) => (
+                <InputMask
+                  source={theme.icons.phone}
+                  error={errors.phone && errors.phone.message}
+                  editable={!loading}
+                  onChangeText={onChange}
+                  value={value}
+                  placeholder="Telefone"
+                />
+              )}
+              name="phone"
+            />
 
-          <Controller
-            control={control}
-            rules={{required: true}}
-            render={({field: {onChange, value}}) => (
-              <InputMask
-                source={theme.icons.phone}
-                error={errors.phone && errors.phone.message}
-                editable={!loading}
-                onChangeText={onChange}
-                value={value}
-                placeholder="Telefone"
-              />
-            )}
-            name="phone"
-          />
-
-          <ContinueButton
-            title="Continuar"
-            onPressed={handleSubmit(onSubmit)}
-            loading={loading}
-          />
-        </InputWrapper>
+            <ContinueButton
+              title="Continuar"
+              onPressed={handleSubmit(onSubmit)}
+              loading={loading}
+            />
+          </InputWrapper>
+        </Wrapper>
       </Container>
     </TouchableWithoutFeedback>
   );

@@ -27,6 +27,7 @@ import {
   Circle,
   CenterCircle,
   InputWrapper,
+  ButtonWrapper,
 } from './styles';
 
 const schema = Yup.object().shape({
@@ -93,7 +94,10 @@ export function Register() {
             <CenterCircle source={theme.icons.blankcircle} />
           </CircleAdjust>
         </CircleWrapper>
-        <Image source={theme.icons.womanleft} style={{marginTop: RFValue(6)}} />
+        <Image
+          source={theme.icons.womanleft}
+          style={{marginTop: RFValue(6), marginBottom: RFValue(26)}}
+        />
 
         <InputWrapper>
           <Controller
@@ -144,7 +148,7 @@ export function Register() {
                 editable={!loading}
                 error={errors.confirmPassword && errors.confirmPassword.message}
                 keyboardType="default"
-                placeholder="comfirmar senha"
+                placeholder="confirmar senha"
                 source={theme.icons.password}
                 name="password"
                 onChangeText={onChange}
@@ -156,11 +160,13 @@ export function Register() {
           />
         </InputWrapper>
 
-        <ContinueButton
-          title="Continuar"
-          onPressed={handleSubmit(onSubmit)}
-          loading={loading}
-        />
+        <ButtonWrapper>
+          <ContinueButton
+            title="Continuar"
+            onPressed={handleSubmit(onSubmit)}
+            loading={loading}
+          />
+        </ButtonWrapper>
       </Container>
     </TouchableWithoutFeedback>
   );

@@ -9,19 +9,18 @@ export const Container = styled.View`
 
 export const Header = styled.View`
   width: 100%;
-  height: ${RFValue(97)}px;
   flex-direction: row;
   align-items: center;
+  height: ${RFValue(56)}px;
 `;
 
 export const TittleWrapper = styled.View`
-  width: ${RFValue(215)}px;
-  align-items: center;
+  margin-left: ${RFValue(75)}px;
 `;
 
 export const Title = styled.Text`
   font-family: ${({theme}) => theme.fonts.primaryMed};
-  font-size: ${RFValue(14)}px;
+  font-size: ${RFValue(17)}px;
   font-weight: bold;
   color: ${({theme}) => theme.colors.text_dark};
 `;
@@ -32,6 +31,7 @@ export const Text = styled.Text`
   font-weight: bold;
   color: ${({theme}) => theme.colors.text_gray};
   margin-top: ${RFValue(5)}px;
+  text-align: justify;
 `;
 
 export const WrapperText = styled.View`
@@ -44,7 +44,7 @@ export const WrapperTitle = styled.View`
 
 export const SubTitle = styled.Text`
   font-family: ${({theme}) => theme.fonts.primaryMed};
-  font-size: ${RFValue(28)}px;
+  font-size: ${RFValue(23)}px;
   font-weight: bold;
   color: ${({theme}) => theme.colors.text_dark};
 `;
