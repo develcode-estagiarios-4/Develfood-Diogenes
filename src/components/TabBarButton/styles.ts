@@ -2,7 +2,7 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 
 export const ButtonIcon = styled.TouchableOpacity`
-  width: ${RFValue(75)}px;
+  width: ${RFValue(70)}px;
   height: ${RFValue(60)}px;
 
   align-items: center;
@@ -15,4 +15,5 @@ export const Title = styled.Text`
   text-align: center;
   color: ${({theme}) => theme.colors.icon_gray};
   font-family: ${({theme}) => theme.fonts.primaryReg};
+  margin-bottom: ${RFValue(5)}px;
 `;

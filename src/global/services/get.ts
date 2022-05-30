@@ -2,7 +2,7 @@ import axios, {AxiosRequestConfig} from 'axios';
 import {useEffect, useState} from 'react';
 
 const api = axios.create({
-  baseURL: 'https://gorest.co.in',
+  baseURL: 'https://develfood-3.herokuapp.com',
 });
 
 export function useFetch<T = unknown>(
@@ -18,6 +18,7 @@ export function useFetch<T = unknown>(
       try {
         const response = await api.get(url, options);
         setData(response.data);
+        console.log(response.data);
       } catch (erro) {
         setError(error);
       } finally {

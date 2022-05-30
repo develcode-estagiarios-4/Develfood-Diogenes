@@ -5,27 +5,18 @@ import {useTheme} from 'styled-components';
 
 import {ButtonIcon, Title} from './styles';
 interface Props {
+  source: any;
   name: string;
   isPressed: boolean;
   onPressed: Function;
 }
 
-export function TabBarButton({name, isPressed, onPressed}: Props) {
+export function TabBarButton({source, name, isPressed, onPressed}: Props) {
   const theme = useTheme();
   return (
     <ButtonIcon onPress={() => onPressed()}>
       <Image
-        source={
-          name === 'Inicio'
-            ? theme.icons.home
-            : name === 'Favoritos'
-            ? theme.icons.favorite
-            : name === 'Historico'
-            ? theme.icons.list
-            : name === 'Perfil'
-            ? theme.icons.user
-            : null
-        }
+        source={source}
         style={{
           tintColor: isPressed ? theme.colors.icon_red : theme.colors.icon_gray,
           height: isPressed ? RFValue(25) : RFValue(20),

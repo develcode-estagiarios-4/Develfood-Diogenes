@@ -48,6 +48,8 @@ export default {
     locale: require('../assets/loginIcons/Locale.png'),
     exit: require('../assets/loginIcons/Exit.png'),
     womansuccess: require('../assets/loginIcons/womansuccess.png'),
+    search: require('../assets/Icons/search.png'),
+    iconLocale: require('../assets/Icons/locale.png'),
   },
 
   images: {
@@ -55,5 +57,8 @@ export default {
     pizza: require('../assets/loginImages/metadepizza.png'),
     footer: require('../assets/loginImages/footer.png'),
     develfood: require('../assets/loginImages/develfood.png'),
+    banner: require('../assets/Images/banner.png'),
+    noImage: require('../assets/Images/NoImage.png'),
+    pizzaImage: require('../assets/Images/pizza.png'),
   },
 };

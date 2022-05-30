@@ -1,78 +1,44 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {Text, View, Button, FlatList, StatusBar} from 'react-native';
-import {useFetch} from '../../global/services/get';
-import {useDelete} from '../../global/services/delete';
-import {usePut} from '../../global/services/put';
-
-import {Container, Content, Header} from './styles';
+import {Text, View, StatusBar} from 'react-native';
+import {useTheme} from 'styled-components';
+import {Input} from '../../components/Input';
+import {Restaurants} from '../../components/Restaurants';
 import {useAuth} from '../../global/Context';
+import {useFetch} from '../../global/services/get';
+import {
+  Container,
+  Content,
+  Header,
+  BannerWrapper,
+  Banner,
+  TitleWrapper,
+  Title,
+  RestaurantList,
+} from './styles';
 
-interface Data {
+interface ListRestaurantProps {
+  id: number;
   name: string;
-  email: string;
-  gender: string;
-  status: string;
+  photo: string;
 }
-
-interface CreateUserPut {
-  email: string;
-  gender: string;
-  name: string;
-  status: string;
-}
-
-interface UserDataPut {
-  email: string;
-  gender: string;
-  name: string;
-  status: string;
-}
-interface UserDataDelete {
-  email: string;
-  gender: string;
-  name: string;
-  status: string;
+interface ListRestaurantResponse {
+  content: ListRestaurantProps[];
 }
 
 export function Home() {
-  const {data, loading} = useFetch<Data[]>('/public/v2/users');
+  const theme = useTheme();
 
   const {token} = useAuth();
 
-  const {
-    data: ModifyUsers,
-    loading: isloadingPut,
-    handlerPut,
-  } = usePut<CreateUserPut, UserDataPut>(
-    '/public/v2/users/8552',
-    {
-      email: 'diogenes@develcode611.com',
-      gender: 'male',
-      name: 'joao',
-      status: 'active',
-    },
+  const {data, loading} = useFetch<ListRestaurantResponse>(
+    '/restaurant?page=0&quantity=10',
     {
       headers: {
-        'Content-type': 'application/json',
-        Authorization:
-          'Bearer a4e3743577c2a9f43ef23ca81f710292e0158b333e74723043f685454876fda1',
+        Authorization: `Bearer ${token}`,
       },
     },
   );
-
-  const {
-    data: DeleteData,
-    loading: isLoadingDelete,
-    handlerDelete,
-  } = useDelete<UserDataDelete>('public/v2/users/8552', {
-    headers: {
-      'Content-type': 'application/json',
-      Authorization:
-        'Bearer a4e3743577c2a9f43ef23ca81f710292e0158b333e74723043f685454876fda1',
-    },
-  });
-
   return (
     <Container>
       <StatusBar
@@ -83,61 +49,33 @@ export function Home() {
 
       <Header />
 
+      <BannerWrapper>
+        <Banner source={theme.images.banner} />
+        <Banner source={theme.images.banner} />
+      </BannerWrapper>
+
+      <TitleWrapper>
+        <Title>Categoria</Title>
+      </TitleWrapper>
+
       <Content>
+        <Input
+          source={theme.icons.search}
+          placeholder="Buscar restaurantes"
+          onChangeText={() => {}}
+        />
+
         <Text>API's</Text>
         {loading ? (
           <Text>Carregando...</Text>
         ) : (
           <View>
-            <FlatList
-              data={data}
-              renderItem={({item}) => (
-                <>
-                  <Text>Email: {item.email}</Text>
-                  <Text>Gender: {item.gender}</Text>
-                  <Text>Name: {item.name}</Text>
-                  <Text>Status: {item.status}</Text>
-                </>
-              )}
-              style={{width: '100%', borderWidth: 2, marginTop: 150}}
+            <RestaurantList
+              data={data.content}
+              numColumns={2}
+              renderItem={({item}: any) => <Restaurants name={item.name} />}
+              style={{width: '100%', borderWidth: 2, marginTop: 10}}
             />
-
-            {/* <View>
-                  <Text>
-                      {data[0].email}{'\n'}
-                      {data.name}{'\n'}
-                      {data.gender}{'\n'}
-                      {data.status}{'\n'}
-                  </Text>
-                </View> */}
-
-            <Button title="Delete" onPress={() => handlerDelete()} />
-
-            <Button title="Put" onPress={() => handlerPut()} />
-          </View>
-        )}
-
-        <Text>{token}</Text>
-
-        {isloadingPut ? (
-          <Text>Carregando Put</Text>
-        ) : (
-          <View>
-            <Text>{ModifyUsers?.email}</Text>
-            <Text>{ModifyUsers?.gender}</Text>
-            <Text>{ModifyUsers?.name}</Text>
-            <Text>{ModifyUsers?.status}</Text>
-          </View>
-        )}
-
-        {isLoadingDelete ? (
-          <Text>Carregando Delete</Text>
-        ) : (
-          <View>
-            <Text>{DeleteData?.email}</Text>
-            <Text>{DeleteData?.gender}</Text>
-            <Text>{DeleteData?.name}</Text>
-            <Text>{DeleteData?.status}</Text>
           </View>
         )}
       </Content>
