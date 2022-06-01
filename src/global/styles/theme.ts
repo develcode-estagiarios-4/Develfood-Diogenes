@@ -50,6 +50,8 @@ export default {
     womansuccess: require('../assets/loginIcons/womansuccess.png'),
     search: require('../assets/Icons/search.png'),
     iconLocale: require('../assets/Icons/locale.png'),
+    favoriteRestaurant: require('../assets/Icons/favoriteRestaurant.png'),
+    starRatio: require('../assets/Icons/star.png'),
   },
 
   images: {

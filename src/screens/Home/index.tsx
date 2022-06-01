@@ -1,11 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
-import {Text, View, StatusBar} from 'react-native';
+import React, {useCallback, useState} from 'react';
+import {ActivityIndicator, StatusBar, View} from 'react-native';
 import {useTheme} from 'styled-components';
 import {Input} from '../../components/Input';
-import {Restaurants} from '../../components/Restaurants';
 import {useAuth} from '../../global/Context';
 import {useFetch} from '../../global/services/get';
+
+import {Restaurants} from '../../components/Restaurants';
+import {Category} from '../../components/CategoryButton';
+
 import {
   Container,
   Content,
@@ -14,8 +18,11 @@ import {
   Banner,
   TitleWrapper,
   Title,
+  CategorySelect,
+  RestaurantListWrapper,
   RestaurantList,
 } from './styles';
+import {useFocusEffect} from '@react-navigation/native';
 
 interface ListRestaurantProps {
   id: number;
@@ -24,6 +31,8 @@ interface ListRestaurantProps {
 }
 interface ListRestaurantResponse {
   content: ListRestaurantProps[];
+  number: number;
+  totalPages: number;
 }
 
 export function Home() {
@@ -31,54 +40,123 @@ export function Home() {
 
   const {token} = useAuth();
 
-  const {data, loading} = useFetch<ListRestaurantResponse>(
-    '/restaurant?page=0&quantity=10',
+  const [page, setPage] = useState(0);
+
+  const {data, loading, fetchData} = useFetch<ListRestaurantResponse>(
+    `/restaurant?page=${page}&quantity=10`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     },
   );
+
+  const [restaurants, setRestaurants] = useState([]);
+
+  function onSuccess(response: any) {
+    setRestaurants([...restaurants, ...response.content] as never);
+  }
+
+  async function loadRestaurants() {
+    await fetchData(onSuccess);
+    setPage(1);
+  }
+
+  async function handleLoadOnEnd() {
+    if (data.number < data.totalPages - 1) {
+      await fetchData(onSuccess);
+      setPage(page + 1);
+    }
+  }
+
+  function handleOnEndReached() {
+    handleLoadOnEnd();
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+      setRestaurants([]);
+      loadRestaurants();
+    }, []),
+  );
+
   return (
-    <Container>
-      <StatusBar
-        barStyle={'light-content'}
-        translucent
-        backgroundColor="transparent"
-      />
+    <>
+      <Container>
+        <RestaurantList
+          data={restaurants}
+          keyExtractor={(item: any) => item.id}
+          numColumns={2}
+          ListHeaderComponent={() => (
+            <>
+              <StatusBar
+                barStyle={'light-content'}
+                translucent
+                backgroundColor="#C20C18"
+              />
+              <Header />
 
-      <Header />
+              <BannerWrapper>
+                <Banner source={theme.images.banner} />
+                <Banner source={theme.images.banner} />
+              </BannerWrapper>
 
-      <BannerWrapper>
-        <Banner source={theme.images.banner} />
-        <Banner source={theme.images.banner} />
-      </BannerWrapper>
+              <TitleWrapper>
+                <Title>Categoria</Title>
+              </TitleWrapper>
 
-      <TitleWrapper>
-        <Title>Categoria</Title>
-      </TitleWrapper>
+              <CategorySelect
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}>
+                <Category title="Pizza" />
+                <Category title="Churrasco" />
+                <Category title="Almoço" />
+                <Category title="Massas" />
+                <Category title="Coreana" />
+                <Category title="Japonesa" />
+                <Category title="Tailandesa" />
+                <Category title="Chinesa" />
+              </CategorySelect>
 
-      <Content>
-        <Input
-          source={theme.icons.search}
-          placeholder="Buscar restaurantes"
-          onChangeText={() => {}}
+              <Content>
+                <Input
+                  source={theme.icons.search}
+                  placeholder="Buscar restaurantes"
+                  onChangeText={() => {}}
+                />
+              </Content>
+            </>
+          )}
+          ListFooterComponent={() => (
+            <View style={{height: 50, justifyContent: 'center'}}>
+              {loading && <ActivityIndicator />}
+            </View>
+          )}
+          renderItem={({item}: any) => (
+            <RestaurantListWrapper>
+              <Restaurants
+                name={item.name}
+                source={
+                  item.photo
+                    ? {
+                        uri: `${item.photo}`,
+                      }
+                    : theme.images.noImage
+                }
+              />
+            </RestaurantListWrapper>
+          )}
+          style={{
+            width: '100%',
+            marginTop: 10,
+            margin: 20,
+          }}
+          onEndReached={() => {
+            handleOnEndReached();
+          }}
         />
-
-        <Text>API's</Text>
-        {loading ? (
-          <Text>Carregando...</Text>
-        ) : (
-          <View>
-            <RestaurantList
-              data={data.content}
-              numColumns={2}
-              renderItem={({item}: any) => <Restaurants name={item.name} />}
-              style={{width: '100%', borderWidth: 2, marginTop: 10}}
-            />
-          </View>
-        )}
-      </Content>
-    </Container>
+      </Container>
+    </>
   );
 }
