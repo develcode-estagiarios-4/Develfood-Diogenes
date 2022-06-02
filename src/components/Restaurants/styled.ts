@@ -22,7 +22,7 @@ export const FavoriteIconWrapper = styled.View`
   position: absolute;
   right: 0;
   top: 0;
-  border-top-right-radius: 8px;
+
   border-bottom-left-radius: 16px;
   background-color: ${({theme}) => theme.colors.background};
   align-items: center;

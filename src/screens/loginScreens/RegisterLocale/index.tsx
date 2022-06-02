@@ -30,10 +30,12 @@ import {
   RowView,
   NicknameWrapper,
   CepWrapper,
+  Content,
   StateWrapper,
   NumberWrapper,
   ButtonWrapper,
 } from './styles';
+import {InputMaskZipCode} from '../../../components/InputMask/zipcode';
 
 const schema = Yup.object().shape({
   street: Yup.string().required('Rua é obrigatório.'),
@@ -42,9 +44,7 @@ const schema = Yup.object().shape({
   number: Yup.number()
     .required('Numero é obrigatório.')
     .typeError('Apenas numeros são aceitos'),
-  cep: Yup.number()
-    .required('CEP é obrigatório.')
-    .typeError('Apenas numeros são aceitos'),
+  cep: Yup.string().required('CEP é obrigatório.'),
   state: Yup.string().required('Estado é obrigatório.').uppercase(),
   nickname: Yup.string().required('Apelido é obrigatório.'),
 });
@@ -152,17 +152,13 @@ export function RegisterLocale() {
                 control={control}
                 rules={{required: true}}
                 render={({field: {onChange, value}}) => (
-                  <Input
-                    control={control}
-                    editable={!loading}
-                    error={errors.cep && errors.cep.message}
-                    keyboardType="email-address"
-                    placeholder="CEP"
+                  <InputMaskZipCode
                     source={theme.icons.locale}
-                    name="cep"
+                    error={errors.cep && errors.cep.message}
+                    editable={!loading}
                     onChangeText={onChange}
                     value={value}
-                    maxLength={8}
+                    placeholder="CEP"
                   />
                 )}
                 name="cep"
@@ -170,62 +166,64 @@ export function RegisterLocale() {
             </CepWrapper>
           </RowView>
 
-          <Controller
-            control={control}
-            rules={{required: true}}
-            render={({field: {onChange, value}}) => (
-              <Input
-                control={control}
-                editable={!loading}
-                error={errors.street && errors.street.message}
-                keyboardType="email-address"
-                placeholder="Rua"
-                source={theme.icons.locale}
-                name="street"
-                onChangeText={onChange}
-                value={value}
-              />
-            )}
-            name="street"
-          />
+          <Content>
+            <Controller
+              control={control}
+              rules={{required: true}}
+              render={({field: {onChange, value}}) => (
+                <Input
+                  control={control}
+                  editable={!loading}
+                  error={errors.street && errors.street.message}
+                  keyboardType="email-address"
+                  placeholder="Rua"
+                  source={theme.icons.locale}
+                  name="street"
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
+              name="street"
+            />
 
-          <Controller
-            control={control}
-            rules={{required: true}}
-            render={({field: {onChange, value}}) => (
-              <Input
-                control={control}
-                editable={!loading}
-                error={errors.city && errors.city.message}
-                keyboardType="email-address"
-                placeholder="Cidade"
-                source={theme.icons.locale}
-                name="city"
-                onChangeText={onChange}
-                value={value}
-              />
-            )}
-            name="city"
-          />
+            <Controller
+              control={control}
+              rules={{required: true}}
+              render={({field: {onChange, value}}) => (
+                <Input
+                  control={control}
+                  editable={!loading}
+                  error={errors.city && errors.city.message}
+                  keyboardType="email-address"
+                  placeholder="Cidade"
+                  source={theme.icons.locale}
+                  name="city"
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
+              name="city"
+            />
 
-          <Controller
-            control={control}
-            rules={{required: true}}
-            render={({field: {onChange, value}}) => (
-              <Input
-                control={control}
-                editable={!loading}
-                error={errors.neighborhood && errors.neighborhood.message}
-                keyboardType="email-address"
-                placeholder="Bairro"
-                source={theme.icons.locale}
-                name="neighborhood"
-                onChangeText={onChange}
-                value={value}
-              />
-            )}
-            name="neighborhood"
-          />
+            <Controller
+              control={control}
+              rules={{required: true}}
+              render={({field: {onChange, value}}) => (
+                <Input
+                  control={control}
+                  editable={!loading}
+                  error={errors.neighborhood && errors.neighborhood.message}
+                  keyboardType="email-address"
+                  placeholder="Bairro"
+                  source={theme.icons.locale}
+                  name="neighborhood"
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
+              name="neighborhood"
+            />
+          </Content>
 
           <RowView>
             <StateWrapper>
