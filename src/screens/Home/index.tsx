@@ -1,146 +1,162 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
-import {Text, View, Button, FlatList, StatusBar} from 'react-native';
-import {useFetch} from '../../global/services/get';
-import {useDelete} from '../../global/services/delete';
-import {usePut} from '../../global/services/put';
-
-import {Container, Content, Header} from './styles';
+import React, {useCallback, useState} from 'react';
+import {ActivityIndicator, StatusBar, View} from 'react-native';
+import {useTheme} from 'styled-components';
+import {Input} from '../../components/Input';
 import {useAuth} from '../../global/Context';
+import {useFetch} from '../../global/services/get';
 
-interface Data {
-  name: string;
-  email: string;
-  gender: string;
-  status: string;
-}
+import {Restaurants} from '../../components/Restaurants';
+import {Category} from '../../components/CategoryButton';
 
-interface CreateUserPut {
-  email: string;
-  gender: string;
-  name: string;
-  status: string;
-}
+import {
+  Container,
+  Content,
+  Header,
+  BannerWrapper,
+  Banner,
+  TitleWrapper,
+  Title,
+  CategorySelect,
+  RestaurantListWrapper,
+  RestaurantList,
+} from './styles';
+import {useFocusEffect} from '@react-navigation/native';
 
-interface UserDataPut {
-  email: string;
-  gender: string;
+interface ListRestaurantProps {
+  id: number;
   name: string;
-  status: string;
+  photo: string;
 }
-interface UserDataDelete {
-  email: string;
-  gender: string;
-  name: string;
-  status: string;
+interface ListRestaurantResponse {
+  content: ListRestaurantProps[];
+  number: number;
+  totalPages: number;
 }
 
 export function Home() {
-  const {data, loading} = useFetch<Data[]>('/public/v2/users');
+  const theme = useTheme();
 
   const {token} = useAuth();
 
-  const {
-    data: ModifyUsers,
-    loading: isloadingPut,
-    handlerPut,
-  } = usePut<CreateUserPut, UserDataPut>(
-    '/public/v2/users/8552',
-    {
-      email: 'diogenes@develcode611.com',
-      gender: 'male',
-      name: 'joao',
-      status: 'active',
-    },
+  const [page, setPage] = useState(0);
+
+  const {data, loading, fetchData} = useFetch<ListRestaurantResponse>(
+    `/restaurant?page=${page}&quantity=10`,
     {
       headers: {
-        'Content-type': 'application/json',
-        Authorization:
-          'Bearer a4e3743577c2a9f43ef23ca81f710292e0158b333e74723043f685454876fda1',
+        Authorization: `Bearer ${token}`,
       },
     },
   );
 
-  const {
-    data: DeleteData,
-    loading: isLoadingDelete,
-    handlerDelete,
-  } = useDelete<UserDataDelete>('public/v2/users/8552', {
-    headers: {
-      'Content-type': 'application/json',
-      Authorization:
-        'Bearer a4e3743577c2a9f43ef23ca81f710292e0158b333e74723043f685454876fda1',
-    },
-  });
+  const [restaurants, setRestaurants] = useState([]);
+
+  function onSuccess(response: any) {
+    setRestaurants([...restaurants, ...response.content] as never);
+  }
+
+  async function loadRestaurants() {
+    await fetchData(onSuccess);
+    setPage(1);
+  }
+
+  async function handleLoadOnEnd() {
+    if (data.number < data.totalPages - 1) {
+      await fetchData(onSuccess);
+      setPage(page + 1);
+    }
+  }
+
+  function handleOnEndReached() {
+    handleLoadOnEnd();
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+      setRestaurants([]);
+      loadRestaurants();
+    }, []),
+  );
 
   return (
-    <Container>
-      <StatusBar
-        barStyle={'light-content'}
-        translucent
-        backgroundColor="transparent"
-      />
+    <>
+      <Container>
+        <RestaurantList
+          data={restaurants}
+          keyExtractor={(item: any) => item.id}
+          numColumns={2}
+          ListHeaderComponent={() => (
+            <>
+              <StatusBar
+                barStyle={'light-content'}
+                translucent
+                backgroundColor="#C20C18"
+              />
+              <Header />
 
-      <Header />
+              <BannerWrapper>
+                <Banner source={theme.images.banner} />
+                <Banner source={theme.images.banner} />
+              </BannerWrapper>
 
-      <Content>
-        <Text>API's</Text>
-        {loading ? (
-          <Text>Carregando...</Text>
-        ) : (
-          <View>
-            <FlatList
-              data={data}
-              renderItem={({item}) => (
-                <>
-                  <Text>Email: {item.email}</Text>
-                  <Text>Gender: {item.gender}</Text>
-                  <Text>Name: {item.name}</Text>
-                  <Text>Status: {item.status}</Text>
-                </>
-              )}
-              style={{width: '100%', borderWidth: 2, marginTop: 150}}
-            />
+              <TitleWrapper>
+                <Title>Categoria</Title>
+              </TitleWrapper>
 
-            {/* <View>
-                  <Text>
-                      {data[0].email}{'\n'}
-                      {data.name}{'\n'}
-                      {data.gender}{'\n'}
-                      {data.status}{'\n'}
-                  </Text>
-                </View> */}
+              <CategorySelect
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}>
+                <Category title="Pizza" />
+                <Category title="Churrasco" />
+                <Category title="Almoço" />
+                <Category title="Massas" />
+                <Category title="Coreana" />
+                <Category title="Japonesa" />
+                <Category title="Tailandesa" />
+                <Category title="Chinesa" />
+              </CategorySelect>
 
-            <Button title="Delete" onPress={() => handlerDelete()} />
-
-            <Button title="Put" onPress={() => handlerPut()} />
-          </View>
-        )}
-
-        <Text>{token}</Text>
-
-        {isloadingPut ? (
-          <Text>Carregando Put</Text>
-        ) : (
-          <View>
-            <Text>{ModifyUsers?.email}</Text>
-            <Text>{ModifyUsers?.gender}</Text>
-            <Text>{ModifyUsers?.name}</Text>
-            <Text>{ModifyUsers?.status}</Text>
-          </View>
-        )}
-
-        {isLoadingDelete ? (
-          <Text>Carregando Delete</Text>
-        ) : (
-          <View>
-            <Text>{DeleteData?.email}</Text>
-            <Text>{DeleteData?.gender}</Text>
-            <Text>{DeleteData?.name}</Text>
-            <Text>{DeleteData?.status}</Text>
-          </View>
-        )}
-      </Content>
-    </Container>
+              <Content>
+                <Input
+                  source={theme.icons.search}
+                  placeholder="Buscar restaurantes"
+                  onChangeText={() => {}}
+                />
+              </Content>
+            </>
+          )}
+          ListFooterComponent={() => (
+            <View style={{height: 50, justifyContent: 'center'}}>
+              {loading && <ActivityIndicator />}
+            </View>
+          )}
+          renderItem={({item}: any) => (
+            <RestaurantListWrapper>
+              <Restaurants
+                name={item.name}
+                source={
+                  item.photo
+                    ? {
+                        uri: `${item.photo}`,
+                      }
+                    : theme.images.noImage
+                }
+              />
+            </RestaurantListWrapper>
+          )}
+          style={{
+            width: '100%',
+            marginTop: 10,
+            margin: 20,
+          }}
+          onEndReached={() => {
+            handleOnEndReached();
+          }}
+        />
+      </Container>
+    </>
   );
 }

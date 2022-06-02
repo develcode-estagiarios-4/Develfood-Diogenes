@@ -1,8 +1,8 @@
 import axios, {AxiosRequestConfig} from 'axios';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 
 const api = axios.create({
-  baseURL: 'https://gorest.co.in',
+  baseURL: 'https://develfood-3.herokuapp.com',
 });
 
 export function useFetch<T = unknown>(
@@ -13,19 +13,17 @@ export function useFetch<T = unknown>(
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await api.get(url, options);
-        setData(response.data);
-      } catch (erro) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
+  async function fetchData(onSuccess?: (response: T) => void) {
+    try {
+      setLoading(true);
+      const response = await api.get(url, options);
+      setData(response.data);
+      response.data && onSuccess && onSuccess(response.data);
+    } catch (erro) {
+      setError(error);
+    } finally {
+      setLoading(false);
     }
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  return {data, loading, error};
+  }
+  return {data, loading, error, fetchData, setData};
 }

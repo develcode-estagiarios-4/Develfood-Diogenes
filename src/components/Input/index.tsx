@@ -14,16 +14,16 @@ import {
 import {KeyboardType, TextInputProps} from 'react-native';
 
 interface Props extends TextInputProps {
-  name: string;
-  control: Control;
-  error: string;
-  editable: boolean;
+  name?: string;
+  control?: Control;
+  error?: string;
+  editable?: boolean;
   source: any;
   placeholder: string;
-  keyboardType: KeyboardType;
+  keyboardType?: KeyboardType;
   sourcePassword?: any;
   onChangeText: (value: string) => void;
-  value: string;
+  value?: string;
   maxLength?: number;
 }
 
