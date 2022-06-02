@@ -69,10 +69,6 @@ export function Home() {
     }
   }
 
-  function handleOnEndReached() {
-    handleLoadOnEnd();
-  }
-
   useFocusEffect(
     useCallback(() => {
       fetchData();
@@ -154,7 +150,7 @@ export function Home() {
             margin: 20,
           }}
           onEndReached={() => {
-            handleOnEndReached();
+            handleLoadOnEnd();
           }}
         />
       </Container>
