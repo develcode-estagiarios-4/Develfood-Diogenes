@@ -1,8 +1,12 @@
+/* eslint-disable no-lone-blocks */
 import React from 'react';
-import {StatusBar} from 'react-native';
+import {StatusBar, Text} from 'react-native';
+import {useAuth} from '../../global/Context';
 import {Container, Header} from './styles';
 
 export function Historic() {
+  const {token} = useAuth();
+
   return (
     <Container>
       <StatusBar
@@ -11,11 +15,11 @@ export function Historic() {
         backgroundColor="transparent"
       />
       <Header />
+
+      <Text>{token}</Text>
     </Container>
   );
 }
-
-// const {token} = useAuth();
 
 // const {
 //   data: ModifyUsers,
