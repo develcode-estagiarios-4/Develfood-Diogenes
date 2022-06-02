@@ -52,13 +52,15 @@ export const RowView = styled.View`
 `;
 
 export const NicknameWrapper = styled.View`
-  width: 54%;
+  width: 56%;
   margin-right: 2%;
 `;
 
 export const CepWrapper = styled.View`
   width: 42%;
 `;
+
+export const Content = styled.View``;
 
 export const StateWrapper = styled.View`
   width: 48%;
