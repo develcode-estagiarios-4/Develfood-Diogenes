@@ -15,11 +15,11 @@ export const Container = styled.View`
 `;
 
 export const LoginIcon = styled.Image`
-  margin-left: ${RFValue(18)}px;
+  margin-left: ${RFValue(1)}px;
 `;
 
 export const TextMask = styled(TextInputMask)`
-  margin-left: ${RFValue(14)}px;
+  margin-left: ${RFValue(7)}px;
   width: ${RFValue(250)}px;
 `;
 

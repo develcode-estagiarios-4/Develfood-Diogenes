@@ -123,6 +123,7 @@ export function Home() {
                 <Input
                   source={theme.icons.search}
                   placeholder="Buscar restaurantes"
+                  keyboardType="email-address"
                   onChangeText={() => {}}
                 />
               </Content>
