@@ -127,7 +127,9 @@ export function Home() {
           )}
           ListFooterComponent={() => (
             <View style={{height: 50, justifyContent: 'center'}}>
-              {loading && <ActivityIndicator />}
+              {loading && (
+                <ActivityIndicator color={theme.colors.background_red} />
+              )}
             </View>
           )}
           renderItem={({item}: any) => (
