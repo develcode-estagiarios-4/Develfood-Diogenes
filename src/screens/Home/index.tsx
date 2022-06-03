@@ -89,7 +89,7 @@ export function Home() {
               <StatusBar
                 barStyle={'light-content'}
                 translucent
-                backgroundColor="#C20C18"
+                backgroundColor={theme.colors.background_red}
               />
               <Header />
 
