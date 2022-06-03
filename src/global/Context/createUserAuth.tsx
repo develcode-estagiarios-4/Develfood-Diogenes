@@ -36,7 +36,9 @@ interface CreateUserPost {
     lastName?: string;
     cpf?: string;
     phone?: string;
-    photo?: string;
+    photo?: {
+      code: string;
+    };
     address?: CreateUserAddress[];
   };
 }
