@@ -59,11 +59,8 @@ export const CategorySelect = styled.ScrollView`
   margin-top: ${RFValue(285)}px;
 `;
 
-export const RestaurantListWrapper = styled.View`
-  flex-grow: 1;
-  margin: ${RFValue(12)}px;
-`;
+export const RestaurantListWrapper = styled.View``;
 
 export const RestaurantList = styled.FlatList`
-  margin: 0 ${RFValue(20)}px;
+  flex: 1;
 `;

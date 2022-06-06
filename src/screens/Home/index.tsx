@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useCallback, useState} from 'react';
-import {ActivityIndicator, StatusBar, View} from 'react-native';
+import {ActivityIndicator, Dimensions, StatusBar, View} from 'react-native';
 import {useTheme} from 'styled-components';
 import {Input} from '../../components/Input';
 import {useAuth} from '../../global/Context';
@@ -23,6 +23,7 @@ import {
   RestaurantList,
 } from './styles';
 import {useFocusEffect} from '@react-navigation/native';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 interface ListRestaurantProps {
   id: number;
@@ -34,6 +35,9 @@ interface ListRestaurantResponse {
   number: number;
   totalPages: number;
 }
+
+const CardMargins =
+  (Dimensions.get('screen').width - RFValue(312)) / RFValue(3.5);
 
 export function Home() {
   const theme = useTheme();
@@ -84,6 +88,14 @@ export function Home() {
           data={restaurants}
           keyExtractor={(item: any) => item.id}
           numColumns={2}
+          columnWrapperStyle={{
+            justifyContent: 'space-between',
+            paddingHorizontal: RFValue(CardMargins),
+            paddingBottom: 10,
+          }}
+          contentContainerStyle={{
+            width: '100%',
+          }}
           ListHeaderComponent={() => (
             <>
               <StatusBar
