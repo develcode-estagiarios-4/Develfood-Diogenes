@@ -46,8 +46,10 @@ export function Home() {
 
   const [page, setPage] = useState(0);
 
+  const [isTexted, setIsTexted] = useState('');
+
   const {data, loading, fetchData} = useFetch<ListRestaurantResponse>(
-    `/restaurant?page=${page}&quantity=10`,
+    `/restaurant/filter?name=${isTexted}&page=${page}&quantity=10`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -72,6 +74,13 @@ export function Home() {
       setPage(page + 1);
     }
   }
+
+  function handleSearch(value: string) {
+    setIsTexted(value);
+  }
+  setTimeout(() => {
+    handleSearch('');
+  }, 1.5);
 
   useFocusEffect(
     useCallback(() => {
@@ -132,7 +141,7 @@ export function Home() {
                   source={theme.icons.search}
                   placeholder="Buscar restaurantes"
                   keyboardType="email-address"
-                  onChangeText={() => {}}
+                  onChangeText={value => handleSearch(value)}
                 />
               </Content>
             </>
