@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useCallback, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, Dimensions, StatusBar, View} from 'react-native';
 import {useTheme} from 'styled-components';
 import {Input} from '../../components/Input';
 import {useAuth} from '../../global/Context';
 import {useFetch} from '../../global/services/get';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {useDebouncedCallback} from 'use-debounce';
 
 import {Restaurants} from '../../components/Restaurants';
 import {Category} from '../../components/CategoryButton';
@@ -22,8 +24,6 @@ import {
   RestaurantListWrapper,
   RestaurantList,
 } from './styles';
-import {useFocusEffect} from '@react-navigation/native';
-import {RFValue} from 'react-native-responsive-fontsize';
 
 interface ListRestaurantProps {
   id: number;
@@ -44,12 +44,13 @@ export function Home() {
 
   const {token} = useAuth();
 
-  const [page, setPage] = useState(0);
-
-  const [isTexted, setIsTexted] = useState('');
+  const [isFiltred, setIsFiltred] = useState({
+    text: '',
+    page: 0,
+  });
 
   const {data, loading, fetchData} = useFetch<ListRestaurantResponse>(
-    `/restaurant/filter?name=${isTexted}&page=${page}&quantity=10`,
+    `/restaurant/filter?name=${isFiltred.text}&page=${isFiltred.page}&quantity=10`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -65,30 +66,31 @@ export function Home() {
 
   async function loadRestaurants() {
     await fetchData(onSuccess);
-    setPage(1);
   }
 
   async function handleLoadOnEnd() {
-    if (data.number < data.totalPages - 1) {
-      await fetchData(onSuccess);
-      setPage(page + 1);
+    if (data.totalPages !== isFiltred.page) {
+      setIsFiltred({...isFiltred, page: isFiltred.page + 1});
     }
   }
 
   function handleSearch(value: string) {
-    setIsTexted(value);
-  }
-  setTimeout(() => {
-    handleSearch('');
-  }, 1.5);
-
-  useFocusEffect(
-    useCallback(() => {
-      fetchData();
+    if (value.length > 1) {
       setRestaurants([]);
-      loadRestaurants();
-    }, []),
-  );
+      setIsFiltred({text: value, page: 0});
+    } else if (value.length <= 1) {
+      setRestaurants([]);
+      setIsFiltred({text: '', page: 0});
+    }
+  }
+
+  const debounced = useDebouncedCallback(value => {
+    handleSearch(value);
+  }, 1500);
+
+  useEffect(() => {
+    loadRestaurants();
+  }, [isFiltred]);
 
   return (
     <>
@@ -105,7 +107,7 @@ export function Home() {
           contentContainerStyle={{
             width: '100%',
           }}
-          ListHeaderComponent={() => (
+          ListHeaderComponent={
             <>
               <StatusBar
                 barStyle={'light-content'}
@@ -141,11 +143,12 @@ export function Home() {
                   source={theme.icons.search}
                   placeholder="Buscar restaurantes"
                   keyboardType="email-address"
-                  onChangeText={value => handleSearch(value)}
+                  onChangeText={value => debounced(value)}
+                  onEndEditing={value => handleSearch(value.nativeEvent.text)}
                 />
               </Content>
             </>
-          )}
+          }
           ListFooterComponent={() => (
             <View style={{height: 50, justifyContent: 'center'}}>
               {loading && (

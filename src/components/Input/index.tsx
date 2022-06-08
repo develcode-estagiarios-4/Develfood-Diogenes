@@ -25,6 +25,7 @@ interface Props extends TextInputProps {
   onChangeText: (value: string) => void;
   value?: string;
   maxLength?: number;
+  onEndEditing?: (value: any) => void;
 }
 
 export function Input({
@@ -37,6 +38,7 @@ export function Input({
   onChangeText,
   value,
   maxLength,
+  onEndEditing,
 }: Props) {
   const [isClicked, setIsClicked] = useState(false);
 
@@ -58,6 +60,7 @@ export function Input({
           value={value}
           editable={editable}
           maxLength={maxLength}
+          onEndEditing={onEndEditing}
         />
 
         {sourcePassword && (
