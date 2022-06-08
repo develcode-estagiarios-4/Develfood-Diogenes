@@ -78,7 +78,7 @@ export function Home() {
     if (value.length > 1) {
       setRestaurants([]);
       setIsFiltred({text: value, page: 0});
-    } else if (value.length <= 1) {
+    } else {
       setRestaurants([]);
       setIsFiltred({text: '', page: 0});
     }
@@ -144,7 +144,6 @@ export function Home() {
                   placeholder="Buscar restaurantes"
                   keyboardType="email-address"
                   onChangeText={value => debounced(value)}
-                  onEndEditing={value => handleSearch(value.nativeEvent.text)}
                 />
               </Content>
             </>
