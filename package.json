@@ -32,6 +32,7 @@
     "react-native-splash-screen": "^3.3.0",
     "react-native-vector-icons": "^9.1.0",
     "styled-components": "^5.3.5",
+    "use-debounce": "^8.0.1",
     "validations-br": "^1.2.0",
     "yup": "^0.32.11"
   },
