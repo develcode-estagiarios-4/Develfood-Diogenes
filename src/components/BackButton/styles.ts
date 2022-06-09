@@ -3,9 +3,9 @@ import styled from 'styled-components/native';
 
 export const ButtonIcon = styled.TouchableOpacity`
   background-color: white;
-  width: ${RFValue(50)}px;
+  width: ${RFValue(20)}px;
   align-items: center;
-  margin-left: ${RFValue(23)}px;
+  margin-left: ${RFValue(20)}px;
 `;
 
 export const ArrowIcon = styled.Image`

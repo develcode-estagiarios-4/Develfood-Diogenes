@@ -8,6 +8,7 @@ import {useAuth} from '../../global/Context';
 import {useFetch} from '../../global/services/get';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {useDebouncedCallback} from 'use-debounce';
+import {useNavigation} from '@react-navigation/native';
 
 import {Restaurants} from '../../components/Restaurants';
 import {Category} from '../../components/CategoryButton';
@@ -48,6 +49,15 @@ export function Home() {
     text: '',
     page: 0,
   });
+
+  const navigation = useNavigation();
+
+  function handleRestaurantProfile(id: number, name: string, photo: string) {
+    navigation.navigate(
+      'RestaurantProfile' as never,
+      {id, name, photo} as never,
+    );
+  }
 
   const {data, loading, fetchData} = useFetch<ListRestaurantResponse>(
     `/restaurant/filter?name=${isFiltred.text}&page=${isFiltred.page}&quantity=10`,
@@ -158,6 +168,9 @@ export function Home() {
           renderItem={({item}: any) => (
             <RestaurantListWrapper>
               <Restaurants
+                onPress={() =>
+                  handleRestaurantProfile(item.id, item.name, item.photo)
+                }
                 name={item.name}
                 source={
                   item.photo

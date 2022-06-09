@@ -1,10 +1,10 @@
 import React from 'react';
 import {useAuth} from '../Context';
 import {AuthRoutes} from './authroutes.routes';
-import {Routes} from './routes.routes';
+import {RestaurantsRoutes} from './restaurants.routes';
 
 export function AppRoutes() {
   const {token} = useAuth();
 
-  return token ? <Routes /> : <AuthRoutes />;
+  return token ? <RestaurantsRoutes /> : <AuthRoutes />;
 }
