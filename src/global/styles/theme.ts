@@ -62,5 +62,6 @@ export default {
     banner: require('../assets/Images/banner.png'),
     noImage: require('../assets/Images/NoImage.png'),
     pizzaImage: require('../assets/Images/pizza.png'),
+    camaraoImage: require('../assets/Images/camarao.png'),
   },
 };

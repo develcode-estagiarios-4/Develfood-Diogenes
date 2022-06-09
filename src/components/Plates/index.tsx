@@ -14,13 +14,12 @@ import {
 } from './styles';
 
 interface ListPlatesProps {
-  name: string;
-  plateInfo: string;
+  description: string;
   price: string;
   source: any;
 }
 
-export function Plates({name, plateInfo, price, source}: ListPlatesProps) {
+export function Plates({description, price, source}: ListPlatesProps) {
   return (
     <Container>
       <WrapperImage>
@@ -28,11 +27,14 @@ export function Plates({name, plateInfo, price, source}: ListPlatesProps) {
       </WrapperImage>
 
       <WrapperPlateInfo>
-        <PlateTitle>{name}</PlateTitle>
-        <PlateInfo>{plateInfo}</PlateInfo>
+        <PlateTitle>{description}</PlateTitle>
+        <PlateInfo>
+          Um prato de camarão com fritas que é uma ótima opção para pedir quando
+          se está com a família
+        </PlateInfo>
 
         <WrapperAdvancedInfo>
-          <Price>{price}</Price>
+          <Price>R${price}</Price>
           <AddButton>
             <TextButton>Adicionar</TextButton>
           </AddButton>

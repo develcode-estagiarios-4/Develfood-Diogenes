@@ -1,9 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
 import {useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, StatusBar, View} from 'react-native';
 import {useTheme} from 'styled-components';
+import {useDebouncedCallback} from 'use-debounce';
 import {BackButton} from '../../components/BackButton';
+import {Input} from '../../components/Input';
 import {Plates} from '../../components/Plates';
 import {useAuth} from '../../global/Context';
 import {useFetch} from '../../global/services/get';
@@ -45,16 +47,44 @@ export function RestaurantProfile({route}: any) {
     navigation.navigate('Home' as never);
   }
 
-  console.log(id, name);
+  const [plate, setPlate] = useState([]);
 
-  const {data, loading, fetchData} = useFetch<any>(
-    `/foodType/restaurant/${id}`,
+  const [plateName, setPlateName] = useState('');
+
+  const {loading, fetchData} = useFetch<any[]>(
+    `/plate/restaurant/${id}?page=0&quantity=10`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     },
   );
+
+  function onSuccess(response: any) {
+    setPlate([...plate, ...response.content] as never);
+  }
+
+  async function loadPlates() {
+    await fetchData(onSuccess);
+  }
+
+  function handleSearch(value: string) {
+    if (value.length > 1) {
+      setPlate([]);
+      setPlateName(value);
+    } else {
+      setPlate([]);
+      setPlateName('');
+    }
+  }
+
+  const debounced = useDebouncedCallback(value => {
+    handleSearch(value);
+  }, 1500);
+
+  useEffect(() => {
+    loadPlates();
+  }, []);
 
   return (
     <Container>
@@ -86,7 +116,7 @@ export function RestaurantProfile({route}: any) {
         </WrapperRestaurantTypes>
 
         <WrapperPhoto>
-          <RestaurantPhoto source={theme.images.noImage} />
+          <RestaurantPhoto source={theme.images.camaraoImage} />
         </WrapperPhoto>
       </WrapperRestaurantInfo>
 
@@ -94,12 +124,20 @@ export function RestaurantProfile({route}: any) {
         <LineBetween />
 
         <PlatesList
-          data={data}
+          data={plate}
           keyExtractor={(item: any) => item.id}
+          showsVerticalScrollIndicator={false}
           ListHeaderComponent={
             <>
               <Wrapper>
                 <Title>Pratos</Title>
+
+                <Input
+                  source={theme.icons.search}
+                  placeholder={`Buscar em ${name}`}
+                  keyboardType="email-address"
+                  onChangeText={value => debounced(value)}
+                />
               </Wrapper>
             </>
           }
@@ -112,15 +150,14 @@ export function RestaurantProfile({route}: any) {
           )}
           renderItem={({item}: any) => (
             <Plates
-              name={item.name}
-              plateInfo={item.plateInfo}
+              description={item.description}
               price={item.price}
               source={
                 item.photo
                   ? {
                       uri: `${item.photo}`,
                     }
-                  : theme.images.noImage
+                  : theme.images.camaraoImage
               }
             />
           )}
