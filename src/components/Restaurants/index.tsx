@@ -29,7 +29,7 @@ export function Restaurants({name, source, onPress}: ListRestaurantProps) {
   const [isPressed, setIsPressed] = useState(false);
 
   return (
-    <Wrapper onPress={onPress}>
+    <Wrapper onPress={onPress} activeOpacity={0.2}>
       <Container>
         <RestaurantImage source={source} />
 
