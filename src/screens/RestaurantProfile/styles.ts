@@ -36,7 +36,7 @@ export const WrapperRestaurantInfo = styled.View`
   height: ${RFValue(99)}px;
   top: ${RFValue(22)}px;
   padding-left: ${RFValue(21)}px;
-  padding-top: ${RFValue(26)}px;
+  padding-top: ${RFValue(13)}px;
   flex-direction: row;
   border-bottom: ${RFValue(10)}px;
 `;
@@ -67,23 +67,22 @@ export const RestaurantPhoto = styled.Image`
 `;
 
 export const Content = styled.View`
-  flex: 1;
-  margin: 0 ${RFValue(20)}px;
-  margin-top: ${RFValue(30)}px;
+  padding: 0 ${RFValue(20)}px;
 `;
 
 export const LineBetween = styled.View`
-  width: 100%;
+  width: ${RFValue(321)}px;
   height: ${RFValue(2)}px;
   background-color: #f0f0f5;
+  margin-left: ${RFValue(20)}px;
   margin-bottom: ${RFValue(18)}px;
 `;
 
-export const PlatesList = styled.FlatList`
-  flex: 1;
+export const PlatesWrapper = styled.View`
+  padding-left: ${RFValue(10)}px;
 `;
 
-export const Wrapper = styled.View``;
+export const PlatesList = styled.FlatList``;
 
 export const Title = styled.Text`
   font-size: ${RFValue(18)}px;

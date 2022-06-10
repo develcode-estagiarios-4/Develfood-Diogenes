@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, StatusBar, View} from 'react-native';
+import {ActivityIndicator, Image, StatusBar, Text, View} from 'react-native';
 import {useTheme} from 'styled-components';
 import {useDebouncedCallback} from 'use-debounce';
 import {BackButton} from '../../components/BackButton';
@@ -22,11 +23,11 @@ import {
   TypeFood,
   WrapperPhoto,
   RestaurantPhoto,
-  Content,
   LineBetween,
+  Content,
   PlatesList,
-  Wrapper,
   Title,
+  PlatesWrapper,
 } from './styles';
 
 {
@@ -120,35 +121,35 @@ export function RestaurantProfile({route}: any) {
         </WrapperPhoto>
       </WrapperRestaurantInfo>
 
-      <Content>
-        <LineBetween />
+      <LineBetween />
 
-        <PlatesList
-          data={plate}
-          keyExtractor={(item: any) => item.id}
-          showsVerticalScrollIndicator={false}
-          ListHeaderComponent={
-            <>
-              <Wrapper>
-                <Title>Pratos</Title>
+      <PlatesList
+        data={plate}
+        keyExtractor={(item: any) => item.id}
+        showsVerticalScrollIndicator={false}
+        ListHeaderComponent={
+          <>
+            <Content>
+              <Title>Pratos</Title>
 
-                <Input
-                  source={theme.icons.search}
-                  placeholder={`Buscar em ${name}`}
-                  keyboardType="email-address"
-                  onChangeText={value => debounced(value)}
-                />
-              </Wrapper>
-            </>
-          }
-          ListFooterComponent={() => (
-            <View style={{height: 50, justifyContent: 'center'}}>
-              {loading && (
-                <ActivityIndicator color={theme.colors.background_red} />
-              )}
-            </View>
-          )}
-          renderItem={({item}: any) => (
+              <Input
+                source={theme.icons.search}
+                placeholder={`Buscar em ${name}`}
+                keyboardType="email-address"
+                onChangeText={value => debounced(value)}
+              />
+            </Content>
+          </>
+        }
+        ListFooterComponent={() => (
+          <View style={{height: 50, justifyContent: 'center'}}>
+            {loading && (
+              <ActivityIndicator color={theme.colors.background_red} />
+            )}
+          </View>
+        )}
+        renderItem={({item}: any) => (
+          <PlatesWrapper>
             <Plates
               description={item.description}
               price={item.price}
@@ -160,9 +161,29 @@ export function RestaurantProfile({route}: any) {
                   : theme.images.camaraoImage
               }
             />
-          )}
-        />
-      </Content>
+          </PlatesWrapper>
+        )}
+        ListEmptyComponent={
+          !loading ? (
+            <View
+              style={{
+                width: '100%',
+                height: '100%',
+                alignContent: 'center',
+              }}>
+              <Image source={theme.images.notFound} />
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 17,
+                  color: 'black',
+                }}>
+                Nenhum prato encontrado
+              </Text>
+            </View>
+          ) : null
+        }
+      />
     </Container>
   );
 }

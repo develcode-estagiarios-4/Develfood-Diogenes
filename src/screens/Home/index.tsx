@@ -1,7 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, Dimensions, StatusBar, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Dimensions,
+  Image,
+  StatusBar,
+  Text,
+  View,
+} from 'react-native';
 import {useTheme} from 'styled-components';
 import {Input} from '../../components/Input';
 import {useAuth} from '../../global/Context';
@@ -190,6 +197,26 @@ export function Home() {
           onEndReached={() => {
             handleLoadOnEnd();
           }}
+          ListEmptyComponent={
+            !loading ? (
+              <View
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  alignContent: 'center',
+                }}>
+                <Image source={theme.images.notFound} />
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    fontSize: 17,
+                    color: 'black',
+                  }}>
+                  Nenhum restaurante encontrado
+                </Text>
+              </View>
+            ) : null
+          }
         />
       </Container>
     </>
