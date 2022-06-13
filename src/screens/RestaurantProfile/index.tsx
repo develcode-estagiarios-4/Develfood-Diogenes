@@ -2,11 +2,12 @@
 /* eslint-disable react-native/no-inline-styles */
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, Image, StatusBar, Text, View} from 'react-native';
+import {ActivityIndicator, StatusBar, View} from 'react-native';
 import {useTheme} from 'styled-components';
 import {useDebouncedCallback} from 'use-debounce';
 import {BackButton} from '../../components/BackButton';
 import {Input} from '../../components/Input';
+import {ListEmptyComponent} from '../../components/ListEmptyComponent';
 import {Plates} from '../../components/Plates';
 import {useAuth} from '../../global/Context';
 import {useFetch} from '../../global/services/get';
@@ -50,10 +51,13 @@ export function RestaurantProfile({route}: any) {
 
   const [plate, setPlate] = useState([]);
 
-  const [plateName, setPlateName] = useState('');
+  const [isFiltred, setIsFiltred] = useState({
+    text: '',
+    page: 0,
+  });
 
   const {loading, fetchData} = useFetch<any[]>(
-    `/plate/restaurant/${id}?page=0&quantity=10`,
+    `/plate/restaurant/${id}?page=${isFiltred.page}&quantity=10`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -69,13 +73,17 @@ export function RestaurantProfile({route}: any) {
     await fetchData(onSuccess);
   }
 
+  async function handleLoadOnEnd() {
+    setIsFiltred({...isFiltred, page: isFiltred.page + 1});
+  }
+
   function handleSearch(value: string) {
     if (value.length > 1) {
       setPlate([]);
-      setPlateName(value);
+      setIsFiltred({text: value, page: 0});
     } else {
       setPlate([]);
-      setPlateName('');
+      setIsFiltred({text: '', page: 0});
     }
   }
 
@@ -85,7 +93,7 @@ export function RestaurantProfile({route}: any) {
 
   useEffect(() => {
     loadPlates();
-  }, []);
+  }, [isFiltred]);
 
   return (
     <Container>
@@ -117,7 +125,7 @@ export function RestaurantProfile({route}: any) {
         </WrapperRestaurantTypes>
 
         <WrapperPhoto>
-          <RestaurantPhoto source={theme.images.camaraoImage} />
+          <RestaurantPhoto source={theme.images.noImage} />
         </WrapperPhoto>
       </WrapperRestaurantInfo>
 
@@ -158,29 +166,17 @@ export function RestaurantProfile({route}: any) {
                   ? {
                       uri: `${item.photo}`,
                     }
-                  : theme.images.camaraoImage
+                  : theme.images.noImage
               }
             />
           </PlatesWrapper>
         )}
+        onEndReached={() => {
+          handleLoadOnEnd();
+        }}
         ListEmptyComponent={
           !loading ? (
-            <View
-              style={{
-                width: '100%',
-                height: '100%',
-                alignContent: 'center',
-              }}>
-              <Image source={theme.images.notFound} />
-              <Text
-                style={{
-                  textAlign: 'center',
-                  fontSize: 17,
-                  color: 'black',
-                }}>
-                Nenhum prato encontrado
-              </Text>
-            </View>
+            <ListEmptyComponent title="Nenhum prato encontrado" />
           ) : null
         }
       />
