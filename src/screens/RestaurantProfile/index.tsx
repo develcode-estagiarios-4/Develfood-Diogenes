@@ -43,7 +43,7 @@ interface Plate {
   photo_url: string;
 }
 
-interface ListPLateResponse {
+interface ListPlateResponse {
   content: Plate[];
 }
 
@@ -68,7 +68,7 @@ export function RestaurantProfile({route}: any) {
     page: 0,
   });
 
-  const {loading, fetchData} = useFetch<ListPLateResponse>(
+  const {loading, fetchData} = useFetch<ListPlateResponse>(
     `/plate/restaurant/${id}?page=${isFiltred.page}&quantity=10`,
     {
       headers: {
