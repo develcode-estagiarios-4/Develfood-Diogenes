@@ -137,7 +137,7 @@ export function RestaurantProfile({route}: any) {
         </WrapperRestaurantTypes>
 
         <WrapperPhoto>
-          <RestaurantPhoto source={theme.images.noImage} />
+          <RestaurantPhoto source={photo ? photo : theme.images.noImage} />
         </WrapperPhoto>
       </WrapperRestaurantInfo>
 
