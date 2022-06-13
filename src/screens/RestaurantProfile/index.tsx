@@ -31,8 +31,20 @@ import {
   PlatesWrapper,
 } from './styles';
 
-{
-  /* <ListPLateResponse> */
+interface Plate {
+  id: number;
+  description: string;
+  price: number;
+  foodType: {
+    id: number;
+    name: string;
+  };
+  retaurantName: string;
+  photo_url: string;
+}
+
+interface ListPLateResponse {
+  content: Plate[];
 }
 
 export function RestaurantProfile({route}: any) {
@@ -56,7 +68,7 @@ export function RestaurantProfile({route}: any) {
     page: 0,
   });
 
-  const {loading, fetchData} = useFetch<any[]>(
+  const {loading, fetchData} = useFetch<ListPLateResponse>(
     `/plate/restaurant/${id}?page=${isFiltred.page}&quantity=10`,
     {
       headers: {
