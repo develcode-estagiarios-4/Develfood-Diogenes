@@ -31,7 +31,9 @@ interface ListRestaurantProps {
   food_types: ListFoodType[];
   id: number;
   name: string;
-  photo: string;
+  photo_url: {
+    code: string;
+  };
 }
 interface ListRestaurantResponse {
   content: ListRestaurantProps[];
@@ -186,9 +188,9 @@ export function Home() {
                 name={item.name}
                 category={item.food_types[0]?.name}
                 source={
-                  item.photo
+                  item.photo_url.code
                     ? {
-                        uri: `${item.photo}`,
+                        uri: `${item.photo_url.code}`,
                       }
                     : theme.images.noImage
                 }

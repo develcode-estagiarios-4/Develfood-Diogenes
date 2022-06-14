@@ -40,7 +40,9 @@ interface Plate {
     name: string;
   };
   retaurantName: string;
-  photo_url: string;
+  photo_url: {
+    code: string;
+  };
 }
 
 interface ListPlateResponse {
@@ -49,7 +51,7 @@ interface ListPlateResponse {
 
 export function RestaurantProfile({route}: any) {
   const navigation = useNavigation();
-  const {id, name, photo} = route.params;
+  const {id, name, photo_url} = route.params;
 
   const {token} = useAuth();
 
@@ -136,7 +138,9 @@ export function RestaurantProfile({route}: any) {
         </WrapperRestaurantTypes>
 
         <WrapperPhoto>
-          <RestaurantPhoto source={photo ? photo : theme.images.noImage} />
+          <RestaurantPhoto
+            source={photo_url ? photo_url : theme.images.noImage}
+          />
         </WrapperPhoto>
       </WrapperRestaurantInfo>
 
@@ -172,13 +176,7 @@ export function RestaurantProfile({route}: any) {
             <Plates
               description={item.description}
               price={item.price}
-              source={
-                item.photo
-                  ? {
-                      uri: `${item.photo}`,
-                    }
-                  : theme.images.noImage
-              }
+              source={item.photo_url}
             />
           </PlatesWrapper>
         )}

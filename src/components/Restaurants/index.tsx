@@ -1,5 +1,8 @@
-import React, {useState} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useEffect, useState} from 'react';
 import {useTheme} from 'styled-components';
+import {useAuth} from '../../global/Context';
+import {useFetch} from '../../global/services/get';
 import {
   Wrapper,
   Container,
@@ -24,6 +27,11 @@ interface ListRestaurantProps {
   onPress: () => void;
 }
 
+interface Photos {
+  id: number;
+  code: string;
+}
+
 export function Restaurants({
   name,
   category,
@@ -34,10 +42,30 @@ export function Restaurants({
 
   const [isPressed, setIsPressed] = useState(false);
 
+  const {token} = useAuth();
+
+  const [photos, setPhotos] = useState<Photos[]>([]);
+
+  const {data, fetchData} = useFetch<Photos>(`/photo/${source}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  function onSuccess(response: any) {
+    setPhotos([...photos, ...response]);
+  }
+
+  useEffect(() => {
+    fetchData(onSuccess);
+  }, []);
+
   return (
     <Wrapper onPress={onPress} activeOpacity={0.2}>
       <Container>
-        <RestaurantImage source={source} />
+        <RestaurantImage
+          source={data.code ? {uri: `${data.code}`} : theme.images.noImage}
+        />
 
         <FavoriteIconWrapper>
           <IconButton onPress={() => setIsPressed(!isPressed)}>
