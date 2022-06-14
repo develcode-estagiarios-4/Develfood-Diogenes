@@ -63,13 +63,12 @@ export function RestaurantProfile({route}: any) {
 
   const [plate, setPlate] = useState([]);
 
-  const [isFiltred, setIsFiltred] = useState({
-    text: '',
-    page: 0,
-  });
+  const [filter, setFilter] = useState('');
 
-  const {loading, fetchData} = useFetch<ListPlateResponse>(
-    `/plate/restaurant/${id}?page=${isFiltred.page}&quantity=10`,
+  const [isLoading, setIsLoading] = useState(false);
+
+  const {fetchData} = useFetch<ListPlateResponse>(
+    `/plate/search?name=${filter}&restaurantid=${id}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -78,25 +77,25 @@ export function RestaurantProfile({route}: any) {
   );
 
   function onSuccess(response: any) {
-    setPlate([...plate, ...response.content] as never);
+    setPlate([...plate, ...response] as never);
   }
 
   async function loadPlates() {
+    setIsLoading(true);
     await fetchData(onSuccess);
-  }
-
-  async function handleLoadOnEnd() {
-    setIsFiltred({...isFiltred, page: isFiltred.page + 1});
+    setIsLoading(false);
   }
 
   function handleSearch(value: string) {
+    setIsLoading(true);
     if (value.length > 1) {
       setPlate([]);
-      setIsFiltred({text: value, page: 0});
+      setFilter(value);
     } else {
       setPlate([]);
-      setIsFiltred({text: '', page: 0});
+      setFilter('');
     }
+    setIsLoading(false);
   }
 
   const debounced = useDebouncedCallback(value => {
@@ -105,7 +104,7 @@ export function RestaurantProfile({route}: any) {
 
   useEffect(() => {
     loadPlates();
-  }, [isFiltred]);
+  }, [filter]);
 
   return (
     <Container>
@@ -163,7 +162,7 @@ export function RestaurantProfile({route}: any) {
         }
         ListFooterComponent={() => (
           <View style={{height: 50, justifyContent: 'center'}}>
-            {loading && (
+            {isLoading && (
               <ActivityIndicator color={theme.colors.background_red} />
             )}
           </View>
@@ -183,11 +182,8 @@ export function RestaurantProfile({route}: any) {
             />
           </PlatesWrapper>
         )}
-        onEndReached={() => {
-          handleLoadOnEnd();
-        }}
         ListEmptyComponent={
-          !loading ? (
+          !isLoading ? (
             <ListEmptyComponent title="Nenhum prato encontrado" />
           ) : null
         }

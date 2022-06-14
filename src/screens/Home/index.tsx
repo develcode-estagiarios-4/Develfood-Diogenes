@@ -28,6 +28,7 @@ import {
 import {ListEmptyComponent} from '../../components/ListEmptyComponent';
 
 interface ListRestaurantProps {
+  food_types: ListFoodType[];
   id: number;
   name: string;
   photo: string;
@@ -36,6 +37,10 @@ interface ListRestaurantResponse {
   content: ListRestaurantProps[];
   number: number;
   totalPages: number;
+}
+interface ListFoodType {
+  id: number;
+  name: string;
 }
 
 const CardMargins =
@@ -60,7 +65,7 @@ export function Home() {
     );
   }
 
-  const {data, loading, fetchData} = useFetch<ListRestaurantResponse>(
+  const {data, fetchData} = useFetch<ListRestaurantResponse>(
     `/restaurant/filter?name=${isFiltred.text}&page=${isFiltred.page}&quantity=10`,
     {
       headers: {
@@ -69,6 +74,8 @@ export function Home() {
     },
   );
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [restaurants, setRestaurants] = useState([]);
 
   function onSuccess(response: any) {
@@ -76,7 +83,9 @@ export function Home() {
   }
 
   async function loadRestaurants() {
+    setIsLoading(true);
     await fetchData(onSuccess);
+    setIsLoading(false);
   }
 
   async function handleLoadOnEnd() {
@@ -86,6 +95,7 @@ export function Home() {
   }
 
   function handleSearch(value: string) {
+    setIsLoading(true);
     if (value.length > 1) {
       setRestaurants([]);
       setIsFiltred({text: value, page: 0});
@@ -93,6 +103,7 @@ export function Home() {
       setRestaurants([]);
       setIsFiltred({text: '', page: 0});
     }
+    setIsLoading(false);
   }
 
   const debounced = useDebouncedCallback(value => {
@@ -161,7 +172,7 @@ export function Home() {
           }
           ListFooterComponent={() => (
             <View style={{height: 50, justifyContent: 'center'}}>
-              {loading && (
+              {isLoading && (
                 <ActivityIndicator color={theme.colors.background_red} />
               )}
             </View>
@@ -173,6 +184,7 @@ export function Home() {
                   handleRestaurantProfile(item.id, item.name, item.photo)
                 }
                 name={item.name}
+                category={item.food_types[0]?.name}
                 source={
                   item.photo
                     ? {
@@ -192,7 +204,7 @@ export function Home() {
             handleLoadOnEnd();
           }}
           ListEmptyComponent={
-            !loading ? (
+            !isLoading ? (
               <ListEmptyComponent title="Nenhum restaurante encontrado" />
             ) : null
           }

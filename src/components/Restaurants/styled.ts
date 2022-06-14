@@ -21,18 +21,20 @@ export const RestaurantImage = styled.Image`
 `;
 
 export const FavoriteIconWrapper = styled.View`
-  width: ${RFValue(43)}px;
-  height: ${RFValue(43)}px;
+  width: ${RFValue(45)}px;
+  height: ${RFValue(45)}px;
   position: absolute;
   right: 0;
   top: 0;
+  border: ${RFValue(1)}px;
+  border-color: ${({theme}) => theme.colors.favorite_border};
   border-top-right-radius: ${RFValue(8)}px;
   border-bottom-left-radius: ${RFValue(16)}px;
   background-color: ${({theme}) => theme.colors.background};
 `;
 
 export const IconButton = styled.TouchableOpacity`
-  width: ${RFValue(43)}px;
+  width: ${RFValue(42)}px;
   height: ${RFValue(44)}px;
   margin-top: ${RFValue(10)}px;
   align-items: center;

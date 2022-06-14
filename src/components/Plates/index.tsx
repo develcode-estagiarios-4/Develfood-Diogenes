@@ -34,7 +34,7 @@ export function Plates({description, price, source}: ListPlatesProps) {
         </PlateInfo>
 
         <WrapperAdvancedInfo>
-          <Price>R${price}</Price>
+          <Price>R${price.toString().replace('.', ',')}</Price>
           <AddButton>
             <TextButton>Adicionar</TextButton>
           </AddButton>

@@ -19,11 +19,17 @@ import {
 
 interface ListRestaurantProps {
   name: string;
+  category: any;
   source: any;
   onPress: () => void;
 }
 
-export function Restaurants({name, source, onPress}: ListRestaurantProps) {
+export function Restaurants({
+  name,
+  category,
+  source,
+  onPress,
+}: ListRestaurantProps) {
   const theme = useTheme();
 
   const [isPressed, setIsPressed] = useState(false);
@@ -49,7 +55,7 @@ export function Restaurants({name, source, onPress}: ListRestaurantProps) {
           </TitleWrapper>
 
           <Description>
-            <SubTitle>Pizza</SubTitle>
+            <SubTitle>{category}</SubTitle>
 
             <Avaliation>
               <StarRatio source={theme.icons.starRatio} />
