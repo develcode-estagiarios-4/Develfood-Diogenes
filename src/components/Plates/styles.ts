@@ -46,7 +46,9 @@ export const PlateInfo = styled.Text`
 `;
 
 export const WrapperAdvancedInfo = styled.View`
-  margin-top: ${RFValue(7)}px;
+  position: absolute;
+  width: 100%;
+  top: ${RFValue(62)}px;
   flex-direction: row;
   justify-content: space-between;
 `;
@@ -57,7 +59,9 @@ export const Price = styled.Text`
   color: ${({theme}) => theme.colors.text_dark};
 `;
 
-export const AddButton = styled.TouchableOpacity``;
+export const AddButton = styled.TouchableOpacity`
+  right: 0;
+`;
 
 export const TextButton = styled.Text`
   font-size: ${RFValue(14)}px;
