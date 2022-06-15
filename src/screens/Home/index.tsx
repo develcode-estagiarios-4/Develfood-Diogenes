@@ -192,6 +192,7 @@ export function Home() {
                       item.food_types[0]?.name.slice(1).toLowerCase()
                     : ''
                 }
+                avaliation={item.id}
                 source={
                   item.photo_url.code
                     ? {
