@@ -9,6 +9,7 @@ import {TabBarButton} from '../../components/TabBarButton';
 import {useTheme} from 'styled-components';
 import {useNavigation} from '@react-navigation/native';
 import {Platform} from 'react-native';
+import {RFValue} from 'react-native-responsive-fontsize';
 // import {TabBar} from '../../components/TabBar';
 
 const Tabs = createBottomTabNavigator();
@@ -24,7 +25,7 @@ export function Routes() {
         screenOptions={{
           headerShown: false,
           tabBarStyle: {
-            height: 60,
+            height: RFValue(40),
             paddingVertical: Platform.OS === 'ios' ? 20 : 0,
           },
           tabBarLabelStyle: {
