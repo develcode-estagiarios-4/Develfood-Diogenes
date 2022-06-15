@@ -61,7 +61,7 @@ export function Restaurants({
   }, []);
 
   return (
-    <Wrapper onPress={onPress} activeOpacity={0.2}>
+    <Wrapper onPress={onPress} activeOpacity={0}>
       <Container>
         <RestaurantImage
           source={data.code ? {uri: `${data.code}`} : theme.images.noImage}
