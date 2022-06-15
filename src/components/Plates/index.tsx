@@ -40,12 +40,8 @@ export function Plates({name, description, price, source}: ListPlatesProps) {
     },
   });
 
-  async function loadPhotoPLates() {
-    await fetchData();
-  }
-
   useEffect(() => {
-    loadPhotoPLates();
+    fetchData();
   }, [source]);
 
   return (
