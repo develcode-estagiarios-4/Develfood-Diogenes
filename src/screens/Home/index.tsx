@@ -31,13 +31,10 @@ interface ListRestaurantProps {
   food_types: ListFoodType[];
   id: number;
   name: string;
-  photo_url: {
-    code: string;
-  };
+  photo_url: string;
 }
 interface ListRestaurantResponse {
   content: ListRestaurantProps[];
-  number: number;
   totalPages: number;
 }
 interface ListFoodType {
@@ -60,10 +57,14 @@ export function Home() {
 
   const navigation = useNavigation();
 
-  function handleRestaurantProfile(id: number, name: string, code: string) {
+  function handleRestaurantProfile(
+    id: number,
+    name: string,
+    photo_url: string,
+  ) {
     navigation.navigate(
       'RestaurantProfile' as never,
-      {id, name, code} as never,
+      {id, name, photo_url} as never,
     );
   }
 
@@ -183,7 +184,7 @@ export function Home() {
             <RestaurantListWrapper>
               <Restaurants
                 onPress={() =>
-                  handleRestaurantProfile(item.id, item.name, item.photo)
+                  handleRestaurantProfile(item.id, item.name, item.photo_url)
                 }
                 name={item.name}
                 category={
@@ -193,13 +194,7 @@ export function Home() {
                     : ''
                 }
                 avaliation={item.id}
-                source={
-                  item.photo_url.code
-                    ? {
-                        uri: `${item.photo_url.code}`,
-                      }
-                    : theme.images.noImage
-                }
+                source={item.photo_url ? item.photo_url : theme.images.noImage}
               />
             </RestaurantListWrapper>
           )}

@@ -46,7 +46,7 @@ export function Restaurants({
 
   const {token} = useAuth();
 
-  const {data, fetchData} = useFetch<CardData>(`/photo/${source}`, {
+  const {data, fetchData} = useFetch<CardData>(source, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
