@@ -33,6 +33,7 @@ import {
 
 interface Plate {
   id: number;
+  name: string;
   description: string;
   price: number;
   foodType: {
@@ -174,6 +175,7 @@ export function RestaurantProfile({route}: any) {
         renderItem={({item}: any) => (
           <PlatesWrapper>
             <Plates
+              name={item.name}
               description={item.description}
               price={item.price}
               source={item.photo_url}
