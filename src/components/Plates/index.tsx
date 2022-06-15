@@ -34,9 +34,7 @@ export function Plates({name, description, price, source}: ListPlatesProps) {
 
   const {token} = useAuth();
 
-  const photo = source.slice(33);
-
-  const {data, fetchData} = useFetch<Photos>(photo, {
+  const {data, fetchData} = useFetch<Photos>(source, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -48,7 +46,7 @@ export function Plates({name, description, price, source}: ListPlatesProps) {
 
   useEffect(() => {
     loadPhotoPLates();
-  }, [photo]);
+  }, [source]);
 
   return (
     <Container>
