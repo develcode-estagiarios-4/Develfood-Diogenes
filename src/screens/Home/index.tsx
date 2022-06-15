@@ -186,7 +186,12 @@ export function Home() {
                   handleRestaurantProfile(item.id, item.name, item.photo)
                 }
                 name={item.name}
-                category={item.food_types[0]?.name}
+                category={
+                  item.food_types.length > 0
+                    ? item.food_types[0]?.name.charAt(0).toUpperCase() +
+                      item.food_types[0]?.name.slice(1).toLowerCase()
+                    : ''
+                }
                 source={
                   item.photo_url.code
                     ? {
