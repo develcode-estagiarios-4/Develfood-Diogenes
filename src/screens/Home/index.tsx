@@ -60,10 +60,10 @@ export function Home() {
 
   const navigation = useNavigation();
 
-  function handleRestaurantProfile(id: number, name: string, photo: string) {
+  function handleRestaurantProfile(id: number, name: string, code: string) {
     navigation.navigate(
       'RestaurantProfile' as never,
-      {id, name, photo} as never,
+      {id, name, code} as never,
     );
   }
 

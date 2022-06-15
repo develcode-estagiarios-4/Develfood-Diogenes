@@ -52,7 +52,7 @@ interface ListPlateResponse {
 
 export function RestaurantProfile({route}: any) {
   const navigation = useNavigation();
-  const {id, name, photo_url} = route.params;
+  const {id, name, code} = route.params;
 
   const {token} = useAuth();
 
@@ -140,7 +140,13 @@ export function RestaurantProfile({route}: any) {
 
         <WrapperPhoto>
           <RestaurantPhoto
-            source={photo_url ? photo_url : theme.images.noImage}
+            source={
+              code
+                ? {
+                    uri: `${code}`,
+                  }
+                : theme.images.noImage
+            }
           />
         </WrapperPhoto>
       </WrapperRestaurantInfo>
