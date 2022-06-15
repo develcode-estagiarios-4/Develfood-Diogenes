@@ -44,21 +44,15 @@ export function Restaurants({
 
   const {token} = useAuth();
 
-  const [photos, setPhotos] = useState<Photos[]>([]);
-
   const {data, fetchData} = useFetch<Photos>(`/photo/${source}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
-  function onSuccess(response: any) {
-    setPhotos([...photos, ...response]);
-  }
-
   useEffect(() => {
-    fetchData(onSuccess);
-  }, []);
+    fetchData();
+  }, [source]);
 
   return (
     <Wrapper onPress={onPress} activeOpacity={0}>
