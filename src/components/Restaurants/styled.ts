@@ -1,6 +1,8 @@
 import {RFValue} from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 
+export const Wrapper = styled.TouchableOpacity``;
+
 export const Container = styled.View.attrs({
   elevation: 10,
 })`
@@ -14,22 +16,29 @@ export const Container = styled.View.attrs({
 export const RestaurantImage = styled.Image`
   width: ${RFValue(156)}px;
   height: ${RFValue(127)}px;
+  border-top-left-radius: ${RFValue(8)}px;
+  border-top-right-radius: ${RFValue(8)}px;
 `;
 
 export const FavoriteIconWrapper = styled.View`
-  width: ${RFValue(42)}px;
-  height: ${RFValue(42)}px;
+  width: ${RFValue(45)}px;
+  height: ${RFValue(45)}px;
   position: absolute;
   right: 0;
   top: 0;
-
-  border-bottom-left-radius: 16px;
+  border: ${RFValue(1)}px;
+  border-color: ${({theme}) => theme.colors.favorite_border};
+  border-top-right-radius: ${RFValue(8)}px;
+  border-bottom-left-radius: ${RFValue(16)}px;
   background-color: ${({theme}) => theme.colors.background};
-  align-items: center;
-  justify-content: center;
 `;
 
-export const IconButton = styled.TouchableOpacity``;
+export const IconButton = styled.TouchableOpacity`
+  width: ${RFValue(42)}px;
+  height: ${RFValue(44)}px;
+  margin-top: ${RFValue(10)}px;
+  align-items: center;
+`;
 
 export const FavoriteIcon = styled.Image`
   width: ${RFValue(25)}px;

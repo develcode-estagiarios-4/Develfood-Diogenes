@@ -8,6 +8,7 @@ import {useAuth} from '../../global/Context';
 import {useFetch} from '../../global/services/get';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {useDebouncedCallback} from 'use-debounce';
+import {useNavigation} from '@react-navigation/native';
 
 import {Restaurants} from '../../components/Restaurants';
 import {Category} from '../../components/CategoryButton';
@@ -24,16 +25,24 @@ import {
   RestaurantListWrapper,
   RestaurantList,
 } from './styles';
+import {ListEmptyComponent} from '../../components/ListEmptyComponent';
 
 interface ListRestaurantProps {
+  food_types: ListFoodType[];
   id: number;
   name: string;
-  photo: string;
+  photo_url: {
+    code: string;
+  };
 }
 interface ListRestaurantResponse {
   content: ListRestaurantProps[];
   number: number;
   totalPages: number;
+}
+interface ListFoodType {
+  id: number;
+  name: string;
 }
 
 const CardMargins =
@@ -49,7 +58,16 @@ export function Home() {
     page: 0,
   });
 
-  const {data, loading, fetchData} = useFetch<ListRestaurantResponse>(
+  const navigation = useNavigation();
+
+  function handleRestaurantProfile(id: number, name: string, code: string) {
+    navigation.navigate(
+      'RestaurantProfile' as never,
+      {id, name, code} as never,
+    );
+  }
+
+  const {data, fetchData} = useFetch<ListRestaurantResponse>(
     `/restaurant/filter?name=${isFiltred.text}&page=${isFiltred.page}&quantity=10`,
     {
       headers: {
@@ -58,6 +76,8 @@ export function Home() {
     },
   );
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [restaurants, setRestaurants] = useState([]);
 
   function onSuccess(response: any) {
@@ -65,7 +85,9 @@ export function Home() {
   }
 
   async function loadRestaurants() {
+    setIsLoading(true);
     await fetchData(onSuccess);
+    setIsLoading(false);
   }
 
   async function handleLoadOnEnd() {
@@ -75,6 +97,7 @@ export function Home() {
   }
 
   function handleSearch(value: string) {
+    setIsLoading(true);
     if (value.length > 1) {
       setRestaurants([]);
       setIsFiltred({text: value, page: 0});
@@ -82,6 +105,7 @@ export function Home() {
       setRestaurants([]);
       setIsFiltred({text: '', page: 0});
     }
+    setIsLoading(false);
   }
 
   const debounced = useDebouncedCallback(value => {
@@ -150,7 +174,7 @@ export function Home() {
           }
           ListFooterComponent={() => (
             <View style={{height: 50, justifyContent: 'center'}}>
-              {loading && (
+              {isLoading && (
                 <ActivityIndicator color={theme.colors.background_red} />
               )}
             </View>
@@ -158,11 +182,20 @@ export function Home() {
           renderItem={({item}: any) => (
             <RestaurantListWrapper>
               <Restaurants
+                onPress={() =>
+                  handleRestaurantProfile(item.id, item.name, item.photo)
+                }
                 name={item.name}
+                category={
+                  item.food_types.length > 0
+                    ? item.food_types[0]?.name.charAt(0).toUpperCase() +
+                      item.food_types[0]?.name.slice(1).toLowerCase()
+                    : ''
+                }
                 source={
-                  item.photo
+                  item.photo_url.code
                     ? {
-                        uri: `${item.photo}`,
+                        uri: `${item.photo_url.code}`,
                       }
                     : theme.images.noImage
                 }
@@ -177,6 +210,11 @@ export function Home() {
           onEndReached={() => {
             handleLoadOnEnd();
           }}
+          ListEmptyComponent={
+            !isLoading ? (
+              <ListEmptyComponent title="Nenhum restaurante encontrado" />
+            ) : null
+          }
         />
       </Container>
     </>

@@ -49,7 +49,7 @@ export const CategorySelect = styled.ScrollView`
 export const Content = styled.View`
   justify-content: center;
   align-items: center;
-  margin: 0 ${RFValue(21)}px;
+  margin: 0 ${RFValue(12)}px;
   margin-top: ${RFValue(12)}px;
 `;
 
