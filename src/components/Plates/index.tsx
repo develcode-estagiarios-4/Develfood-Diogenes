@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useTheme} from 'styled-components';
 import {useAuth} from '../../global/Context';
 import {useFetch} from '../../global/services/get';
@@ -18,6 +18,7 @@ import {
 } from './styles';
 
 interface ListPlatesProps {
+  name: string;
   description: string;
   price: string;
   source: any;
@@ -28,26 +29,26 @@ interface Photos {
   code: string;
 }
 
-export function Plates({description, price, source}: ListPlatesProps) {
+export function Plates({name, description, price, source}: ListPlatesProps) {
   const theme = useTheme();
 
   const {token} = useAuth();
 
-  const [photos, setPhotos] = useState<Photos[]>([]);
+  const photo = source.slice(33);
 
-  const {data, fetchData} = useFetch<Photos>(`/photo/${source}`, {
+  const {data, fetchData} = useFetch<Photos>(photo, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
-  function onSuccess(response: any) {
-    setPhotos([...photos, ...response]);
+  async function loadPhotoPLates() {
+    await fetchData();
   }
 
   useEffect(() => {
-    fetchData(onSuccess);
-  }, []);
+    loadPhotoPLates();
+  }, [photo]);
 
   return (
     <Container>
@@ -58,11 +59,8 @@ export function Plates({description, price, source}: ListPlatesProps) {
       </WrapperImage>
 
       <WrapperPlateInfo>
-        <PlateTitle>{description}</PlateTitle>
-        <PlateInfo>
-          Um prato de camarão com fritas que é uma ótima opção para pedir quando
-          se está com a família
-        </PlateInfo>
+        <PlateTitle>{name}</PlateTitle>
+        <PlateInfo>{description}</PlateInfo>
 
         <WrapperAdvancedInfo>
           <Price>R${price.toString().replace('.', ',')}</Price>
