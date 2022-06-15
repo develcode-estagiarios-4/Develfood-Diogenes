@@ -36,10 +36,7 @@ interface Plate {
   name: string;
   description: string;
   price: number;
-  foodType: {
-    id: number;
-    name: string;
-  };
+  foodType: string;
   retaurantName: string;
   photo_url: string;
 }
