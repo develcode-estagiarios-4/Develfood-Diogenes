@@ -61,10 +61,11 @@ export function Home() {
     id: number,
     name: string,
     photo_url: string,
+    food_types: string,
   ) {
     navigation.navigate(
       'RestaurantProfile' as never,
-      {id, name, photo_url} as never,
+      {id, name, photo_url, food_types} as never,
     );
   }
 
@@ -184,7 +185,12 @@ export function Home() {
             <RestaurantListWrapper>
               <Restaurants
                 onPress={() =>
-                  handleRestaurantProfile(item.id, item.name, item.photo_url)
+                  handleRestaurantProfile(
+                    item.id,
+                    item.name,
+                    item.photo_url,
+                    item.food_types.length > 0 ? item.food_types[0].name : '',
+                  )
                 }
                 name={item.name}
                 category={

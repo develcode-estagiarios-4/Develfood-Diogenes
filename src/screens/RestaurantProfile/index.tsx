@@ -41,9 +41,7 @@ interface Plate {
     name: string;
   };
   retaurantName: string;
-  photo_url: {
-    code: string;
-  };
+  photo_url: string;
 }
 
 interface ListPlateResponse {
@@ -57,7 +55,7 @@ interface Photo {
 
 export function RestaurantProfile({route}: any) {
   const navigation = useNavigation();
-  const {id, name, photo_url} = route.params;
+  const {id, name, photo_url, food_types} = route.params;
 
   const {token} = useAuth();
 
@@ -147,7 +145,10 @@ export function RestaurantProfile({route}: any) {
       <WrapperRestaurantInfo>
         <WrapperRestaurantTypes>
           <NameRestaurant>{name}</NameRestaurant>
-          <TypeFood>Lanche</TypeFood>
+          <TypeFood>
+            {food_types.charAt(0).toUpperCase() +
+              food_types.slice(1).toLowerCase()}
+          </TypeFood>
         </WrapperRestaurantTypes>
 
         <WrapperPhoto>
