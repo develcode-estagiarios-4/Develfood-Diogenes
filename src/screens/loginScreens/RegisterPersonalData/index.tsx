@@ -72,8 +72,9 @@ export function RegisterPersonalData() {
         cpf: value.cpf,
         phone: value.phone,
         photo: {
-          code: '',
+          code: ' ',
         },
+        ...postData,
       },
     });
     navigation.navigate('RegisterLocale' as never);
