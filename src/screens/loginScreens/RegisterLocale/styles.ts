@@ -15,7 +15,7 @@ export const Header = styled.View`
 `;
 
 export const TittleWrapper = styled.View`
-  margin-left: ${RFValue(100)}px;
+  margin-left: ${RFValue(105)}px;
 `;
 export const Title = styled.Text`
   font-family: ${({theme}) => theme.fonts.primaryMed};
