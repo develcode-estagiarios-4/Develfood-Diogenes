@@ -73,7 +73,11 @@ export function Register() {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
-        <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
+        <StatusBar
+          hidden={false}
+          barStyle={'dark-content'}
+          backgroundColor={'white'}
+        />
         <Header>
           <BackButton onPressed={handlerBackButton} name="arrow" />
           <TittleWrapper>
