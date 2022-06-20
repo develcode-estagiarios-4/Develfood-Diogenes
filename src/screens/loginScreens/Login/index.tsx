@@ -9,7 +9,7 @@ import {useAuth} from '../../../global/Context';
 import {useNavigation} from '@react-navigation/native';
 import {Input} from '../../../components/Input';
 
-import {Keyboard, TouchableWithoutFeedback} from 'react-native';
+import {Keyboard, StatusBar, TouchableWithoutFeedback} from 'react-native';
 
 import {
   Container,
@@ -66,6 +66,11 @@ export function Login() {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
         <>
+          <StatusBar
+            barStyle={'dark-content'}
+            translucent
+            backgroundColor={'transparent'}
+          />
           <Hamburger
             source={theme.images.hamburger}
             style={{height: RFValue(210), width: RFValue(75)}}
