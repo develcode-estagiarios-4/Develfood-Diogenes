@@ -36,23 +36,23 @@ interface Plate {
   name: string;
   description: string;
   price: number;
-  foodType: {
-    id: number;
-    name: string;
-  };
+  foodType: string;
   retaurantName: string;
-  photo_url: {
-    code: string;
-  };
+  photo_url: string;
 }
 
 interface ListPlateResponse {
   content: Plate[];
 }
 
+interface Photo {
+  id: number;
+  code: string;
+}
+
 export function RestaurantProfile({route}: any) {
   const navigation = useNavigation();
-  const {id, name, code} = route.params;
+  const {id, name, photo_url, food_types} = route.params;
 
   const {token} = useAuth();
 
@@ -78,6 +78,12 @@ export function RestaurantProfile({route}: any) {
       },
     },
   );
+
+  const {data, fetchData: fetchPhoto} = useFetch<Photo>(photo_url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   function onSuccess(response: any) {
     setPlate([...plate, ...response] as never);
@@ -107,6 +113,7 @@ export function RestaurantProfile({route}: any) {
 
   useEffect(() => {
     loadPlates();
+    fetchPhoto();
   }, [filter]);
 
   return (
@@ -135,15 +142,18 @@ export function RestaurantProfile({route}: any) {
       <WrapperRestaurantInfo>
         <WrapperRestaurantTypes>
           <NameRestaurant>{name}</NameRestaurant>
-          <TypeFood>Lanche</TypeFood>
+          <TypeFood>
+            {food_types.charAt(0).toUpperCase() +
+              food_types.slice(1).toLowerCase()}
+          </TypeFood>
         </WrapperRestaurantTypes>
 
         <WrapperPhoto>
           <RestaurantPhoto
             source={
-              code
+              data.code
                 ? {
-                    uri: `${code}`,
+                    uri: `${data.code}`,
                   }
                 : theme.images.noImage
             }

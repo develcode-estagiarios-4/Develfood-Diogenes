@@ -25,9 +25,10 @@ interface ListRestaurantProps {
   category: any;
   source: any;
   onPress: () => void;
+  avaliation: number;
 }
 
-interface Photos {
+interface CardData {
   id: number;
   code: string;
 }
@@ -37,6 +38,7 @@ export function Restaurants({
   category,
   source,
   onPress,
+  avaliation,
 }: ListRestaurantProps) {
   const theme = useTheme();
 
@@ -44,15 +46,36 @@ export function Restaurants({
 
   const {token} = useAuth();
 
-  const {data, fetchData} = useFetch<Photos>(`/photo/${source}`, {
+  const {data, fetchData} = useFetch<CardData>(source, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
+  const {data: dataRatio, fetchData: fetchRatio} = useFetch<CardData>(
+    `/restaurantEvaluation/${avaliation}/grade`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+
+  function ratio() {
+    if (dataRatio.toString() === '[object Object]') {
+      return '-';
+    } else {
+      return dataRatio.toString();
+    }
+  }
+
   useEffect(() => {
     fetchData();
   }, [source]);
+
+  useEffect(() => {
+    fetchRatio();
+  }, [dataRatio]);
 
   return (
     <Wrapper onPress={onPress} activeOpacity={0}>
@@ -81,7 +104,7 @@ export function Restaurants({
 
             <Avaliation>
               <StarRatio source={theme.icons.starRatio} />
-              <NumberRatio>{Math.ceil(Math.random() * 5)}</NumberRatio>
+              <NumberRatio>{ratio()}</NumberRatio>
             </Avaliation>
           </Description>
         </Content>
