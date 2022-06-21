@@ -40,11 +40,6 @@ interface Plate {
   retaurantName: string;
   photo_url: string;
 }
-
-interface ListPlateResponse {
-  content: Plate[];
-}
-
 interface Photo {
   id: number;
   code: string;
@@ -52,6 +47,7 @@ interface Photo {
 
 export function RestaurantProfile({route}: any) {
   const navigation = useNavigation();
+
   const {id, name, photo_url, food_types} = route.params;
 
   const {token} = useAuth();
@@ -60,17 +56,13 @@ export function RestaurantProfile({route}: any) {
 
   const [isPressed, setIsPressed] = useState(false);
 
-  function handlerBackButton() {
-    navigation.navigate('Home' as never);
-  }
-
-  const [plate, setPlate] = useState([]);
+  const [plate, setPlate] = useState<Plate[]>([]);
 
   const [filter, setFilter] = useState('');
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const {fetchData} = useFetch<ListPlateResponse>(
+  const {fetchData} = useFetch<Plate[]>(
     `/plate/search?name=${filter}&restaurantid=${id}`,
     {
       headers: {
@@ -85,8 +77,8 @@ export function RestaurantProfile({route}: any) {
     },
   });
 
-  function onSuccess(response: any) {
-    setPlate([...plate, ...response] as never);
+  function onSuccess(response: Plate[]) {
+    setPlate([...plate, ...response]);
   }
 
   async function loadPlates() {
@@ -110,6 +102,10 @@ export function RestaurantProfile({route}: any) {
   const debounced = useDebouncedCallback(value => {
     handleSearch(value);
   }, 1500);
+
+  function handlerBackButton() {
+    navigation.navigate('Home' as never);
+  }
 
   useEffect(() => {
     loadPlates();

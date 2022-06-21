@@ -11,14 +11,14 @@ import {
   LogoHide,
 } from './styles';
 
-import {KeyboardType, TextInputProps} from 'react-native';
+import {ImageSourcePropType, KeyboardType, TextInputProps} from 'react-native';
 
 interface Props extends TextInputProps {
   name?: string;
   control?: Control;
   error?: string;
   editable?: boolean;
-  source: any;
+  source: ImageSourcePropType;
   placeholder: string;
   keyboardType?: KeyboardType;
   sourcePassword?: any;

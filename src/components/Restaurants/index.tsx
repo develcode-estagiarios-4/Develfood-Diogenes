@@ -22,8 +22,8 @@ import {
 
 interface ListRestaurantProps {
   name: string;
-  category: any;
-  source: any;
+  category: string;
+  source: string;
   onPress: () => void;
   avaliation: number;
 }

@@ -55,6 +55,10 @@ export function Home() {
     page: 0,
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [restaurants, setRestaurants] = useState<ListRestaurantProps[]>([]);
+
   const navigation = useNavigation();
 
   function handleRestaurantProfile(
@@ -78,12 +82,8 @@ export function Home() {
     },
   );
 
-  const [isLoading, setIsLoading] = useState(false);
-
-  const [restaurants, setRestaurants] = useState([]);
-
-  function onSuccess(response: any) {
-    setRestaurants([...restaurants, ...response.content] as never);
+  function onSuccess(response: ListRestaurantResponse) {
+    setRestaurants([...restaurants, ...response.content]);
   }
 
   async function loadRestaurants() {

@@ -21,7 +21,7 @@ interface ListPlatesProps {
   name: string;
   description: string;
   price: string;
-  source: any;
+  source: string;
 }
 
 interface Photos {

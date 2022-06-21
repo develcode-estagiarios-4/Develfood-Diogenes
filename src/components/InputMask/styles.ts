@@ -15,7 +15,7 @@ export const Container = styled.View`
 `;
 
 export const LoginIcon = styled.Image`
-  margin-left: ${RFValue(1)}px;
+  margin-left: ${RFValue(10)}px;
 `;
 
 export const TextMask = styled(TextInputMask)`

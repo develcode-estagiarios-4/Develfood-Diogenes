@@ -2,12 +2,12 @@ import React from 'react';
 
 import {Container, LoginIcon, TextMask, Error} from './styles';
 
-import {TextInputProps} from 'react-native';
+import {ImageSourcePropType, TextInputProps} from 'react-native';
 
 interface Props extends TextInputProps {
   error: string;
   editable: boolean;
-  source: any;
+  source: ImageSourcePropType;
   placeholder: string;
   onChangeText: (value: string) => void;
   value: string;

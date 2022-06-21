@@ -1,11 +1,11 @@
 import React from 'react';
-import {Image} from 'react-native';
+import {Image, ImageSourcePropType} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {useTheme} from 'styled-components';
 
 import {ButtonIcon, Title} from './styles';
 interface Props {
-  source: any;
+  source: ImageSourcePropType;
   name: string;
   isPressed: boolean;
   onPressed: Function;
