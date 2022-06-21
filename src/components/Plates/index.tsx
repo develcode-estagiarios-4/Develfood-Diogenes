@@ -40,6 +40,13 @@ export function Plates({name, description, price, source}: ListPlatesProps) {
     },
   });
 
+  function priceConverter() {
+    const priceWZeros = parseFloat(price).toFixed(2);
+    const priceFormatted = priceWZeros.toString().replace('.', ',');
+    return priceFormatted;
+  }
+  const priceFormatted = priceConverter();
+
   useEffect(() => {
     fetchData();
   }, [source]);
@@ -57,7 +64,7 @@ export function Plates({name, description, price, source}: ListPlatesProps) {
         <PlateInfo>{description}</PlateInfo>
 
         <WrapperAdvancedInfo>
-          <Price>R${price.toString().replace('.', ',')}</Price>
+          <Price>R$ {priceFormatted}</Price>
           <AddButton>
             <TextButton>Adicionar</TextButton>
           </AddButton>
