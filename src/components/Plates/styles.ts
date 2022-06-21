@@ -4,14 +4,13 @@ import styled from 'styled-components/native';
 export const Container = styled.View.attrs({
   elevation: 10,
 })`
-  width: ${RFValue(321)}px;
+  width: 100%;
   height: ${RFValue(103)}px;
   flex-direction: row;
   align-items: center;
   margin-bottom: ${RFValue(18)}px;
   border-radius: ${RFValue(8)}px;
   background-color: ${({theme}) => theme.colors.background};
-  margin-left: ${RFValue(10)}px;
 `;
 
 export const WrapperImage = styled.View`

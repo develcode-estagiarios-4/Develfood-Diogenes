@@ -79,7 +79,7 @@ export const LineBetween = styled.View`
 `;
 
 export const PlatesWrapper = styled.View`
-  padding-left: ${RFValue(10)}px;
+  padding: 0 ${RFValue(20)}px;
 `;
 
 export const PlatesList = styled.FlatList``;
