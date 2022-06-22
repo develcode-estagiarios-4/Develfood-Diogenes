@@ -2,6 +2,7 @@
 import React, {useEffect} from 'react';
 import {useTheme} from 'styled-components';
 import {useAuth} from '../../global/Context';
+import {useCreateCart} from '../../global/Context/Cart';
 import {useFetch} from '../../global/services/get';
 
 import {
@@ -15,14 +16,16 @@ import {
   Price,
   AddButton,
   TextButton,
+  RemoveButton,
 } from './styles';
 
 interface ListPlatesProps {
+  id: number;
   name: string;
   description: string;
   price: string;
   source: string;
-  onPress: () => void;
+  restaurantID: number;
 }
 
 interface Photos {
@@ -35,11 +38,14 @@ export function Plates({
   description,
   price,
   source,
-  onPress,
+  restaurantID,
+  id,
 }: ListPlatesProps) {
   const theme = useTheme();
 
   const {token} = useAuth();
+
+  const {addProductToCart, removeProductFromCart} = useCreateCart();
 
   const {data, fetchData} = useFetch<Photos>(source, {
     headers: {
@@ -72,9 +78,12 @@ export function Plates({
 
         <WrapperAdvancedInfo>
           <Price>R$ {priceFormatted}</Price>
-          <AddButton onPress={onPress}>
+          <AddButton onPress={() => addProductToCart(id, price, restaurantID)}>
             <TextButton>Adicionar</TextButton>
           </AddButton>
+          <RemoveButton onPress={() => removeProductFromCart(id, price)}>
+            <TextButton>Remover</TextButton>
+          </RemoveButton>
         </WrapperAdvancedInfo>
       </WrapperPlateInfo>
     </Container>

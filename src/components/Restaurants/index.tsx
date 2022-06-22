@@ -26,6 +26,7 @@ interface ListRestaurantProps {
   source: string;
   onPress: () => void;
   avaliation: number;
+  id: number;
 }
 
 interface CardData {

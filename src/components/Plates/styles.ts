@@ -67,3 +67,7 @@ export const TextButton = styled.Text`
   font-weight: 500;
   color: ${({theme}) => theme.colors.icon_red};
 `;
+
+export const RemoveButton = styled.TouchableOpacity`
+  right: 20;
+`;
