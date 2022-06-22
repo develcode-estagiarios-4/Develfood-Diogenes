@@ -22,6 +22,7 @@ interface ListPlatesProps {
   description: string;
   price: string;
   source: string;
+  onPress: () => void;
 }
 
 interface Photos {
@@ -29,7 +30,13 @@ interface Photos {
   code: string;
 }
 
-export function Plates({name, description, price, source}: ListPlatesProps) {
+export function Plates({
+  name,
+  description,
+  price,
+  source,
+  onPress,
+}: ListPlatesProps) {
   const theme = useTheme();
 
   const {token} = useAuth();
@@ -65,7 +72,7 @@ export function Plates({name, description, price, source}: ListPlatesProps) {
 
         <WrapperAdvancedInfo>
           <Price>R$ {priceFormatted}</Price>
-          <AddButton>
+          <AddButton onPress={onPress}>
             <TextButton>Adicionar</TextButton>
           </AddButton>
         </WrapperAdvancedInfo>

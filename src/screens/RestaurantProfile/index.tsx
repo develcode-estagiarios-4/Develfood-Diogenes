@@ -10,6 +10,7 @@ import {Input} from '../../components/Input';
 import {ListEmptyComponent} from '../../components/ListEmptyComponent';
 import {Plates} from '../../components/Plates';
 import {useAuth} from '../../global/Context';
+import {useCreateCart} from '../../global/Context/Cart';
 import {useFetch} from '../../global/services/get';
 
 import {
@@ -61,6 +62,8 @@ export function RestaurantProfile({route}: any) {
   const [filter, setFilter] = useState('');
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const {addProductToCart} = useCreateCart();
 
   const {fetchData} = useFetch<Plate[]>(
     `/plate/search?name=${filter}&restaurantid=${id}`,
@@ -191,6 +194,7 @@ export function RestaurantProfile({route}: any) {
               description={item.description}
               price={item.price}
               source={item.photo_url}
+              onPress={() => addProductToCart(item.name)}
             />
           </PlatesWrapper>
         )}
