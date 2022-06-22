@@ -194,7 +194,7 @@ export function RestaurantProfile({route}: any) {
               description={item.description}
               price={item.price}
               source={item.photo_url}
-              onPress={() => addProductToCart(item.name)}
+              onPress={() => addProductToCart(item, item.price)}
             />
           </PlatesWrapper>
         )}

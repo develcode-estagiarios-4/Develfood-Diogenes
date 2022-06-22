@@ -11,27 +11,29 @@ function CartProvider({children}: AuthProviderProps) {
 
   console.log(cart);
 
-  function addProductToCart(id: any) {
+  function addProductToCart(id: any, price: number) {
     const addingProducts = [...cart];
 
     const item = addingProducts.find((product: any) => product.id === id);
 
     if (!item) {
-      addingProducts.push({id: id, quantity: 1});
+      addingProducts.push({id: id, quantity: 1, price: price});
     } else {
       item.quantity += 1;
+      item.price += price;
     }
 
     setCart(addingProducts);
   }
 
-  function removeProductFromCart(id: any) {
+  function removeProductFromCart(id: any, price: number) {
     const removingProducts = [...cart];
 
     const item = removingProducts.find((product: any) => product.id === id);
 
     if (item.quantity > 1) {
       item.quantity -= 1;
+      item.price -= price;
       setCart(removingProducts);
     } else {
       const filterCart = removingProducts.filter(
