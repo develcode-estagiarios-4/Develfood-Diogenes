@@ -53,12 +53,7 @@ export function Plates({
 
   const {token} = useAuth();
 
-  const {
-    addProductToCart,
-    removeProductFromCart,
-    cart,
-    removeAllProductsFromCart,
-  } = useCreateCart();
+  const {addProductToCart, removeProductFromCart, cart} = useCreateCart();
 
   const {data, fetchData} = useFetch<Photos>(source, {
     headers: {
@@ -106,7 +101,7 @@ export function Plates({
 
               {cart.find((item: any) => item?.id === id)?.quantity > 1 ? (
                 <RemoveCartButton
-                  onPress={() => removeAllProductsFromCart(id, price)}>
+                  onPress={() => removeProductFromCart(id, price)}>
                   <RemoveQuantityButtonImage source={theme.icons.remove} />
                 </RemoveCartButton>
               ) : (
