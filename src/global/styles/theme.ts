@@ -56,6 +56,8 @@ export default {
     add: require('../assets/Icons/add.png'),
     remove: require('../assets/Icons/remove.png'),
     litter: require('../assets/Icons/litter.png'),
+    hamper: require('../assets/Icons/hamper.png'),
+    itemsCircle: require('../assets/Icons/itemscircle.png'),
   },
 
   images: {
