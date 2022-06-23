@@ -71,3 +71,60 @@ export const TextButton = styled.Text`
 export const RemoveButton = styled.TouchableOpacity`
   right: 20;
 `;
+
+export const WrapperCartButton = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-left: ${RFValue(80)}px;
+`;
+
+export const AddQuantityButton = styled.TouchableOpacity`
+  position: absolute;
+  margin-left: ${RFValue(75)}px;
+`;
+
+export const AddQuantityButtonImage = styled.Image`
+  width: ${RFValue(10)}px;
+  height: ${RFValue(10)}px;
+`;
+export const RemoveCartButton = styled.TouchableOpacity`
+  justify-content: center;
+  position: absolute;
+  margin-left: ${RFValue(20)}px;
+  width: ${RFValue(10)}px;
+  height: ${RFValue(10)}px;
+`;
+
+export const RemoveQuantityButtonImage = styled.Image`
+  width: ${RFValue(10)}px;
+  height: ${RFValue(5)}px;
+`;
+
+export const NumberOfQuantityWrapper = styled.View`
+  width: ${RFValue(20)}px;
+  height: ${RFValue(20)}px;
+  background-color: ${({theme}) => theme.colors.background_red};
+  border-radius: ${RFValue(4)}px;
+  align-items: center;
+  justify-content: center;
+  margin-left: ${RFValue(45)}px;
+`;
+
+export const Number = styled.Text`
+  font-size: ${RFValue(12)}px;
+  font-weight: 700;
+  color: ${({theme}) => theme.colors.text_white};
+`;
+
+export const LitterButton = styled.TouchableOpacity`
+  justify-content: center;
+  position: absolute;
+  margin-left: ${RFValue(22)}px;
+`;
+
+export const LitterImage = styled.Image`
+  width: ${RFValue(14)}px;
+  height: ${RFValue(14)}px;
+`;

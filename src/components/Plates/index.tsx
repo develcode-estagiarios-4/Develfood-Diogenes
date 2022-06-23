@@ -17,6 +17,15 @@ import {
   AddButton,
   TextButton,
   RemoveButton,
+  WrapperCartButton,
+  AddQuantityButton,
+  AddQuantityButtonImage,
+  RemoveCartButton,
+  RemoveQuantityButtonImage,
+  NumberOfQuantityWrapper,
+  Number,
+  LitterButton,
+  LitterImage,
 } from './styles';
 
 interface ListPlatesProps {
@@ -45,7 +54,7 @@ export function Plates({
 
   const {token} = useAuth();
 
-  const {addProductToCart, removeProductFromCart} = useCreateCart();
+  const {addProductToCart, removeProductFromCart, cart} = useCreateCart();
 
   const {data, fetchData} = useFetch<Photos>(source, {
     headers: {
@@ -78,12 +87,36 @@ export function Plates({
 
         <WrapperAdvancedInfo>
           <Price>R$ {priceFormatted}</Price>
-          <AddButton onPress={() => addProductToCart(id, price, restaurantID)}>
-            <TextButton>Adicionar</TextButton>
-          </AddButton>
-          <RemoveButton onPress={() => removeProductFromCart(id, price)}>
-            <TextButton>Remover</TextButton>
-          </RemoveButton>
+          {cart.find((item: any) => item?.id === id)?.quantity > 0 ? (
+            <WrapperCartButton>
+              <AddQuantityButton
+                onPress={() => addProductToCart(id, price, restaurantID)}>
+                <AddQuantityButtonImage source={theme.icons.add} />
+              </AddQuantityButton>
+
+              <NumberOfQuantityWrapper>
+                <Number>
+                  {cart.find((item: any) => item?.id === id)?.quantity}
+                </Number>
+              </NumberOfQuantityWrapper>
+
+              {cart.find((item: any) => item?.id === id)?.quantity > 1 ? (
+                <RemoveCartButton
+                  onPress={() => removeProductFromCart(id, price)}>
+                  <RemoveQuantityButtonImage source={theme.icons.remove} />
+                </RemoveCartButton>
+              ) : (
+                <LitterButton onPress={() => removeProductFromCart(id, price)}>
+                  <LitterImage source={theme.icons.litter} />
+                </LitterButton>
+              )}
+            </WrapperCartButton>
+          ) : (
+            <AddButton
+              onPress={() => addProductToCart(id, price, restaurantID)}>
+              <TextButton>Adicionar</TextButton>
+            </AddButton>
+          )}
         </WrapperAdvancedInfo>
       </WrapperPlateInfo>
     </Container>

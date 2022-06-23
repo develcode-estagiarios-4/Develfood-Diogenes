@@ -53,6 +53,9 @@ export default {
     iconLocale: require('../assets/Icons/locale.png'),
     favoriteRestaurant: require('../assets/Icons/favoriteRestaurant.png'),
     starRatio: require('../assets/Icons/star.png'),
+    add: require('../assets/Icons/add.png'),
+    remove: require('../assets/Icons/remove.png'),
+    litter: require('../assets/Icons/litter.png'),
   },
 
   images: {
