@@ -16,7 +16,6 @@ import {
   Price,
   AddButton,
   TextButton,
-  RemoveButton,
   WrapperCartButton,
   AddQuantityButton,
   AddQuantityButtonImage,
