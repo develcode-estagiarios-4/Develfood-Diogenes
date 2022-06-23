@@ -79,8 +79,8 @@ function CartProvider({children}: AuthProviderProps) {
 
     if (item.quantity > 1) {
       setTotal(total - item.price);
-      setCart(removeAllProducts);
       setTotalItems(totalItems - item.quantity);
+      setCart(removeAllProducts.filter((product: any) => product.id !== id));
     }
   }
 
