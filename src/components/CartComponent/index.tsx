@@ -1,4 +1,5 @@
 import React from 'react';
+import {RFValue} from 'react-native-responsive-fontsize';
 import {useTheme} from 'styled-components';
 import {useCreateCart} from '../../global/Context/Cart';
 import {
@@ -15,7 +16,11 @@ import {
   CartItemsEnd,
 } from './styles';
 
-export function CartComponent() {
+interface CartProps {
+  BottomBar: boolean;
+}
+
+export function CartComponent({BottomBar}: CartProps) {
   const theme = useTheme();
 
   const {totalItems, total} = useCreateCart();
@@ -28,7 +33,7 @@ export function CartComponent() {
   const priceFormatted = priceConverter();
 
   return (
-    <WrapperCartComponent>
+    <WrapperCartComponent bottom={BottomBar ? RFValue(95) : RFValue(50)}>
       <Container>
         <HamperImage source={theme.icons.hamper} />
         <WrapperImage>

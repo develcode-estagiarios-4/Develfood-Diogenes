@@ -29,10 +29,10 @@ export default {
   },
 
   icons: {
-    home: require('../assets/tabIcons/home.png'),
-    favorite: require('../assets/tabIcons/favorite.png'),
-    list: require('../assets/tabIcons/list.png'),
-    user: require('../assets/tabIcons/user.png'),
+    home: require('../assets/Icons/home.png'),
+    favorite: require('../assets/Icons/favorite.png'),
+    deliverylist: require('../assets/Icons/deliverylist.png'),
+    profile: require('../assets/Icons/profile.png'),
     email: require('../assets/loginIcons/E-mail.png'),
     password: require('../assets/loginIcons/Senha.png'),
     eye: require('../assets/loginIcons/eye.png'),

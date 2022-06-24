@@ -2,7 +2,6 @@
 import React, {createContext, useContext, useState} from 'react';
 import {useEffect} from 'react';
 import {Alert} from 'react-native';
-import {CartComponent} from '../../components/CartComponent';
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -85,6 +84,17 @@ function CartProvider({children}: AuthProviderProps) {
     }
   }
 
+  function clearCart(id: any) {
+    const removeAllProducts = [...cart];
+    const item = removeAllProducts.find((product: any) => product.id === id);
+
+    if (item.quantity > 1) {
+      setCart([]);
+      setTotal(0);
+      setTotalItems(0);
+    }
+  }
+
   return (
     <CartContext.Provider
       value={{
@@ -94,9 +104,9 @@ function CartProvider({children}: AuthProviderProps) {
         total,
         removeProductFromCart,
         removeAllProductsFromCart,
+        clearCart,
       }}>
       {children}
-      {totalItems > 0 && <CartComponent />}
     </CartContext.Provider>
   );
 }

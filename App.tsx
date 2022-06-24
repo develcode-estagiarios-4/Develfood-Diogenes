@@ -7,6 +7,7 @@ import {useEffect} from 'react';
 import {AuthProvider} from './src/global/Context';
 import {AppRoutes} from './src/global/Routes';
 import {CreateUserProvider} from './src/global/Context/createUserAuth';
+import {CartProvider} from './src/global/Context/Cart';
 
 export default function App() {
   useEffect(() => {
@@ -15,13 +16,15 @@ export default function App() {
 
   return (
     <AuthProvider>
-      <CreateUserProvider>
-        <ThemeProvider theme={theme}>
-          <NavigationContainer>
-            <AppRoutes />
-          </NavigationContainer>
-        </ThemeProvider>
-      </CreateUserProvider>
+      <CartProvider>
+        <CreateUserProvider>
+          <ThemeProvider theme={theme}>
+            <NavigationContainer>
+              <AppRoutes />
+            </NavigationContainer>
+          </ThemeProvider>
+        </CreateUserProvider>
+      </CartProvider>
     </AuthProvider>
   );
 }

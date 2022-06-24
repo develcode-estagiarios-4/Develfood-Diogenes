@@ -1,19 +1,23 @@
 import {RFValue} from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 
+export interface CartStyleProps {
+  bottom: number;
+}
+
 export const Container = styled.View`
   width: 100%;
   height: ${RFValue(40)}px;
   position: absolute;
   background-color: ${({theme}) => theme.colors.background_red};
-  bottom: ${RFValue(12)}px;
   border-radius: ${RFValue(6)}px;
   flex-direction: row;
   align-items: center;
 `;
 
-export const WrapperCartComponent = styled.View`
+export const WrapperCartComponent = styled.TouchableOpacity`
   margin: 0 ${RFValue(9)}px;
+  bottom: ${(props: CartStyleProps) => (props.bottom ? props.bottom : 10)}px;
 `;
 
 export const HamperImage = styled.Image`
@@ -50,7 +54,7 @@ export const CartItems = styled.Text`
   font-size: ${RFValue(8)}px;
 `;
 
-export const GoToCart = styled.TouchableOpacity`
+export const GoToCart = styled.View`
   width: ${RFValue(100)}px;
   height: ${RFValue(40)}px;
 `;

@@ -6,10 +6,12 @@ import {ActivityIndicator, StatusBar, View} from 'react-native';
 import {useTheme} from 'styled-components';
 import {useDebouncedCallback} from 'use-debounce';
 import {BackButton} from '../../components/BackButton';
+import {CartComponent} from '../../components/CartComponent';
 import {Input} from '../../components/Input';
 import {ListEmptyComponent} from '../../components/ListEmptyComponent';
 import {Plates} from '../../components/Plates';
 import {useAuth} from '../../global/Context';
+import {useCreateCart} from '../../global/Context/Cart';
 import {useFetch} from '../../global/services/get';
 
 import {
@@ -61,6 +63,8 @@ export function RestaurantProfile({route}: any) {
   const [filter, setFilter] = useState('');
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const {totalItems} = useCreateCart();
 
   const {fetchData} = useFetch<Plate[]>(
     `/plate/search?name=${filter}&restaurantid=${id}`,
@@ -202,6 +206,7 @@ export function RestaurantProfile({route}: any) {
           ) : null
         }
       />
+      {totalItems > 0 && <CartComponent BottomBar={false} />}
     </Container>
   );
 }
