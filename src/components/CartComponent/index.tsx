@@ -26,7 +26,7 @@ export function CartComponent({BottomBar}: CartProps) {
   const {totalItems, total} = useCreateCart();
 
   function priceConverter() {
-    const priceWZeros = parseFloat(total).toFixed(2);
+    const priceWZeros = parseFloat(String(total)).toFixed(2);
     const priceFormatted = priceWZeros.toString().replace('.', ',');
     return priceFormatted;
   }

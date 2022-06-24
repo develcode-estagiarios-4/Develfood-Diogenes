@@ -7,10 +7,27 @@ interface AuthProviderProps {
   children: React.ReactNode;
 }
 
-const CartContext = createContext({} as any);
+interface Props {
+  addProductToCart: Function;
+  removeProductFromCart: Function;
+  removeAllProductsFromCart: Function;
+  clearCart: Function;
+  cart: any;
+  totalItems: number;
+  total: number;
+}
+
+interface ItemProps {
+  id: any;
+  quantity: number;
+  price: number;
+  restaurantID: number;
+}
+
+const CartContext = createContext({} as Props);
 
 function CartProvider({children}: AuthProviderProps) {
-  const [cart, setCart] = useState<any[]>([]);
+  const [cart, setCart] = useState<ItemProps[]>([]);
 
   const [total, setTotal] = useState(0);
 
@@ -23,7 +40,7 @@ function CartProvider({children}: AuthProviderProps) {
   function addProductToCart(id: any, price: number, restaurantID: any) {
     const addingProducts = [...cart];
 
-    const item = addingProducts.find((product: any) => product.id === id);
+    const item = addingProducts.find((product: ItemProps) => product.id === id);
 
     const fromOtherRestaurant = addingProducts.find(
       (product: any) => product.restaurantID !== restaurantID,
