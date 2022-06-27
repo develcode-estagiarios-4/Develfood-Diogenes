@@ -9,11 +9,9 @@ import {
   ItemsCircle,
   WrapperImage,
   CartItems,
-  WrapperItems,
   GoToCart,
   ShowCart,
   TotalPrice,
-  CartItemsEnd,
 } from './styles';
 
 interface CartProps {
@@ -39,18 +37,18 @@ export function CartComponent({BottomBar}: CartProps) {
         <WrapperImage>
           {totalItems > 0 && totalItems <= 9 ? (
             <>
-              <ItemsCircle source={theme.icons.itemsCircle} />
-              <WrapperItems>
+              <ItemsCircle>
                 <CartItems>{totalItems}</CartItems>
-              </WrapperItems>
+              </ItemsCircle>
             </>
           ) : totalItems > 9 ? (
             <>
-              <ItemsCircle source={theme.icons.itemsCircle} />
-              <CartItemsEnd>9+</CartItemsEnd>
+              <ItemsCircle>
+                <CartItems>9+</CartItems>
+              </ItemsCircle>
             </>
           ) : (
-            <ItemsCircle source={theme.icons.itemsCircle} />
+            <ItemsCircle />
           )}
         </WrapperImage>
 
