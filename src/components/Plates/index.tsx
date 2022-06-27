@@ -35,6 +35,9 @@ interface ListPlatesProps {
   price: string;
   source: string;
   restaurantID: number;
+  restaurantName: string;
+  restaurantPhoto: string;
+  restaurantFoodTypes: string;
 }
 
 interface Photos {
@@ -48,6 +51,9 @@ export function Plates({
   price,
   source,
   restaurantID,
+  restaurantName,
+  restaurantPhoto,
+  restaurantFoodTypes,
   id,
 }: ListPlatesProps) {
   const theme = useTheme();
@@ -92,7 +98,16 @@ export function Plates({
           {cart.find((item: any) => item?.id === id)?.quantity > 0 ? (
             <WrapperCartButton>
               <AddQuantityButton
-                onPress={() => addProductToCart(id, price, restaurantID)}>
+                onPress={() =>
+                  addProductToCart(
+                    id,
+                    price,
+                    restaurantID,
+                    restaurantName,
+                    restaurantPhoto,
+                    restaurantFoodTypes,
+                  )
+                }>
                 <AddQuantityButtonImage source={theme.icons.add} />
               </AddQuantityButton>
 

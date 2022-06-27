@@ -22,6 +22,9 @@ interface ItemProps {
   quantity: number;
   price: number;
   restaurantID: number;
+  restaurantName: string;
+  restaurantPhoto: string;
+  restaurantFoodTypes: string;
 }
 
 const CartContext = createContext({} as Props);
@@ -37,7 +40,14 @@ function CartProvider({children}: AuthProviderProps) {
     console.log(cart, total, totalItems);
   }, [cart]);
 
-  function addProductToCart(id: any, price: number, restaurantID: any) {
+  function addProductToCart(
+    id: any,
+    price: number,
+    restaurantID: any,
+    restaurantName: string,
+    restaurantPhoto: string,
+    restaurantFoodTypes: string,
+  ) {
     const addingProducts = [...cart];
 
     const item = addingProducts.find((product: ItemProps) => product.id === id);
@@ -53,6 +63,9 @@ function CartProvider({children}: AuthProviderProps) {
           quantity: 1,
           price: price,
           restaurantID: restaurantID,
+          restaurantName: restaurantName,
+          restaurantPhoto: restaurantPhoto,
+          restaurantFoodTypes: restaurantFoodTypes,
         });
       } else {
         item.quantity += 1;

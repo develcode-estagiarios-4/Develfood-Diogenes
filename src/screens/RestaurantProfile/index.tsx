@@ -38,7 +38,7 @@ interface Plate {
   name: string;
   description: string;
   price: number;
-  foodType: string;
+  food_types: string;
   retaurantName: string;
   photo_url: string;
 }
@@ -109,6 +109,10 @@ export function RestaurantProfile({route}: any) {
 
   function handlerBackButton() {
     navigation.navigate('Home' as never);
+  }
+
+  function handlerCartScreen() {
+    navigation.navigate('CartScreen' as never);
   }
 
   useEffect(() => {
@@ -197,6 +201,9 @@ export function RestaurantProfile({route}: any) {
               source={item.photo_url}
               restaurantID={id}
               id={item.id}
+              restaurantFoodTypes={item.food_types}
+              restaurantName={item.name}
+              restaurantPhoto={item.photo_url}
             />
           </PlatesWrapper>
         )}
@@ -206,7 +213,9 @@ export function RestaurantProfile({route}: any) {
           ) : null
         }
       />
-      {totalItems > 0 && <CartComponent BottomBar={false} />}
+      {totalItems > 0 && (
+        <CartComponent BottomBar={false} onPress={handlerCartScreen} />
+      )}
     </Container>
   );
 }

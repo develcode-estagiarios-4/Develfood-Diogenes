@@ -58,6 +58,7 @@ export default {
     litter: require('../assets/Icons/litter.png'),
     hamper: require('../assets/Icons/hamper.png'),
     itemsCircle: require('../assets/Icons/itemscircle.png'),
+    exitWhite: require('../assets/Icons/exitwhite.png'),
   },
 
   images: {

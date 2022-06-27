@@ -16,9 +16,10 @@ import {
 
 interface CartProps {
   BottomBar: boolean;
+  onPress: () => void;
 }
 
-export function CartComponent({BottomBar}: CartProps) {
+export function CartComponent({BottomBar, onPress}: CartProps) {
   const theme = useTheme();
 
   const {totalItems, total} = useCreateCart();
@@ -31,7 +32,9 @@ export function CartComponent({BottomBar}: CartProps) {
   const priceFormatted = priceConverter();
 
   return (
-    <WrapperCartComponent bottom={BottomBar ? RFValue(95) : RFValue(50)}>
+    <WrapperCartComponent
+      onPress={onPress}
+      bottom={BottomBar ? RFValue(95) : RFValue(50)}>
       <Container>
         <HamperImage source={theme.icons.hamper} />
         <WrapperImage>
