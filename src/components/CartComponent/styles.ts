@@ -65,7 +65,7 @@ export const ShowCart = styled.Text`
 `;
 
 export const TotalPrice = styled.Text`
-  left: ${RFValue(180)}px;
+  left: ${RFValue(170)}px;
   color: ${({theme}) => theme.colors.text_white};
   font-weight: 400;
   font-size: ${RFValue(12)}px;

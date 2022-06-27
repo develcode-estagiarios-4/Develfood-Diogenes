@@ -11,4 +11,6 @@ export const Header = styled.View`
   align-items: center;
 `;
 
+export const Title = styled.Text``;
+
 export const MapImage = styled.Image``;
