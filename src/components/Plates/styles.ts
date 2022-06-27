@@ -52,6 +52,10 @@ export const WrapperAdvancedInfo = styled.View`
   justify-content: space-between;
 `;
 
+export const PriceWrapper = styled.View`
+  width: ${RFValue(100)}px;
+`;
+
 export const Price = styled.Text`
   font-size: ${RFValue(12)}px;
   font-weight: 700;
@@ -77,7 +81,7 @@ export const WrapperCartButton = styled.View`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin-left: ${RFValue(80)}px;
+  left: ${RFValue(20)}px;
 `;
 
 export const AddQuantityButton = styled.TouchableOpacity`

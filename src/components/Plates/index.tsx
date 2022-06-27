@@ -25,6 +25,7 @@ import {
   Number,
   LitterButton,
   LitterImage,
+  PriceWrapper,
 } from './styles';
 
 interface ListPlatesProps {
@@ -85,7 +86,9 @@ export function Plates({
         <PlateInfo>{description}</PlateInfo>
 
         <WrapperAdvancedInfo>
-          <Price>R$ {priceFormatted}</Price>
+          <PriceWrapper>
+            <Price>R$ {priceFormatted}</Price>
+          </PriceWrapper>
           {cart.find((item: any) => item?.id === id)?.quantity > 0 ? (
             <WrapperCartButton>
               <AddQuantityButton
