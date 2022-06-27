@@ -45,6 +45,12 @@ interface Photos {
   code: string;
 }
 
+interface ItemProps {
+  id: string;
+  quantity: number;
+  price: number;
+}
+
 export function Plates({
   name,
   description,
@@ -95,7 +101,7 @@ export function Plates({
           <PriceWrapper>
             <Price>R$ {priceFormatted}</Price>
           </PriceWrapper>
-          {cart.find((item: any) => item?.id === id)?.quantity > 0 ? (
+          {cart.find((item: ItemProps) => item?.id === id)?.quantity > 0 ? (
             <WrapperCartButton>
               <AddQuantityButton
                 onPress={() =>
@@ -117,7 +123,7 @@ export function Plates({
                 </Number>
               </NumberOfQuantityWrapper>
 
-              {cart.find((item: any) => item?.id === id)?.quantity > 1 ? (
+              {cart.find((item: ItemProps) => item?.id === id)?.quantity > 1 ? (
                 <RemoveCartButton
                   onPress={() => removeProductFromCart(id, price)}>
                   <RemoveQuantityButtonImage source={theme.icons.remove} />

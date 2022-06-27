@@ -10,15 +10,15 @@ interface AuthProviderProps {
 interface Props {
   addProductToCart: Function;
   removeProductFromCart: Function;
-  removeAllProductsFromCart: Function;
+  deleteFromCart: Function;
   clearCart: Function;
-  cart: any;
+  cart: ItemProps[];
   totalItems: number;
   total: number;
 }
 
 interface ItemProps {
-  id: any;
+  id: string;
   quantity: number;
   price: number;
   restaurantID: number;
@@ -102,7 +102,7 @@ function CartProvider({children}: AuthProviderProps) {
     }
   }
 
-  function removeAllProductsFromCart(id: any) {
+  function deleteFromCart(id: string) {
     const removeAllProducts = [...cart];
 
     const item = removeAllProducts.find((product: any) => product.id === id);
@@ -133,7 +133,7 @@ function CartProvider({children}: AuthProviderProps) {
         totalItems,
         total,
         removeProductFromCart,
-        removeAllProductsFromCart,
+        deleteFromCart,
         clearCart,
       }}>
       {children}
