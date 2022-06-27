@@ -27,7 +27,7 @@ interface ItemProps {
 const CartContext = createContext({} as Props);
 
 function CartProvider({children}: AuthProviderProps) {
-  const [cart, setCart] = useState<ItemProps[]>([]);
+  const [cart, setCart] = useState<any[]>([]);
 
   const [total, setTotal] = useState(0);
 
