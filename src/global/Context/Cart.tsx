@@ -8,13 +8,17 @@ interface AuthProviderProps {
 }
 
 interface Props {
+  addNewProductoCart: Function;
   addProductToCart: Function;
   removeProductFromCart: Function;
-  deleteFromCart: Function;
+  cleanUpSamePlates: Function;
   clearCart: Function;
   cart: ItemProps[];
   totalItems: number;
   total: number;
+  nameRestaurant: string;
+  foodTypes: any;
+  restaurantPhoto: string;
 }
 
 interface ItemProps {
@@ -22,9 +26,12 @@ interface ItemProps {
   quantity: number;
   price: number;
   restaurantID: number;
-  restaurantName: string;
-  restaurantPhoto: string;
+  name: string;
+  description: string;
+  source: string;
   restaurantFoodTypes: string;
+  restaurantName: string;
+  photoRestaurant: string;
 }
 
 const CartContext = createContext({} as Props);
@@ -36,21 +43,78 @@ function CartProvider({children}: AuthProviderProps) {
 
   const [totalItems, setTotalItems] = useState<any>(0);
 
+  const [nameRestaurant, setNameRestaurant] = useState('');
+
+  const [foodTypes, setFoodTypes] = useState<any>([]);
+
+  const [restaurantPhoto, setRestaurantPhoto] = useState('');
+
   useEffect(() => {
     console.log(cart, total, totalItems);
   }, [cart]);
 
-  function addProductToCart(
-    id: any,
+  function addNewProductoCart(
+    id: string,
     price: number,
-    restaurantID: any,
-    restaurantName: string,
-    restaurantPhoto: string,
+    restaurantID: number,
+    name: string,
+    description: string,
+    source: string,
     restaurantFoodTypes: string,
+    restaurantName: string,
+    photoRestaurant: string,
+  ) {
+    const addProducts = [...cart];
+
+    const item = addProducts.find((product: any) => product.id === id);
+
+    const fromOtherRestaurant = addProducts.find(
+      (product: any) => product.restaurantID !== restaurantID,
+    );
+
+    if (!fromOtherRestaurant) {
+      if (!item) {
+        addProducts.push({
+          id,
+          quantity: 1,
+          price,
+          unityPrice: price,
+          restaurantID,
+          name,
+          description,
+          source,
+          restaurantFoodTypes,
+          restaurantName,
+          photoRestaurant,
+        });
+      } else {
+        item.quantity += 1;
+        item.price += price;
+      }
+      setCart(addProducts);
+      setTotal(total + price);
+      setTotalItems(totalItems + 1);
+      setNameRestaurant(restaurantName);
+      setFoodTypes(restaurantFoodTypes);
+      setRestaurantPhoto(photoRestaurant);
+    } else {
+      Alert.alert(
+        'Você não pode adicionar produtos de restaurantes diferentes',
+      );
+    }
+  }
+
+  function addProductToCart(
+    id: string,
+    price: number,
+    restaurantID: number,
+    name: string,
+    description: string,
+    source: string,
   ) {
     const addingProducts = [...cart];
 
-    const item = addingProducts.find((product: ItemProps) => product.id === id);
+    const item = addingProducts.find((product: any) => product.id === id);
 
     const fromOtherRestaurant = addingProducts.find(
       (product: any) => product.restaurantID !== restaurantID,
@@ -59,13 +123,13 @@ function CartProvider({children}: AuthProviderProps) {
     if (!fromOtherRestaurant) {
       if (!item) {
         addingProducts.push({
-          id: id,
+          id,
           quantity: 1,
-          price: price,
-          restaurantID: restaurantID,
-          restaurantName: restaurantName,
-          restaurantPhoto: restaurantPhoto,
-          restaurantFoodTypes: restaurantFoodTypes,
+          price,
+          restaurantID,
+          name,
+          description,
+          source,
         });
       } else {
         item.quantity += 1;
@@ -102,7 +166,7 @@ function CartProvider({children}: AuthProviderProps) {
     }
   }
 
-  function deleteFromCart(id: string) {
+  function cleanUpSamePlates(id: string) {
     const removeAllProducts = [...cart];
 
     const item = removeAllProducts.find((product: any) => product.id === id);
@@ -129,12 +193,16 @@ function CartProvider({children}: AuthProviderProps) {
     <CartContext.Provider
       value={{
         cart,
+        addNewProductoCart,
         addProductToCart,
         totalItems,
         total,
         removeProductFromCart,
-        deleteFromCart,
+        cleanUpSamePlates,
         clearCart,
+        nameRestaurant,
+        foodTypes,
+        restaurantPhoto,
       }}>
       {children}
     </CartContext.Provider>

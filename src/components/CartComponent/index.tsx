@@ -5,7 +5,7 @@ import {useCreateCart} from '../../global/Context/Cart';
 import {
   Container,
   WrapperCartComponent,
-  HamperImage,
+  BasketImage,
   ItemsCircle,
   WrapperImage,
   CartItems,
@@ -25,7 +25,7 @@ export function CartComponent({BottomBar, onPress}: CartProps) {
   const {totalItems, total} = useCreateCart();
 
   function priceConverter() {
-    const priceWZeros = parseFloat(String(total)).toFixed(2);
+    const priceWZeros = parseFloat(total.toString()).toFixed(2);
     const priceFormatted = priceWZeros.toString().replace('.', ',');
     return priceFormatted;
   }
@@ -36,7 +36,7 @@ export function CartComponent({BottomBar, onPress}: CartProps) {
       onPress={onPress}
       bottom={BottomBar ? RFValue(95) : RFValue(50)}>
       <Container>
-        <HamperImage source={theme.icons.hamper} />
+        <BasketImage source={theme.icons.hamper} />
         <WrapperImage>
           {totalItems > 0 && totalItems <= 9 ? (
             <>

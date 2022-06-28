@@ -1,6 +1,10 @@
 import {RFValue} from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 
+export interface CartStyleProps {
+  insideCart: number;
+}
+
 export const Container = styled.View.attrs({
   elevation: 10,
 })`
@@ -81,7 +85,8 @@ export const WrapperCartButton = styled.View`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  left: ${RFValue(20)}px;
+  left: ${(props: CartStyleProps) =>
+    props.insideCart ? props.insideCart : 10}px;
 `;
 
 export const AddQuantityButton = styled.TouchableOpacity`

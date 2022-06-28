@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect} from 'react';
+import {RFValue} from 'react-native-responsive-fontsize';
 import {useTheme} from 'styled-components';
 import {useAuth} from '../../global/Context';
 import {useCreateCart} from '../../global/Context/Cart';
@@ -35,9 +36,10 @@ interface ListPlatesProps {
   price: string;
   source: string;
   restaurantID: number;
-  restaurantName: string;
-  restaurantPhoto: string;
   restaurantFoodTypes: string;
+  restaurantName: string;
+  inside: boolean;
+  photoRestaurant: string;
 }
 
 interface Photos {
@@ -57,16 +59,18 @@ export function Plates({
   price,
   source,
   restaurantID,
-  restaurantName,
-  restaurantPhoto,
-  restaurantFoodTypes,
   id,
+  restaurantFoodTypes,
+  restaurantName,
+  photoRestaurant,
+  inside,
 }: ListPlatesProps) {
   const theme = useTheme();
 
   const {token} = useAuth();
 
-  const {addProductToCart, removeProductFromCart, cart} = useCreateCart();
+  const {addProductToCart, removeProductFromCart, cart, addNewProductoCart} =
+    useCreateCart();
 
   const {data, fetchData} = useFetch<Photos>(source, {
     headers: {
@@ -101,19 +105,11 @@ export function Plates({
           <PriceWrapper>
             <Price>R$ {priceFormatted}</Price>
           </PriceWrapper>
-          {cart.find((item: ItemProps) => item?.id === id)?.quantity > 0 ? (
-            <WrapperCartButton>
+
+          {cart.find((item?: ItemProps) => item?.id === id)?.quantity > 0 ? (
+            <WrapperCartButton insideCart={inside ? RFValue(5) : RFValue(20)}>
               <AddQuantityButton
-                onPress={() =>
-                  addProductToCart(
-                    id,
-                    price,
-                    restaurantID,
-                    restaurantName,
-                    restaurantPhoto,
-                    restaurantFoodTypes,
-                  )
-                }>
+                onPress={() => addProductToCart(id, price, restaurantID)}>
                 <AddQuantityButtonImage source={theme.icons.add} />
               </AddQuantityButton>
 
@@ -136,7 +132,19 @@ export function Plates({
             </WrapperCartButton>
           ) : (
             <AddButton
-              onPress={() => addProductToCart(id, price, restaurantID)}>
+              onPress={() =>
+                addNewProductoCart(
+                  id,
+                  price,
+                  restaurantID,
+                  name,
+                  description,
+                  source,
+                  restaurantFoodTypes,
+                  restaurantName,
+                  photoRestaurant,
+                )
+              }>
               <TextButton>Adicionar</TextButton>
             </AddButton>
           )}

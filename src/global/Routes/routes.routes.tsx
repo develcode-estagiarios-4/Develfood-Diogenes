@@ -23,8 +23,8 @@ export function Routes() {
 
   const {totalItems} = useCreateCart();
 
-  function handlerCartScreen() {
-    navigation.navigate('CartScreen' as never);
+  function handlerCheckoutScreen() {
+    navigation.navigate('Checkout' as never);
   }
 
   return (
@@ -103,7 +103,7 @@ export function Routes() {
       </Tabs.Navigator>
       {/* <TabBar /> */}
       {totalItems > 0 && (
-        <CartComponent BottomBar onPress={handlerCartScreen} />
+        <CartComponent BottomBar onPress={handlerCheckoutScreen} />
       )}
     </>
   );

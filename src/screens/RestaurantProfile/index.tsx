@@ -35,11 +35,8 @@ import {
 
 interface Plate {
   id: number;
-  name: string;
   description: string;
   price: number;
-  food_types: string;
-  retaurantName: string;
   photo_url: string;
 }
 interface Photo {
@@ -111,8 +108,8 @@ export function RestaurantProfile({route}: any) {
     navigation.navigate('Home' as never);
   }
 
-  function handlerCartScreen() {
-    navigation.navigate('CartScreen' as never);
+  function handlerCheckoutScreen() {
+    navigation.navigate('Checkout' as never);
   }
 
   useEffect(() => {
@@ -195,15 +192,16 @@ export function RestaurantProfile({route}: any) {
         renderItem={({item}: any) => (
           <PlatesWrapper>
             <Plates
+              inside={false}
               name={item.name}
               description={item.description}
               price={item.price}
               source={item.photo_url}
               restaurantID={id}
               id={item.id}
-              restaurantFoodTypes={item.food_types}
-              restaurantName={item.name}
-              restaurantPhoto={item.photo_url}
+              restaurantFoodTypes={food_types}
+              restaurantName={name}
+              photoRestaurant={photo_url}
             />
           </PlatesWrapper>
         )}
@@ -214,7 +212,7 @@ export function RestaurantProfile({route}: any) {
         }
       />
       {totalItems > 0 && (
-        <CartComponent BottomBar={false} onPress={handlerCartScreen} />
+        <CartComponent BottomBar={false} onPress={handlerCheckoutScreen} />
       )}
     </Container>
   );

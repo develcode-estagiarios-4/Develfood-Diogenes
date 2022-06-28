@@ -59,6 +59,7 @@ export default {
     hamper: require('../assets/Icons/hamper.png'),
     itemsCircle: require('../assets/Icons/itemscircle.png'),
     exitWhite: require('../assets/Icons/exitwhite.png'),
+    dollar: require('../assets/Icons/dollar.png'),
   },
 
   images: {
@@ -71,5 +72,6 @@ export default {
     pizzaImage: require('../assets/Images/pizza.png'),
     camaraoImage: require('../assets/Images/camarao.png'),
     notFound: require('../assets/Images/not_found.png'),
+    mapImage: require('../assets/Images/mapImage.png'),
   },
 };

@@ -20,7 +20,7 @@ export const WrapperCartComponent = styled.TouchableOpacity`
   bottom: ${(props: CartStyleProps) => (props.bottom ? props.bottom : 10)}px;
 `;
 
-export const HamperImage = styled.Image`
+export const BasketImage = styled.Image`
   position: absolute;
   left: ${RFValue(17)}px;
   width: ${RFValue(18)}px;
