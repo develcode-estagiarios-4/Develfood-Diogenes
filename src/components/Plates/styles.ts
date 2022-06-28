@@ -140,3 +140,29 @@ export const LitterImage = styled.Image`
   width: ${RFValue(14)}px;
   height: ${RFValue(14)}px;
 `;
+
+export const CleanUpWrapper = styled.View`
+  background-color: red;
+  position: absolute;
+  border-radius: ${RFValue(8)}px;
+  height: ${RFValue(103)}px;
+  width: ${RFValue(100)}px;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const CleanUpButton = styled.TouchableOpacity`
+  align-items: center;
+`;
+
+export const CleanUpImage = styled.Image`
+  width: ${RFValue(20)}px;
+  height: ${RFValue(20)}px;
+  color: ${({theme}) => theme.colors.icon_white};
+`;
+
+export const CleanUpTitle = styled.Text`
+  font-size: ${RFValue(12)}px;
+  color: ${({theme}) => theme.colors.text_white};
+  font-weight: 400;
+`;

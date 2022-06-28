@@ -207,7 +207,10 @@ export function RestaurantProfile({route}: any) {
         )}
         ListEmptyComponent={
           !isLoading ? (
-            <ListEmptyComponent title="Nenhum prato encontrado" />
+            <ListEmptyComponent
+              source={theme.images.notFound}
+              title="Nenhum prato encontrado"
+            />
           ) : null
         }
       />

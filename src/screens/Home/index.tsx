@@ -215,7 +215,10 @@ export function Home() {
           }}
           ListEmptyComponent={
             !isLoading ? (
-              <ListEmptyComponent title="Nenhum restaurante encontrado" />
+              <ListEmptyComponent
+                source={theme.images.notFound}
+                title="Nenhum restaurante encontrado"
+              />
             ) : null
           }
         />

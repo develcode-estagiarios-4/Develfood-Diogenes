@@ -60,6 +60,7 @@ export default {
     itemsCircle: require('../assets/Icons/itemscircle.png'),
     exitWhite: require('../assets/Icons/exitwhite.png'),
     dollar: require('../assets/Icons/dollar.png'),
+    cleanUp: require('../assets/Icons/cleanUp.png'),
   },
 
   images: {
@@ -73,5 +74,6 @@ export default {
     camaraoImage: require('../assets/Images/camarao.png'),
     notFound: require('../assets/Images/not_found.png'),
     mapImage: require('../assets/Images/mapImage.png'),
+    checkoutEmpty: require('../assets/Images/checkoutEmpty.png'),
   },
 };

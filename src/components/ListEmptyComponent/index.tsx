@@ -1,18 +1,16 @@
 import React from 'react';
-import {Image} from 'react-native';
-import {useTheme} from 'styled-components';
+import {Image, ImageSourcePropType} from 'react-native';
 import {Container, Title} from './styles';
 
 interface ListEmptyComponentProps {
   title: string;
+  source: ImageSourcePropType;
 }
 
-export function ListEmptyComponent({title}: ListEmptyComponentProps) {
-  const theme = useTheme();
-
+export function ListEmptyComponent({source, title}: ListEmptyComponentProps) {
   return (
     <Container>
-      <Image source={theme.images.notFound} />
+      <Image source={source} />
       <Title>{title}</Title>
     </Container>
   );

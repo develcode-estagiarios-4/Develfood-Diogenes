@@ -5,10 +5,12 @@ import {StatusBar} from 'react-native';
 import {useTheme} from 'styled-components';
 import {BackButton} from '../../components/BackButton';
 import {CheckoutComponent} from '../../components/CheckoutComponent';
+import {ListEmptyComponent} from '../../components/ListEmptyComponent';
 import {Plates} from '../../components/Plates';
 import {useAuth} from '../../global/Context';
 import {useCreateCart} from '../../global/Context/Cart';
 import {useFetch} from '../../global/services/get';
+
 import {
   Container,
   Header,
@@ -30,6 +32,7 @@ import {
   TitleCart,
   CartList,
   WrapperCartPlates,
+  FooterComponent,
 } from './styles';
 
 interface PlateProps {
@@ -113,46 +116,57 @@ export function Checkout({
         <Title>Compras</Title>
       </Header>
 
-      <WrapperInfo>
-        <MapImage source={theme.images.mapImage} />
+      {cart.length > 0 ? (
+        <>
+          <WrapperInfo>
+            <MapImage source={theme.images.mapImage} />
 
-        <WrapperAddresInfo>
-          <SubTitle>Entregar em:</SubTitle>
-          <Street>Garusogil 43</Street>
-          <Neighborhood>Gangnam - Garusogil 43</Neighborhood>
-        </WrapperAddresInfo>
-      </WrapperInfo>
+            <WrapperAddresInfo>
+              <SubTitle>Entregar em:</SubTitle>
+              <Street>Garusogil 43</Street>
+              <Neighborhood>Gangnam - Garusogil 43</Neighborhood>
+            </WrapperAddresInfo>
+          </WrapperInfo>
+          <Content>
+            <LineBetween />
 
-      <Content>
-        <LineBetween />
+            <WrapperInfoRestaurant>
+              <RestauratName>{nameRestaurant}</RestauratName>
 
-        <WrapperInfoRestaurant>
-          <RestauratName>{nameRestaurant}</RestauratName>
+              <FoodType>
+                {foodTypes?.charAt(0).toUpperCase() +
+                  foodTypes?.slice(1).toLowerCase()}
+              </FoodType>
 
-          <FoodType>
-            {foodTypes?.charAt(0).toUpperCase() +
-              foodTypes?.slice(1).toLowerCase()}
-          </FoodType>
-
-          <WrapperPhoto>
-            <RestaurantPhoto
-              source={
-                data.code
-                  ? {
-                      uri: `${data.code}`,
-                    }
-                  : theme.images.noImage
-              }
-            />
-          </WrapperPhoto>
-        </WrapperInfoRestaurant>
-      </Content>
-      <WrapperPlates>
-        <TitleCart>Meus Pedidos</TitleCart>
-      </WrapperPlates>
-      <CartList data={cart} renderItem={renderItem} />
-
-      <CheckoutComponent />
+              <WrapperPhoto>
+                <RestaurantPhoto
+                  source={
+                    data.code
+                      ? {
+                          uri: `${data.code}`,
+                        }
+                      : theme.images.noImage
+                  }
+                />
+              </WrapperPhoto>
+            </WrapperInfoRestaurant>
+          </Content>
+          <WrapperPlates>
+            <TitleCart>Meus Pedidos</TitleCart>
+          </WrapperPlates>
+          <CartList
+            data={cart}
+            renderItem={renderItem}
+            ListFooterComponent={() => <FooterComponent />}
+          />
+          <CheckoutComponent />
+        </>
+      ) : (
+        <ListEmptyComponent
+          source={theme.images.checkoutEmpty}
+          title="Seu carrinho está vazio"
+        />
+      )}
     </Container>
   );
 }

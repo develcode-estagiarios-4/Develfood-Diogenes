@@ -124,3 +124,8 @@ export const WrapperCartPlates = styled.View`
   margin-left: 5%;
   margin-right: 5%;
 `;
+
+export const FooterComponent = styled.View`
+  width: 100%;
+  height: ${RFValue(50)}px;
+`;
