@@ -171,7 +171,7 @@ function CartProvider({children}: AuthProviderProps) {
 
     const item = removeAllProducts.find((product: any) => product.id === id);
 
-    if (item.quantity > 1) {
+    if (item.quantity >= 1) {
       setTotal(total - item.price);
       setTotalItems(totalItems - item.quantity);
       setCart(removeAllProducts.filter((product: any) => product.id !== id));

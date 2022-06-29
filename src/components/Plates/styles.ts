@@ -151,9 +151,7 @@ export const CleanUpWrapper = styled.View`
   justify-content: center;
 `;
 
-export const CleanUpButton = styled.TouchableOpacity`
-  align-items: center;
-`;
+export const CleanUpButton = styled.TouchableOpacity``;
 
 export const CleanUpImage = styled.Image`
   width: ${RFValue(20)}px;

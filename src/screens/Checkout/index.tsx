@@ -85,6 +85,7 @@ export function Checkout({
   const renderItem = ({item}: {item: PlateProps}) => (
     <WrapperCartPlates>
       <Plates
+        Swipe
         inside
         name={item.name}
         description={item.description}

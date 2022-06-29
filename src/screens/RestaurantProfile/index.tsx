@@ -192,6 +192,7 @@ export function RestaurantProfile({route}: any) {
         renderItem={({item}: any) => (
           <PlatesWrapper>
             <Plates
+              Swipe={false}
               inside={false}
               name={item.name}
               description={item.description}
