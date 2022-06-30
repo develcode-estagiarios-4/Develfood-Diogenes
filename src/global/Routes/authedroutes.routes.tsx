@@ -2,6 +2,8 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {RestaurantProfile} from '../../screens/RestaurantProfile';
 import {Routes} from './routes.routes';
+import {CartComponent} from '../../components/CartComponent';
+import {Checkout} from '../../screens/Checkout';
 
 const {Navigator, Screen} = createStackNavigator();
 
@@ -11,6 +13,8 @@ export function AuthedRoutes() {
       <Navigator screenOptions={{headerShown: false}}>
         <Screen name="Home" component={Routes} />
         <Screen name="RestaurantProfile" component={RestaurantProfile} />
+        <Screen name="CartComponent" component={CartComponent} />
+        <Screen name="Checkout" component={Checkout} />
       </Navigator>
     </>
   );

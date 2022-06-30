@@ -6,10 +6,12 @@ import {ActivityIndicator, StatusBar, View} from 'react-native';
 import {useTheme} from 'styled-components';
 import {useDebouncedCallback} from 'use-debounce';
 import {BackButton} from '../../components/BackButton';
+import {CartComponent} from '../../components/CartComponent';
 import {Input} from '../../components/Input';
 import {ListEmptyComponent} from '../../components/ListEmptyComponent';
 import {Plates} from '../../components/Plates';
 import {useAuth} from '../../global/Context';
+import {useCreateCart} from '../../global/Context/Cart';
 import {useFetch} from '../../global/services/get';
 
 import {
@@ -33,11 +35,8 @@ import {
 
 interface Plate {
   id: number;
-  name: string;
   description: string;
   price: number;
-  foodType: string;
-  retaurantName: string;
   photo_url: string;
 }
 interface Photo {
@@ -61,6 +60,8 @@ export function RestaurantProfile({route}: any) {
   const [filter, setFilter] = useState('');
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const {totalItems} = useCreateCart();
 
   const {fetchData} = useFetch<Plate[]>(
     `/plate/search?name=${filter}&restaurantid=${id}`,
@@ -105,6 +106,10 @@ export function RestaurantProfile({route}: any) {
 
   function handlerBackButton() {
     navigation.navigate('Home' as never);
+  }
+
+  function handlerCheckoutScreen() {
+    navigation.navigate('Checkout' as never);
   }
 
   useEffect(() => {
@@ -187,19 +192,32 @@ export function RestaurantProfile({route}: any) {
         renderItem={({item}: any) => (
           <PlatesWrapper>
             <Plates
+              Swipe={false}
+              inside={false}
               name={item.name}
               description={item.description}
               price={item.price}
               source={item.photo_url}
+              restaurantID={id}
+              id={item.id}
+              restaurantFoodTypes={food_types}
+              restaurantName={name}
+              photoRestaurant={photo_url}
             />
           </PlatesWrapper>
         )}
         ListEmptyComponent={
           !isLoading ? (
-            <ListEmptyComponent title="Nenhum prato encontrado" />
+            <ListEmptyComponent
+              source={theme.images.notFound}
+              title="Nenhum prato encontrado"
+            />
           ) : null
         }
       />
+      {totalItems > 0 && (
+        <CartComponent BottomBar={false} onPress={handlerCheckoutScreen} />
+      )}
     </Container>
   );
 }

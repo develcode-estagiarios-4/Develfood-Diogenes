@@ -29,10 +29,10 @@ export default {
   },
 
   icons: {
-    home: require('../assets/tabIcons/home.png'),
-    favorite: require('../assets/tabIcons/favorite.png'),
-    list: require('../assets/tabIcons/list.png'),
-    user: require('../assets/tabIcons/user.png'),
+    home: require('../assets/Icons/home.png'),
+    favorite: require('../assets/Icons/favorite.png'),
+    deliverylist: require('../assets/Icons/deliverylist.png'),
+    profile: require('../assets/Icons/profile.png'),
     email: require('../assets/loginIcons/E-mail.png'),
     password: require('../assets/loginIcons/Senha.png'),
     eye: require('../assets/loginIcons/eye.png'),
@@ -53,6 +53,14 @@ export default {
     iconLocale: require('../assets/Icons/locale.png'),
     favoriteRestaurant: require('../assets/Icons/favoriteRestaurant.png'),
     starRatio: require('../assets/Icons/star.png'),
+    add: require('../assets/Icons/add.png'),
+    remove: require('../assets/Icons/remove.png'),
+    litter: require('../assets/Icons/litter.png'),
+    hamper: require('../assets/Icons/hamper.png'),
+    itemsCircle: require('../assets/Icons/itemscircle.png'),
+    exitWhite: require('../assets/Icons/exitwhite.png'),
+    dollar: require('../assets/Icons/dollar.png'),
+    cleanUp: require('../assets/Icons/cleanUp.png'),
   },
 
   images: {
@@ -65,5 +73,7 @@ export default {
     pizzaImage: require('../assets/Images/pizza.png'),
     camaraoImage: require('../assets/Images/camarao.png'),
     notFound: require('../assets/Images/not_found.png'),
+    mapImage: require('../assets/Images/mapImage.png'),
+    checkoutEmpty: require('../assets/Images/checkoutEmpty.png'),
   },
 };

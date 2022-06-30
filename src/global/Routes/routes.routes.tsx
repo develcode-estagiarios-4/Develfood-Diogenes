@@ -10,6 +10,8 @@ import {useTheme} from 'styled-components';
 import {useNavigation} from '@react-navigation/native';
 import {Platform} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
+import {useCreateCart} from '../Context/Cart';
+import {CartComponent} from '../../components/CartComponent';
 // import {TabBar} from '../../components/TabBar';
 
 const Tabs = createBottomTabNavigator();
@@ -19,13 +21,23 @@ export function Routes() {
 
   const navigation = useNavigation();
 
+  const {totalItems} = useCreateCart();
+
+  function handlerCheckoutScreen() {
+    navigation.navigate('Checkout' as never);
+  }
+
   return (
     <>
       <Tabs.Navigator
         screenOptions={{
           headerShown: false,
           tabBarStyle: {
-            height: RFValue(40),
+            alignItems: 'center',
+            alignContent: 'center',
+            justifyContent: 'center',
+            position: 'absolute',
+            height: RFValue(Platform.OS === 'ios' ? 50 : 50),
             paddingVertical: Platform.OS === 'ios' ? 20 : 0,
           },
           tabBarLabelStyle: {
@@ -68,7 +80,7 @@ export function Routes() {
               <TabBarButton
                 isPressed={focused}
                 name={'Pedidos'}
-                source={theme.icons.list}
+                source={theme.icons.deliverylist}
                 onPressed={() => navigation.navigate('Historico' as never)}
               />
             ),
@@ -82,7 +94,7 @@ export function Routes() {
               <TabBarButton
                 isPressed={focused}
                 name={'Perfil'}
-                source={theme.icons.user}
+                source={theme.icons.profile}
                 onPressed={() => navigation.navigate('Perfil' as never)}
               />
             ),
@@ -90,6 +102,9 @@ export function Routes() {
         />
       </Tabs.Navigator>
       {/* <TabBar /> */}
+      {totalItems > 0 && (
+        <CartComponent BottomBar onPress={handlerCheckoutScreen} />
+      )}
     </>
   );
 }

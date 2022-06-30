@@ -193,6 +193,7 @@ export function Home() {
                   )
                 }
                 name={item.name}
+                id={item.id}
                 category={
                   item.food_types.length > 0
                     ? item.food_types[0]?.name.charAt(0).toUpperCase() +
@@ -214,7 +215,10 @@ export function Home() {
           }}
           ListEmptyComponent={
             !isLoading ? (
-              <ListEmptyComponent title="Nenhum restaurante encontrado" />
+              <ListEmptyComponent
+                source={theme.images.notFound}
+                title="Nenhum restaurante encontrado"
+              />
             ) : null
           }
         />
