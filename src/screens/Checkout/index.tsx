@@ -82,23 +82,9 @@ export function Checkout({
     },
   });
 
-  const renderItem = ({item}: {item: PlateProps}) => (
-    <WrapperCartPlates>
-      <Plates
-        Swipe
-        inside
-        name={item.name}
-        description={item.description}
-        source={item.source ? item.source : theme.images.noImage}
-        price={item.unityPrice}
-        id={item.id}
-        restaurantID={item.restaurantID}
-        restaurantFoodTypes={restaurantFoodTypes}
-        restaurantName={restaurantName}
-        photoRestaurant={restaurantPhoto}
-      />
-    </WrapperCartPlates>
-  );
+  // const renderItem = ({item}: {item: PlateProps}) => (
+
+  // );
 
   useEffect(() => {
     fetchData();
@@ -157,10 +143,25 @@ export function Checkout({
           </WrapperPlates>
           <CartList
             data={cart}
-            renderItem={renderItem}
+            renderItem={({item}: any) => (
+              <WrapperCartPlates>
+                <Plates
+                  Swipe
+                  inside
+                  name={item.name}
+                  description={item.description}
+                  source={item.source ? item.source : theme.images.noImage}
+                  price={item.unityPrice}
+                  id={item.id}
+                  restaurantID={item.restaurantID}
+                  restaurantFoodTypes={restaurantFoodTypes}
+                  restaurantName={restaurantName}
+                  photoRestaurant={restaurantPhoto}
+                />
+              </WrapperCartPlates>
+            )}
             ListFooterComponent={() => <FooterComponent />}
           />
-          <CheckoutComponent />
         </>
       ) : (
         <ListEmptyComponent
@@ -168,6 +169,7 @@ export function Checkout({
           title="Seu carrinho está vazio"
         />
       )}
+      <CheckoutComponent />
     </Container>
   );
 }

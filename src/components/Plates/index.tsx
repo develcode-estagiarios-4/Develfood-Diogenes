@@ -53,11 +53,11 @@ interface Photos {
   code: string;
 }
 
-interface ItemProps {
-  id: string;
-  quantity: number;
-  price: number;
-}
+// interface ItemProps {
+//   id: string;
+//   quantity: number;
+//   price: number;
+// }
 
 export function Plates({
   name,
@@ -131,7 +131,7 @@ export function Plates({
               <Price>R$ {priceFormatted}</Price>
             </PriceWrapper>
 
-            {cart.find((item?: ItemProps) => item?.id === id)?.quantity > 0 ? (
+            {cart.find((item: any) => item?.id === id)?.quantity > 0 ? (
               <WrapperCartButton insideCart={inside ? RFValue(5) : RFValue(20)}>
                 <AddQuantityButton
                   onPress={() => addProductToCart(id, price, restaurantID)}>
@@ -144,8 +144,7 @@ export function Plates({
                   </Number>
                 </NumberOfQuantityWrapper>
 
-                {cart.find((item: ItemProps) => item?.id === id)?.quantity >
-                1 ? (
+                {cart.find((item: any) => item?.id === id)?.quantity > 1 ? (
                   <RemoveCartButton
                     onPress={() => removeProductFromCart(id, price)}>
                     <RemoveQuantityButtonImage source={theme.icons.remove} />
@@ -196,7 +195,7 @@ export function Plates({
             <Price>R$ {priceFormatted}</Price>
           </PriceWrapper>
 
-          {cart.find((item?: ItemProps) => item?.id === id)?.quantity > 0 ? (
+          {cart.find((item?: any) => item?.id === id)?.quantity > 0 ? (
             <WrapperCartButton insideCart={inside ? RFValue(5) : RFValue(20)}>
               <AddQuantityButton
                 onPress={() => addProductToCart(id, price, restaurantID)}>
@@ -209,7 +208,7 @@ export function Plates({
                 </Number>
               </NumberOfQuantityWrapper>
 
-              {cart.find((item: ItemProps) => item?.id === id)?.quantity > 1 ? (
+              {cart.find((item: any) => item?.id === id)?.quantity > 1 ? (
                 <RemoveCartButton
                   onPress={() => removeProductFromCart(id, price)}>
                   <RemoveQuantityButtonImage source={theme.icons.remove} />

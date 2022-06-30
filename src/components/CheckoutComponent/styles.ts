@@ -13,7 +13,7 @@ export const Container = styled.View`
   justify-content: space-between;
 `;
 
-export const WrapperCartComponent = styled.TouchableOpacity`
+export const CheckoutButton = styled.TouchableOpacity`
   margin: 0 ${RFValue(9)}px;
 `;
 

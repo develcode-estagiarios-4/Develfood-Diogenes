@@ -156,7 +156,6 @@ export const CleanUpButton = styled.TouchableOpacity``;
 export const CleanUpImage = styled.Image`
   width: ${RFValue(20)}px;
   height: ${RFValue(20)}px;
-  color: ${({theme}) => theme.colors.icon_white};
 `;
 
 export const CleanUpTitle = styled.Text`

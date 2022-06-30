@@ -4,6 +4,7 @@ import {RestaurantProfile} from '../../screens/RestaurantProfile';
 import {Routes} from './routes.routes';
 import {CartComponent} from '../../components/CartComponent';
 import {Checkout} from '../../screens/Checkout';
+import {CheckoutSuccess} from '../../screens/CheckoutSuccess';
 
 const {Navigator, Screen} = createStackNavigator();
 
@@ -15,6 +16,7 @@ export function AuthedRoutes() {
         <Screen name="RestaurantProfile" component={RestaurantProfile} />
         <Screen name="CartComponent" component={CartComponent} />
         <Screen name="Checkout" component={Checkout} />
+        <Screen name="CheckoutSuccess" component={CheckoutSuccess} />
       </Navigator>
     </>
   );
