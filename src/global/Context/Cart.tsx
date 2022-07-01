@@ -79,7 +79,6 @@ interface ResquestItemsResponse {
   price: number;
   observation: string;
 }
-
 interface UserID {
   id: number;
 }
@@ -113,7 +112,6 @@ interface Props {
   foodTypes: any;
   restaurantPhoto: string;
   userRequestCheckout: Function;
-  userID: number;
 }
 
 interface ItemProps {
@@ -143,8 +141,6 @@ function CartProvider({children}: AuthProviderProps) {
   const [foodTypes, setFoodTypes] = useState<any>([]);
 
   const [restaurantPhoto, setRestaurantPhoto] = useState('');
-
-  useEffect(() => {}, [cart]);
 
   function addNewProductoCart(
     id: string,
@@ -295,13 +291,6 @@ function CartProvider({children}: AuthProviderProps) {
     },
   });
 
-  const [userID, setUserID] = useState(0);
-
-  useEffect(() => {
-    setUserID(data.id);
-    console.log(data.id);
-  }, [userID]);
-
   const loginError = (error: any) => {
     Alert.alert(
       'Erro',
@@ -313,7 +302,7 @@ function CartProvider({children}: AuthProviderProps) {
   };
 
   async function userRequestCheckout(CheckoutUserSuccess: () => void) {
-    const createUserRequest: CartRequest = {
+    const createCheckoutRequest: CartRequest = {
       costumer: {
         id: data.id,
       },
@@ -338,7 +327,7 @@ function CartProvider({children}: AuthProviderProps) {
       }),
       restaurantPromotion: null,
     };
-    await handlerPost(createUserRequest, loginError, CheckoutUserSuccess);
+    await handlerPost(createCheckoutRequest, loginError, CheckoutUserSuccess);
   }
 
   return (
@@ -356,7 +345,6 @@ function CartProvider({children}: AuthProviderProps) {
         foodTypes,
         restaurantPhoto,
         userRequestCheckout,
-        userID,
       }}>
       {children}
     </CartContext.Provider>

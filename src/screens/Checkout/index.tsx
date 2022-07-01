@@ -82,14 +82,10 @@ export function Checkout({
     },
   });
 
-  // const renderItem = ({item}: {item: PlateProps}) => (
-
-  // );
-
   useEffect(() => {
     fetchData();
     fetchPhoto();
-  }, [source]);
+  }, [source, cart]);
 
   return (
     <Container>

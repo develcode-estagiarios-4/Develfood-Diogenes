@@ -73,7 +73,7 @@ export function Home() {
     );
   }
 
-  const {data, fetchData, loading} = useFetch<ListRestaurantResponse>(
+  const {data, fetchData} = useFetch<ListRestaurantResponse>(
     `/restaurant/filter?name=${isFiltred.text}&page=${isFiltred.page}&quantity=10`,
     {
       headers: {
@@ -123,113 +123,107 @@ export function Home() {
   return (
     <>
       <Container>
-        {loading ? (
-          <ActivityIndicator color={theme.colors.background_red} />
-        ) : (
-          <RestaurantList
-            data={restaurants}
-            keyExtractor={(item: any) => item.id}
-            numColumns={2}
-            columnWrapperStyle={{
-              justifyContent: 'space-between',
-              paddingHorizontal: RFValue(CardMargins),
-              paddingBottom: 10,
-            }}
-            contentContainerStyle={{
-              width: '100%',
-            }}
-            ListHeaderComponent={
-              <>
-                <StatusBar
-                  barStyle={'light-content'}
-                  translucent
-                  backgroundColor={theme.colors.background_red}
+        <RestaurantList
+          data={restaurants}
+          keyExtractor={(item: any) => item.id}
+          numColumns={2}
+          columnWrapperStyle={{
+            justifyContent: 'space-between',
+            paddingHorizontal: RFValue(CardMargins),
+            paddingBottom: 10,
+          }}
+          contentContainerStyle={{
+            width: '100%',
+          }}
+          ListHeaderComponent={
+            <>
+              <StatusBar
+                barStyle={'light-content'}
+                translucent
+                backgroundColor={theme.colors.background_red}
+              />
+              <Header />
+
+              <BannerWrapper>
+                <Banner source={theme.images.banner} />
+                <Banner source={theme.images.banner} />
+              </BannerWrapper>
+
+              <TitleWrapper>
+                <Title>Categoria</Title>
+              </TitleWrapper>
+
+              <CategorySelect
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}>
+                <Category title="Pizza" />
+                <Category title="Churrasco" />
+                <Category title="Almoço" />
+                <Category title="Massas" />
+                <Category title="Coreana" />
+                <Category title="Japonesa" />
+                <Category title="Tailandesa" />
+                <Category title="Chinesa" />
+              </CategorySelect>
+
+              <Content>
+                <Input
+                  source={theme.icons.search}
+                  placeholder="Buscar restaurantes"
+                  keyboardType="email-address"
+                  onChangeText={value => debounced(value)}
                 />
-                <Header />
-
-                <BannerWrapper>
-                  <Banner source={theme.images.banner} />
-                  <Banner source={theme.images.banner} />
-                </BannerWrapper>
-
-                <TitleWrapper>
-                  <Title>Categoria</Title>
-                </TitleWrapper>
-
-                <CategorySelect
-                  horizontal={true}
-                  showsHorizontalScrollIndicator={false}>
-                  <Category title="Pizza" />
-                  <Category title="Churrasco" />
-                  <Category title="Almoço" />
-                  <Category title="Massas" />
-                  <Category title="Coreana" />
-                  <Category title="Japonesa" />
-                  <Category title="Tailandesa" />
-                  <Category title="Chinesa" />
-                </CategorySelect>
-
-                <Content>
-                  <Input
-                    source={theme.icons.search}
-                    placeholder="Buscar restaurantes"
-                    keyboardType="email-address"
-                    onChangeText={value => debounced(value)}
-                  />
-                </Content>
-              </>
-            }
-            ListFooterComponent={() => (
-              <View style={{height: 50, justifyContent: 'center'}}>
-                {isLoading && (
-                  <ActivityIndicator color={theme.colors.background_red} />
-                )}
-              </View>
-            )}
-            renderItem={({item}: any) => (
-              <RestaurantListWrapper>
-                <Restaurants
-                  onPress={() =>
-                    handleRestaurantProfile(
-                      item.id,
-                      item.name,
-                      item.photo_url,
-                      item.food_types.length > 0 ? item.food_types[0].name : '',
-                    )
-                  }
-                  name={item.name}
-                  id={item.id}
-                  category={
-                    item.food_types.length > 0
-                      ? item.food_types[0]?.name.charAt(0).toUpperCase() +
-                        item.food_types[0]?.name.slice(1).toLowerCase()
-                      : ''
-                  }
-                  avaliation={item.id}
-                  source={
-                    item.photo_url ? item.photo_url : theme.images.noImage
-                  }
-                />
-              </RestaurantListWrapper>
-            )}
-            style={{
-              width: '100%',
-              marginTop: 10,
-              margin: 20,
-            }}
-            onEndReached={() => {
-              handleLoadOnEnd();
-            }}
-            ListEmptyComponent={
-              !isLoading ? (
-                <ListEmptyComponent
-                  source={theme.images.notFound}
-                  title="Nenhum restaurante encontrado"
-                />
-              ) : null
-            }
-          />
-        )}
+              </Content>
+            </>
+          }
+          ListFooterComponent={() => (
+            <View style={{height: 250, justifyContent: 'center'}}>
+              {isLoading && (
+                <ActivityIndicator color={theme.colors.background_red} />
+              )}
+            </View>
+          )}
+          renderItem={({item}: any) => (
+            <RestaurantListWrapper>
+              <Restaurants
+                onPress={() =>
+                  handleRestaurantProfile(
+                    item.id,
+                    item.name,
+                    item.photo_url,
+                    item.food_types.length > 0 ? item.food_types[0].name : '',
+                  )
+                }
+                name={item.name}
+                id={item.id}
+                category={
+                  item.food_types.length > 0
+                    ? item.food_types[0]?.name.charAt(0).toUpperCase() +
+                      item.food_types[0]?.name.slice(1).toLowerCase()
+                    : ''
+                }
+                avaliation={item.id}
+                source={item.photo_url ? item.photo_url : theme.images.noImage}
+              />
+            </RestaurantListWrapper>
+          )}
+          style={{
+            width: '100%',
+            marginTop: 10,
+            margin: 20,
+          }}
+          onEndReached={() => {
+            handleLoadOnEnd();
+          }}
+          ListEmptyComponent={
+            !isLoading ? (
+              <ListEmptyComponent
+                source={theme.images.notFound}
+                title="Nenhum restaurante encontrado"
+              />
+            ) : null
+          }
+        />
       </Container>
     </>
   );

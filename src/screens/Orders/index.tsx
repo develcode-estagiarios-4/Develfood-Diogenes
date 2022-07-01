@@ -11,6 +11,7 @@ import {ListEmptyComponent} from '../../components/ListEmptyComponent';
 import {OrderCard} from '../../components/OrderCard';
 import {useAuth} from '../../global/Context';
 import {useFetch} from '../../global/services/get';
+import moment from 'moment';
 import {
   Container,
   Content,
@@ -53,7 +54,7 @@ interface RestaurantProps {
 
 interface OrderProps {
   id: number;
-  costumer: any;
+  costumer: null;
   restaurant: RestaurantProps;
   date: any;
   dateLastUpdate: any;
@@ -174,7 +175,7 @@ export function Orders() {
           keyExtractor={(item: any) => item.id}
           renderItem={({item}) => renderItem({item})}
           renderSectionHeader={({section: {title}}) => (
-            <OrderDate>{title}</OrderDate>
+            <OrderDate>{moment(title).format('llll')}</OrderDate>
           )}
           ListFooterComponent={() => (
             <View style={{height: 250, justifyContent: 'center'}}>

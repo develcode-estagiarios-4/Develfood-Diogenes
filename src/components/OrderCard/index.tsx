@@ -16,7 +16,7 @@ import {
 } from './styles';
 
 interface OrderProps {
-  photo_url: any;
+  photo_url: string;
   restaurantName: string;
   statusOrder: any;
   orderNumber: number;
