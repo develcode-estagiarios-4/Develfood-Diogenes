@@ -77,5 +77,6 @@ export default {
     mapImage: require('../assets/Images/mapImage.png'),
     checkoutEmpty: require('../assets/Images/checkoutEmpty.png'),
     checkoutSuccess: require('../assets/Images/checkoutsuccess.png'),
+    noOrder: require('../assets/Images/noOrder.png'),
   },
 };

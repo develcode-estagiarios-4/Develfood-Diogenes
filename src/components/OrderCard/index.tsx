@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect} from 'react';
+import {Text} from 'react-native';
 import {useTheme} from 'styled-components';
 import {useAuth} from '../../global/Context';
 import {useFetch} from '../../global/services/get';
@@ -22,6 +23,7 @@ interface OrderProps {
   orderNumber: number;
   foodName: string;
   foodDescription: string;
+  orderDate: any;
 }
 
 interface Photo {
@@ -36,6 +38,7 @@ export function OrderCard({
   orderNumber,
   foodName,
   foodDescription,
+  orderDate,
 }: OrderProps) {
   const {token} = useAuth();
 
@@ -70,6 +73,7 @@ export function OrderCard({
         <FoodOrderName>
           {foodName}: {foodDescription}
         </FoodOrderName>
+        <Text>{orderDate}</Text>
       </WrapperRestaurantInfo>
     </Container>
   );
