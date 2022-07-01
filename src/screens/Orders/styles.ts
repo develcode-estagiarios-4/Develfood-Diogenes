@@ -33,15 +33,13 @@ export const SubTitle = styled.Text`
   color: ${({theme}) => theme.colors.text_dark};
 `;
 
-export const DateOfTheDay = styled.Text`
+export const OrderDate = styled.Text`
   font-size: ${RFValue(10)}px;
   font-weight: 400;
   color: ${({theme}) => theme.colors.text_gray};
+  left: ${RFValue(20)}px;
 `;
 
 export const Content = styled.View`
-  flex: 1;
   padding: 0 ${RFValue(20)}px;
 `;
-
-export const OrderList = styled.FlatList``;

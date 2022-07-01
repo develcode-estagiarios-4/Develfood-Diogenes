@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-lone-blocks */
-import React, {useState} from 'react';
-import {useEffect} from 'react';
-import {ActivityIndicator, StatusBar, View} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
+import {useCallback} from 'react';
+import {ActivityIndicator, SectionList, StatusBar, View} from 'react-native';
 import {useTheme} from 'styled-components';
 import {ListEmptyComponent} from '../../components/ListEmptyComponent';
 import {OrderCard} from '../../components/OrderCard';
@@ -12,9 +14,8 @@ import {useFetch} from '../../global/services/get';
 import {
   Container,
   Content,
-  DateOfTheDay,
   Header,
-  OrderList,
+  OrderDate,
   SubTitle,
   Title,
   WrapperInfo,
@@ -22,7 +23,7 @@ import {
 
 interface PlateDTOResponse {
   id: number;
-  name: any;
+  name: string;
   description: string;
   price: number;
   foodType: ListFoodType;
@@ -32,7 +33,7 @@ interface PlateDTOResponse {
 
 interface RequestItemsResponse {
   id: number;
-  plateDTO: PlateDTOResponse[];
+  plateDTO: PlateDTOResponse;
   quantity: number;
   price: number;
   observation: string;
@@ -52,7 +53,7 @@ interface RestaurantProps {
 
 interface OrderProps {
   id: number;
-  costumer: null;
+  costumer: any;
   restaurant: RestaurantProps;
   date: any;
   dateLastUpdate: any;
@@ -67,7 +68,12 @@ interface OrderResponse {
   totalPages: number;
 }
 
-export function Orders({dateLastUpdate}: OrderProps) {
+interface SectionListData {
+  title: string;
+  data: OrderProps[];
+}
+
+export function Orders() {
   const {token} = useAuth();
 
   const [filter, setFilter] = useState(0);
@@ -76,7 +82,9 @@ export function Orders({dateLastUpdate}: OrderProps) {
 
   const [order, setOrder] = useState<OrderProps[]>([]);
 
-  const {data, fetchData, loading, setLoading} = useFetch<OrderResponse>(
+  const [orderSections, setOrderSections] = useState<SectionListData[]>([]);
+
+  const {data, fetchData, loading} = useFetch<OrderResponse>(
     `request/costumer?page=${filter}&quantity=10`,
     {
       headers: {
@@ -90,22 +98,60 @@ export function Orders({dateLastUpdate}: OrderProps) {
   }
 
   async function loadOrder() {
-    setLoading(true);
     await fetchData(onSuccess);
-    setLoading(false);
+  }
+
+  const renderItem = ({item}: {item: OrderProps}) => {
+    return item ? (
+      <Content>
+        <OrderCard
+          photo_url={item.restaurant.photo_url}
+          restaurantName={item.restaurant.name}
+          statusOrder={item.status}
+          orderNumber={item.id}
+          foodName={item.requestItems[0].plateDTO?.name}
+          foodDescription={item.requestItems[0].plateDTO?.description}
+        />
+      </Content>
+    ) : null;
+  };
+
+  function sectionDataFormatter(data: OrderProps[]) {
+    const orderFormatted: SectionListData[] = [];
+    data.forEach((order: OrderProps) => {
+      const sectionFound = orderFormatted.find(
+        (historicSection: SectionListData) =>
+          historicSection.title === order.date,
+      );
+      if (sectionFound) {
+        sectionFound.data.push(order);
+        console.log('sectionFound');
+      } else {
+        orderFormatted.push({
+          title: order.date,
+          data: [order],
+        });
+        console.log('sectionNotFound');
+      }
+    });
+    setOrderSections(orderFormatted);
   }
 
   async function handleLoadOnEnd() {
     if (data.totalPages !== filter) {
-      setLoading(true);
       setFilter(filter + 1);
     }
   }
 
+  useFocusEffect(
+    useCallback(() => {
+      loadOrder();
+    }, [filter]),
+  );
+
   useEffect(() => {
-    loadOrder();
-    fetchData();
-  }, [filter]);
+    data.content && sectionDataFormatter([...order, ...data.content]);
+  }, [data]);
 
   return (
     <Container>
@@ -118,58 +164,38 @@ export function Orders({dateLastUpdate}: OrderProps) {
         <Title>Meus Pedidos</Title>
       </Header>
 
-      {order.length > 0 ? (
-        <>
-          <WrapperInfo>
-            <SubTitle>Historico</SubTitle>
-            <DateOfTheDay>{dateLastUpdate}</DateOfTheDay>
-          </WrapperInfo>
-          <OrderList
-            data={order}
-            keyExtractor={(item: any) => item.id}
-            renderItem={({item}: any) => (
-              <Content>
-                <OrderCard
-                  orderDate={
-                    item.dateLastUpdate !== item.date
-                      ? item.date.toString()
-                      : null
-                  }
-                  photo_url={item.restaurant.photo_url}
-                  restaurantName={item.restaurant.name}
-                  statusOrder={item.status}
-                  orderNumber={item.id}
-                  foodName={item.requestItems[0].plateDTO?.name}
-                  foodDescription={item.requestItems[0].plateDTO?.description}
-                />
-              </Content>
-            )}
-            ListFooterComponent={() => (
-              <View style={{height: 50, justifyContent: 'center'}}>
-                {loading && (
-                  <ActivityIndicator color={theme.colors.background_red} />
-                )}
-              </View>
-            )}
-            onEndReached={() => {
-              handleLoadOnEnd();
-            }}
-            ListEmptyComponent={
-              !loading ? (
-                <ListEmptyComponent
-                  source={theme.images.notFound}
-                  title="Nenhum prato encontrado"
-                />
-              ) : null
-            }
-          />
-        </>
-      ) : (
-        <ListEmptyComponent
-          source={theme.images.noOrder}
-          title="Vocẽ ainda não fez nenhum pedido"
+      <>
+        <WrapperInfo>
+          <SubTitle>Historico</SubTitle>
+        </WrapperInfo>
+
+        <SectionList
+          sections={orderSections}
+          keyExtractor={(item: any) => item.id}
+          renderItem={({item}) => renderItem({item})}
+          renderSectionHeader={({section: {title}}) => (
+            <OrderDate>{title}</OrderDate>
+          )}
+          ListFooterComponent={() => (
+            <View style={{height: 250, justifyContent: 'center'}}>
+              {loading && (
+                <ActivityIndicator color={theme.colors.background_red} />
+              )}
+            </View>
+          )}
+          onEndReached={() => {
+            handleLoadOnEnd();
+          }}
+          ListEmptyComponent={
+            !loading ? (
+              <ListEmptyComponent
+                source={theme.images.noOrder}
+                title="Você ainda não fez nenhum pedido"
+              />
+            ) : null
+          }
         />
-      )}
+      </>
     </Container>
   );
 }
