@@ -126,13 +126,11 @@ export function Orders() {
       );
       if (sectionFound) {
         sectionFound.data.push(order);
-        console.log('sectionFound');
       } else {
         orderFormatted.push({
           title: order.date,
           data: [order],
         });
-        console.log('sectionNotFound');
       }
     });
     setOrderSections(orderFormatted);

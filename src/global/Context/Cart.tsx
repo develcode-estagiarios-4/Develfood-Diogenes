@@ -298,7 +298,6 @@ function CartProvider({children}: AuthProviderProps) {
         ? 'Usuário não encontrado'
         : error.response.data.message,
     );
-    console.log('Erro =>', error.response.data);
   };
 
   async function userRequestCheckout(CheckoutUserSuccess: () => void) {
