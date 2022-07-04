@@ -13,6 +13,7 @@ import {
   RestaurantPhoto,
   StatusOrder,
   WrapperRestaurantInfo,
+  WrapperInfoPoduct,
 } from './styles';
 
 interface OrderProps {
@@ -21,7 +22,6 @@ interface OrderProps {
   statusOrder: string;
   orderNumber: number;
   foodName: string;
-  foodDescription: string;
 }
 
 interface Photo {
@@ -35,7 +35,6 @@ export function OrderCard({
   statusOrder,
   orderNumber,
   foodName,
-  foodDescription,
 }: OrderProps) {
   const {token} = useAuth();
 
@@ -64,12 +63,12 @@ export function OrderCard({
       <WrapperRestaurantInfo>
         <RestaurantName>{restaurantName}</RestaurantName>
         <CheckOrders source={theme.icons.checkOrders} />
-        <StatusOrder>{statusOrder}</StatusOrder>
-        <OrderN>N° </OrderN>
-        <OrderNumber>{orderNumber}</OrderNumber>
-        <FoodOrderName>
-          {foodName}: {foodDescription}
-        </FoodOrderName>
+        <WrapperInfoPoduct>
+          <StatusOrder>{statusOrder}</StatusOrder>
+          <OrderN>N° </OrderN>
+          <OrderNumber>{orderNumber}</OrderNumber>
+        </WrapperInfoPoduct>
+        <FoodOrderName>{foodName}</FoodOrderName>
       </WrapperRestaurantInfo>
     </Container>
   );

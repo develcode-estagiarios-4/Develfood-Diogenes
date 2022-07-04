@@ -1,17 +1,16 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react-hooks/exhaustive-deps */
 
-import {useFocusEffect} from '@react-navigation/native';
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
-import {useCallback} from 'react';
-import {ActivityIndicator, SectionList, StatusBar, View} from 'react-native';
+import {ActivityIndicator, SectionList, StatusBar} from 'react-native';
 import {useTheme} from 'styled-components';
 import {ListEmptyComponent} from '../../components/ListEmptyComponent';
 import {OrderCard} from '../../components/OrderCard';
 import {useAuth} from '../../global/Context';
 import {useFetch} from '../../global/services/get';
 import moment from 'moment';
+import 'moment/locale/pt-br';
+
 import {
   Container,
   Content,
@@ -20,6 +19,7 @@ import {
   SubTitle,
   Title,
   WrapperInfo,
+  Footer,
 } from './styles';
 
 interface PlateDTOResponse {
@@ -83,9 +83,11 @@ export function Orders() {
 
   const [order, setOrder] = useState<OrderProps[]>([]);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [orderSections, setOrderSections] = useState<SectionListData[]>([]);
 
-  const {data, fetchData, loading} = useFetch<OrderResponse>(
+  const {data, fetchData} = useFetch<OrderResponse>(
     `request/costumer?page=${filter}&quantity=10`,
     {
       headers: {
@@ -96,10 +98,13 @@ export function Orders() {
 
   function onSuccess(response: OrderResponse) {
     setOrder([...order, ...response.content]);
+    setIsLoading(false);
   }
 
   async function loadOrder() {
+    setIsLoading(true);
     await fetchData(onSuccess);
+    setIsLoading(false);
   }
 
   const renderItem = ({item}: {item: OrderProps}) => {
@@ -110,8 +115,28 @@ export function Orders() {
           restaurantName={item.restaurant.name}
           statusOrder={item.status}
           orderNumber={item.id}
-          foodName={item.requestItems[0].plateDTO?.name}
-          foodDescription={item.requestItems[0].plateDTO?.description}
+          foodName={`${
+            item.requestItems[0].quantity > 1
+              ? item.requestItems[0].quantity
+              : ''
+          } ${item.requestItems[0].plateDTO.name} ${
+            item.requestItems[1]
+              ? ` + ${item.requestItems[1].quantity} ${item.requestItems[1].plateDTO.name}`
+              : ''
+          } ${
+            item.requestItems[2]
+              ? ` + ${item.requestItems[2].quantity} ${item.requestItems[2].plateDTO.name}`
+              : ''
+          } ${
+            item.requestItems[3]
+              ? ` + ${item.requestItems[3].quantity} ${item.requestItems[3].plateDTO.name}`
+              : ''
+          } ${
+            item.requestItems[4]
+              ? ` + ${item.requestItems[4].quantity} ${item.requestItems[4].plateDTO.name}`
+              : ''
+          } 
+          ${item.requestItems[5] ? '...' : ''}`}
         />
       </Content>
     ) : null;
@@ -142,11 +167,22 @@ export function Orders() {
     }
   }
 
-  useFocusEffect(
-    useCallback(() => {
-      loadOrder();
-    }, [filter]),
-  );
+  function handlerRefreshPage() {
+    if (filter !== 0) {
+      setOrder([]);
+      setOrderSections([]);
+      setFilter(0);
+      setIsLoading(true);
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
+    }
+  }
+
+  useEffect(() => {
+    loadOrder();
+  }, [filter]);
 
   useEffect(() => {
     data.content && sectionDataFormatter([...order, ...data.content]);
@@ -173,22 +209,20 @@ export function Orders() {
           keyExtractor={(item: any) => item.id}
           renderItem={({item}) => renderItem({item})}
           renderSectionHeader={({section: {title}}) => (
-            <OrderDate>
-              {moment(title).locale('pt-br').format('llll').slice(0, -9)}
-            </OrderDate>
+            <OrderDate>{moment(title).format('llll').slice(0, -9)}</OrderDate>
           )}
           ListFooterComponent={() => (
-            <View style={{height: 250, justifyContent: 'center'}}>
-              {loading && (
-                <ActivityIndicator color={theme.colors.background_red} />
-              )}
-            </View>
+            <Footer>
+              <ActivityIndicator color={theme.colors.background_red} />
+            </Footer>
           )}
           onEndReached={() => {
             handleLoadOnEnd();
           }}
+          refreshing={isLoading}
+          onRefresh={() => handlerRefreshPage()}
           ListEmptyComponent={
-            !loading ? (
+            !isLoading ? (
               <ListEmptyComponent
                 source={theme.images.noOrder}
                 title="Você ainda não fez nenhum pedido"

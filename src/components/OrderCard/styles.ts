@@ -40,6 +40,10 @@ export const CheckOrders = styled.Image`
   top: ${RFValue(7)}px;
 `;
 
+export const WrapperInfoPoduct = styled.View`
+  flex-direction: row;
+`;
+
 export const StatusOrder = styled.Text`
   font-size: ${RFValue(10)}px;
   font-weight: 700;
@@ -49,8 +53,8 @@ export const StatusOrder = styled.Text`
 `;
 
 export const OrderN = styled.Text`
-  left: ${RFValue(130)}px;
-  bottom: ${RFValue(20)}px;
+  left: ${RFValue(30)}px;
+  bottom: ${RFValue(6)}px;
   font-size: ${RFValue(10)}px;
   font-weight: 700;
   color: ${({theme}) => theme.colors.text_gray};
@@ -60,13 +64,14 @@ export const OrderNumber = styled.Text`
   font-size: ${RFValue(10)}px;
   font-weight: 400;
   color: ${({theme}) => theme.colors.text_gray};
-  left: ${RFValue(145)}px;
-  bottom: ${RFValue(34)}px;
+  left: ${RFValue(30)}px;
+  bottom: ${RFValue(6)}px;
 `;
 
 export const FoodOrderName = styled.Text`
   font-size: ${RFValue(10)}px;
   font-weight: 700;
   color: ${({theme}) => theme.colors.text_gray};
-  bottom: ${RFValue(30)}px;
+  text-align: justify;
+  margin-right: ${RFValue(30)}px;
 `;

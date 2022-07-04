@@ -43,3 +43,10 @@ export const OrderDate = styled.Text`
 export const Content = styled.View`
   padding: 0 ${RFValue(20)}px;
 `;
+
+export const Footer = styled.View`
+  width: 100%;
+  height: ${RFValue(100)}px;
+  align-items: center;
+  top: ${RFValue(20)}px;
+`;
