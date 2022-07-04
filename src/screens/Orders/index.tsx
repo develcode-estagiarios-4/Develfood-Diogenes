@@ -128,19 +128,35 @@ export function Orders() {
               : ''
           } ${item.requestItems[0].plateDTO.name} ${
             item.requestItems[1]
-              ? ` + ${item.requestItems[1].quantity} ${item.requestItems[1].plateDTO.name}`
+              ? ` + ${
+                  item.requestItems[1].quantity > 1
+                    ? item.requestItems[1].quantity
+                    : ''
+                } ${item.requestItems[1].plateDTO.name}`
               : ''
           } ${
             item.requestItems[2]
-              ? ` + ${item.requestItems[2].quantity} ${item.requestItems[2].plateDTO.name}`
+              ? ` + ${
+                  item.requestItems[2].quantity > 1
+                    ? item.requestItems[2].quantity
+                    : ''
+                } ${item.requestItems[2].plateDTO.name}`
               : ''
           } ${
             item.requestItems[3]
-              ? ` + ${item.requestItems[3].quantity} ${item.requestItems[3].plateDTO.name}`
+              ? ` + ${
+                  item.requestItems[3].quantity > 1
+                    ? item.requestItems[3].quantity
+                    : ''
+                } ${item.requestItems[3].plateDTO.name}`
               : ''
           } ${
             item.requestItems[4]
-              ? ` + ${item.requestItems[4].quantity} ${item.requestItems[4].plateDTO.name}`
+              ? ` + ${
+                  item.requestItems[4].quantity > 1
+                    ? item.requestItems[4].quantity
+                    : ''
+                } ${item.requestItems[4].plateDTO.name}`
               : ''
           } 
           ${item.requestItems[5] ? '...' : ''}`}
