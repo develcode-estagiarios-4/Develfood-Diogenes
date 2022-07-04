@@ -175,7 +175,9 @@ export function Orders() {
           keyExtractor={(item: any) => item.id}
           renderItem={({item}) => renderItem({item})}
           renderSectionHeader={({section: {title}}) => (
-            <OrderDate>{moment(title).format('llll')}</OrderDate>
+            <OrderDate>
+              {moment(title).locale('pt-br').format('llll').slice(0, -9)}
+            </OrderDate>
           )}
           ListFooterComponent={() => (
             <View style={{height: 250, justifyContent: 'center'}}>

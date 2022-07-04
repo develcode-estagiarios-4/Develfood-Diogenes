@@ -8,7 +8,8 @@ export const Container = styled.View.attrs({
   height: ${RFValue(103)}px;
   background-color: ${({theme}) => theme.colors.card};
   border-radius: ${RFValue(8)}px;
-  margin-top: ${RFValue(20)}px;
+  margin-top: ${RFValue(10)}px;
+  margin-bottom: ${RFValue(10)}px;
 `;
 
 export const RestaurantPhoto = styled.Image`
