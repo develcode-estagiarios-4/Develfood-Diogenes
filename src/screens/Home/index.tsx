@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useCallback, useState} from 'react';
-import {ActivityIndicator, Dimensions, StatusBar, View} from 'react-native';
+import {ActivityIndicator, Dimensions, StatusBar} from 'react-native';
 import {useTheme} from 'styled-components';
 import {Input} from '../../components/Input';
 import {useAuth} from '../../global/Context';
@@ -24,6 +24,7 @@ import {
   CategorySelect,
   RestaurantListWrapper,
   RestaurantList,
+  Footer,
 } from './styles';
 import {ListEmptyComponent} from '../../components/ListEmptyComponent';
 
@@ -123,6 +124,12 @@ export function Home() {
   return (
     <>
       <Container>
+        <StatusBar
+          barStyle={'light-content'}
+          translucent
+          backgroundColor={theme.colors.background_red}
+        />
+        <Header />
         <RestaurantList
           data={restaurants}
           keyExtractor={(item: any) => item.id}
@@ -137,13 +144,6 @@ export function Home() {
           }}
           ListHeaderComponent={
             <>
-              <StatusBar
-                barStyle={'light-content'}
-                translucent
-                backgroundColor={theme.colors.background_red}
-              />
-              <Header />
-
               <BannerWrapper>
                 <Banner source={theme.images.banner} />
                 <Banner source={theme.images.banner} />
@@ -177,11 +177,9 @@ export function Home() {
             </>
           }
           ListFooterComponent={() => (
-            <View style={{height: 250, justifyContent: 'center'}}>
-              {isLoading && (
-                <ActivityIndicator color={theme.colors.background_red} />
-              )}
-            </View>
+            <Footer>
+              <ActivityIndicator color={theme.colors.background_red} />
+            </Footer>
           )}
           renderItem={({item}: any) => (
             <RestaurantListWrapper>

@@ -58,3 +58,10 @@ export const RestaurantListWrapper = styled.View``;
 export const RestaurantList = styled.FlatList`
   flex: 1;
 `;
+
+export const Footer = styled.View`
+  width: 100%;
+  height: ${RFValue(100)}px;
+  align-items: center;
+  top: ${RFValue(20)}px;
+`;
