@@ -54,7 +54,7 @@ interface RestaurantProps {
 
 interface OrderProps {
   id: number;
-  costumer: null;
+  costumer: any;
   restaurant: RestaurantProps;
   date: Date;
   dateLastUpdate: Date;
