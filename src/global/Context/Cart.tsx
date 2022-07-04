@@ -122,19 +122,20 @@ interface ItemProps {
   name: string;
   description: string;
   source: string;
-  restaurantFoodTypes: string;
-  restaurantName: string;
-  photoRestaurant: string;
+  restaurantFoodTypes?: string;
+  restaurantName?: string;
+  photoRestaurant?: string;
+  unityPrice?: number;
 }
 
 const CartContext = createContext({} as Props);
 
 function CartProvider({children}: AuthProviderProps) {
-  const [cart, setCart] = useState<any[]>([]);
+  const [cart, setCart] = useState<ItemProps[]>([]);
 
   const [total, setTotal] = useState(0);
 
-  const [totalItems, setTotalItems] = useState<any>(0);
+  const [totalItems, setTotalItems] = useState<number>(0);
 
   const [nameRestaurant, setNameRestaurant] = useState('');
 
@@ -143,7 +144,7 @@ function CartProvider({children}: AuthProviderProps) {
   const [restaurantPhoto, setRestaurantPhoto] = useState('');
 
   function addNewProductoCart(
-    id: string,
+    id: number,
     price: number,
     restaurantID: number,
     name: string,
@@ -155,10 +156,10 @@ function CartProvider({children}: AuthProviderProps) {
   ) {
     const addProducts = [...cart];
 
-    const item = addProducts.find((product: any) => product.id === id);
+    const item = addProducts.find((product: ItemProps) => product.id === id);
 
     const fromOtherRestaurant = addProducts.find(
-      (product: any) => product.restaurantID !== restaurantID,
+      (product: ItemProps) => product.restaurantID !== restaurantID,
     );
 
     if (!fromOtherRestaurant) {
@@ -194,7 +195,7 @@ function CartProvider({children}: AuthProviderProps) {
   }
 
   function addProductToCart(
-    id: string,
+    id: number,
     price: number,
     restaurantID: number,
     name: string,
@@ -206,7 +207,7 @@ function CartProvider({children}: AuthProviderProps) {
     const item = addingProducts.find((product: any) => product.id === id);
 
     const fromOtherRestaurant = addingProducts.find(
-      (product: any) => product.restaurantID !== restaurantID,
+      (product: ItemProps) => product.restaurantID !== restaurantID,
     );
 
     if (!fromOtherRestaurant) {
@@ -234,12 +235,14 @@ function CartProvider({children}: AuthProviderProps) {
     }
   }
 
-  function removeProductFromCart(id: any, price: number) {
+  function removeProductFromCart(id: number, price: number) {
     const removingProducts = [...cart];
 
-    const item = removingProducts.find((product: any) => product.id === id);
+    const item = removingProducts.find(
+      (product: ItemProps) => product.id === id,
+    );
 
-    if (item.quantity > 1) {
+    if (item && item.quantity > 1) {
       item.quantity -= 1;
       item.price -= price;
       setTotal(total - price);
@@ -255,15 +258,19 @@ function CartProvider({children}: AuthProviderProps) {
     }
   }
 
-  function cleanUpSamePlates(id: string) {
+  function cleanUpSamePlates(id: number) {
     const removeAllProducts = [...cart];
 
-    const item = removeAllProducts.find((product: any) => product.id === id);
+    const item = removeAllProducts.find(
+      (product: ItemProps) => product.id === id,
+    );
 
-    if (item.quantity >= 1) {
+    if (item && item.quantity >= 1) {
       setTotal(total - item.price);
       setTotalItems(totalItems - item.quantity);
-      setCart(removeAllProducts.filter((product: any) => product.id !== id));
+      setCart(
+        removeAllProducts.filter((product: ItemProps) => product.id !== id),
+      );
     }
   }
 
