@@ -18,7 +18,7 @@ import {
 interface OrderProps {
   photo_url: string;
   restaurantName: string;
-  statusOrder: any;
+  statusOrder: string;
   orderNumber: number;
   foodName: string;
   foodDescription: string;
