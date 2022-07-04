@@ -5,7 +5,10 @@ const api = axios.create({
   baseURL: 'https://develfood-3.herokuapp.com',
 });
 
-export const usePost = <T = unknown, TResponse = unknown>(url: string) => {
+export const usePost = <T = unknown, TResponse = unknown>(
+  url: string,
+  options?: AxiosRequestConfig,
+) => {
   const [data, setData] = useState<TResponse>({} as TResponse);
   const [loading, setLoading] = useState(false);
 
@@ -13,7 +16,6 @@ export const usePost = <T = unknown, TResponse = unknown>(url: string) => {
     body: T,
     onError: (error: AxiosError<any, any>) => void,
     onSuccess?: (response: TResponse) => void,
-    options?: AxiosRequestConfig,
   ) {
     try {
       setLoading(true);
@@ -22,7 +24,6 @@ export const usePost = <T = unknown, TResponse = unknown>(url: string) => {
       response.data && onSuccess && onSuccess(response.data);
     } catch (error: AxiosError<any, any> | any) {
       error && onError(error);
-      console.log(error.response.data);
     } finally {
       setLoading(false);
     }

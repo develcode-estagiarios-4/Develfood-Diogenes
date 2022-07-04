@@ -3,7 +3,6 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import {Home} from '../../screens/Home';
 import {Favorites} from '../../screens/Favorites';
-import {Historic} from '../../screens/Historic';
 import {Settings} from '../../screens/Settings';
 import {TabBarButton} from '../../components/TabBarButton';
 import {useTheme} from 'styled-components';
@@ -12,6 +11,7 @@ import {Platform} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {useCreateCart} from '../Context/Cart';
 import {CartComponent} from '../../components/CartComponent';
+import {Orders} from '../../screens/Orders';
 // import {TabBar} from '../../components/TabBar';
 
 const Tabs = createBottomTabNavigator();
@@ -73,15 +73,15 @@ export function Routes() {
           }}
         />
         <Tabs.Screen
-          name="Historico"
-          component={Historic}
+          name="Orders"
+          component={Orders}
           options={{
             tabBarIcon: ({focused}) => (
               <TabBarButton
                 isPressed={focused}
                 name={'Pedidos'}
                 source={theme.icons.deliverylist}
-                onPressed={() => navigation.navigate('Historico' as never)}
+                onPressed={() => navigation.navigate('Orders' as never)}
               />
             ),
           }}

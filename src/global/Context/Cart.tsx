@@ -2,9 +2,101 @@
 import React, {createContext, useContext, useState} from 'react';
 import {useEffect} from 'react';
 import {Alert} from 'react-native';
+import {useAuth} from '.';
+import {useFetch} from '../services/get';
+import {usePost} from '../services/post';
 
 interface AuthProviderProps {
   children: React.ReactNode;
+}
+
+interface AddressRequest {
+  street: string;
+  number: string;
+  neighborhood: string;
+  city: string;
+  zipCode: string;
+  state: string;
+  nickname: string;
+}
+
+interface CostumerRequest {
+  id: number;
+  firstName: string;
+  lastName: string;
+  address: AddressRequest[];
+  photo_url: string;
+}
+
+interface FoodTypeResponse {
+  id: number;
+  name: string;
+}
+
+interface RestaurantResponse {
+  id: number;
+  name: string;
+  photo_url: string;
+  food_types: FoodTypeResponse[];
+}
+
+interface PlateDTOResponse {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  foodType: FoodTypeResponse;
+  restaurantName: string;
+  photo_url: string;
+}
+
+interface RequestItemResponse {
+  id: number;
+  plateDTO: PlateDTOResponse;
+}
+
+interface CartResponse {
+  id: number;
+  costumer: CostumerRequest;
+  restaurant: RestaurantResponse;
+  date: Date;
+  dateLastUpdate: Date;
+  totalValue: number;
+  paymentType: string;
+  status: string;
+  requestItems: RequestItemResponse[];
+  quantity: number;
+  price: number;
+  observation: string;
+}
+
+interface ResquestItemsResponse {
+  plate: {
+    id: number;
+    price: number;
+  };
+  quantity: number;
+  price: number;
+  observation: string;
+}
+interface UserID {
+  id: number;
+}
+
+interface CartRequest {
+  costumer: {
+    id: number;
+  };
+  restaurant: {
+    id: number;
+  };
+  date: any;
+  dateLastUpdate: any;
+  totalValue: number;
+  paymentType: string;
+  status: string;
+  requestItems: ResquestItemsResponse[];
+  restaurantPromotion: null;
 }
 
 interface Props {
@@ -19,29 +111,31 @@ interface Props {
   nameRestaurant: string;
   foodTypes: any;
   restaurantPhoto: string;
+  userRequestCheckout: Function;
 }
 
 interface ItemProps {
-  id: string;
+  id: number;
   quantity: number;
   price: number;
   restaurantID: number;
   name: string;
   description: string;
   source: string;
-  restaurantFoodTypes: string;
-  restaurantName: string;
-  photoRestaurant: string;
+  restaurantFoodTypes?: string;
+  restaurantName?: string;
+  photoRestaurant?: string;
+  unityPrice?: number;
 }
 
 const CartContext = createContext({} as Props);
 
 function CartProvider({children}: AuthProviderProps) {
-  const [cart, setCart] = useState<any[]>([]);
+  const [cart, setCart] = useState<ItemProps[]>([]);
 
   const [total, setTotal] = useState(0);
 
-  const [totalItems, setTotalItems] = useState<any>(0);
+  const [totalItems, setTotalItems] = useState<number>(0);
 
   const [nameRestaurant, setNameRestaurant] = useState('');
 
@@ -49,12 +143,8 @@ function CartProvider({children}: AuthProviderProps) {
 
   const [restaurantPhoto, setRestaurantPhoto] = useState('');
 
-  useEffect(() => {
-    console.log(cart, total, totalItems);
-  }, [cart]);
-
   function addNewProductoCart(
-    id: string,
+    id: number,
     price: number,
     restaurantID: number,
     name: string,
@@ -66,10 +156,10 @@ function CartProvider({children}: AuthProviderProps) {
   ) {
     const addProducts = [...cart];
 
-    const item = addProducts.find((product: any) => product.id === id);
+    const item = addProducts.find((product: ItemProps) => product.id === id);
 
     const fromOtherRestaurant = addProducts.find(
-      (product: any) => product.restaurantID !== restaurantID,
+      (product: ItemProps) => product.restaurantID !== restaurantID,
     );
 
     if (!fromOtherRestaurant) {
@@ -105,7 +195,7 @@ function CartProvider({children}: AuthProviderProps) {
   }
 
   function addProductToCart(
-    id: string,
+    id: number,
     price: number,
     restaurantID: number,
     name: string,
@@ -117,7 +207,7 @@ function CartProvider({children}: AuthProviderProps) {
     const item = addingProducts.find((product: any) => product.id === id);
 
     const fromOtherRestaurant = addingProducts.find(
-      (product: any) => product.restaurantID !== restaurantID,
+      (product: ItemProps) => product.restaurantID !== restaurantID,
     );
 
     if (!fromOtherRestaurant) {
@@ -145,12 +235,14 @@ function CartProvider({children}: AuthProviderProps) {
     }
   }
 
-  function removeProductFromCart(id: any, price: number) {
+  function removeProductFromCart(id: number, price: number) {
     const removingProducts = [...cart];
 
-    const item = removingProducts.find((product: any) => product.id === id);
+    const item = removingProducts.find(
+      (product: ItemProps) => product.id === id,
+    );
 
-    if (item.quantity > 1) {
+    if (item && item.quantity > 1) {
       item.quantity -= 1;
       item.price -= price;
       setTotal(total - price);
@@ -166,27 +258,82 @@ function CartProvider({children}: AuthProviderProps) {
     }
   }
 
-  function cleanUpSamePlates(id: string) {
+  function cleanUpSamePlates(id: number) {
     const removeAllProducts = [...cart];
 
-    const item = removeAllProducts.find((product: any) => product.id === id);
+    const item = removeAllProducts.find(
+      (product: ItemProps) => product.id === id,
+    );
 
-    if (item.quantity >= 1) {
+    if (item && item.quantity >= 1) {
       setTotal(total - item.price);
       setTotalItems(totalItems - item.quantity);
-      setCart(removeAllProducts.filter((product: any) => product.id !== id));
+      setCart(
+        removeAllProducts.filter((product: ItemProps) => product.id !== id),
+      );
     }
   }
 
-  function clearCart(id: any) {
-    const removeAllProducts = [...cart];
-    const item = removeAllProducts.find((product: any) => product.id === id);
+  function clearCart() {
+    cart.splice(0, cart.length);
+    setTotal(0);
+    setTotalItems(0);
+  }
 
-    if (item.quantity > 1) {
-      setCart([]);
-      setTotal(0);
-      setTotalItems(0);
-    }
+  const {token} = useAuth();
+
+  const {data, fetchData} = useFetch<UserID>('/auth', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const {handlerPost} = usePost<CartRequest, CartResponse>('/request', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const loginError = (error: any) => {
+    Alert.alert(
+      'Erro',
+      error.response.data.status === 409
+        ? 'Usuário não encontrado'
+        : error.response.data.message,
+    );
+  };
+
+  async function userRequestCheckout(CheckoutUserSuccess: () => void) {
+    const createCheckoutRequest: CartRequest = {
+      costumer: {
+        id: data.id,
+      },
+      restaurant: {
+        id: cart[0].restaurantID,
+      },
+      date: new Date().toString,
+      dateLastUpdate: new Date().toString,
+      totalValue: total,
+      paymentType: 'card',
+      status: 'PEDIDO_REALIZADO',
+      requestItems: cart.map((item: any) => {
+        return {
+          plate: {
+            id: item.id,
+            price: item.price,
+          },
+          quantity: item.quantity,
+          price: item.price,
+          observation: '',
+        };
+      }),
+      restaurantPromotion: null,
+    };
+    await handlerPost(createCheckoutRequest, loginError, CheckoutUserSuccess);
   }
 
   return (
@@ -203,6 +350,7 @@ function CartProvider({children}: AuthProviderProps) {
         nameRestaurant,
         foodTypes,
         restaurantPhoto,
+        userRequestCheckout,
       }}>
       {children}
     </CartContext.Provider>

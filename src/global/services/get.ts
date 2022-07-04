@@ -25,5 +25,5 @@ export function useFetch<T = unknown>(
       setLoading(false);
     }
   }
-  return {data, loading, error, fetchData, setData};
+  return {data, loading, setLoading, error, fetchData, setData};
 }

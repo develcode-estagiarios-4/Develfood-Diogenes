@@ -54,9 +54,17 @@ interface Photos {
 }
 
 interface ItemProps {
-  id: string;
+  id: number;
   quantity: number;
   price: number;
+  restaurantID: number;
+  name: string;
+  description: string;
+  source: string;
+  restaurantFoodTypes?: string;
+  restaurantName?: string;
+  photoRestaurant?: string;
+  unityPrice?: number;
 }
 
 export function Plates({
@@ -83,6 +91,8 @@ export function Plates({
     addNewProductoCart,
     cleanUpSamePlates,
   } = useCreateCart();
+
+  const itemCount = cart.find((item: ItemProps) => item?.id === id)?.quantity;
 
   const {data, fetchData} = useFetch<Photos>(source, {
     headers: {
@@ -131,7 +141,7 @@ export function Plates({
               <Price>R$ {priceFormatted}</Price>
             </PriceWrapper>
 
-            {cart.find((item?: ItemProps) => item?.id === id)?.quantity > 0 ? (
+            {itemCount && itemCount > 0 ? (
               <WrapperCartButton insideCart={inside ? RFValue(5) : RFValue(20)}>
                 <AddQuantityButton
                   onPress={() => addProductToCart(id, price, restaurantID)}>
@@ -140,12 +150,11 @@ export function Plates({
 
                 <NumberOfQuantityWrapper>
                   <Number>
-                    {cart.find((item: any) => item?.id === id)?.quantity}
+                    {cart.find((item: ItemProps) => item?.id === id)?.quantity}
                   </Number>
                 </NumberOfQuantityWrapper>
 
-                {cart.find((item: ItemProps) => item?.id === id)?.quantity >
-                1 ? (
+                {itemCount > 1 ? (
                   <RemoveCartButton
                     onPress={() => removeProductFromCart(id, price)}>
                     <RemoveQuantityButtonImage source={theme.icons.remove} />
@@ -196,7 +205,7 @@ export function Plates({
             <Price>R$ {priceFormatted}</Price>
           </PriceWrapper>
 
-          {cart.find((item?: ItemProps) => item?.id === id)?.quantity > 0 ? (
+          {itemCount && itemCount > 0 ? (
             <WrapperCartButton insideCart={inside ? RFValue(5) : RFValue(20)}>
               <AddQuantityButton
                 onPress={() => addProductToCart(id, price, restaurantID)}>
@@ -205,11 +214,11 @@ export function Plates({
 
               <NumberOfQuantityWrapper>
                 <Number>
-                  {cart.find((item: any) => item?.id === id)?.quantity}
+                  {cart && cart.find((item: any) => item?.id === id)?.quantity}
                 </Number>
               </NumberOfQuantityWrapper>
 
-              {cart.find((item: ItemProps) => item?.id === id)?.quantity > 1 ? (
+              {itemCount && itemCount > 1 ? (
                 <RemoveCartButton
                   onPress={() => removeProductFromCart(id, price)}>
                   <RemoveQuantityButtonImage source={theme.icons.remove} />

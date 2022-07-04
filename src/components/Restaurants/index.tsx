@@ -72,11 +72,8 @@ export function Restaurants({
 
   useEffect(() => {
     fetchData();
-  }, [source]);
-
-  useEffect(() => {
     fetchRatio();
-  }, [dataRatio]);
+  }, [source, dataRatio]);
 
   return (
     <Wrapper onPress={onPress} activeOpacity={0}>

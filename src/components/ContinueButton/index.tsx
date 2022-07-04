@@ -6,7 +6,7 @@ import {Container, Title} from './styles';
 interface Props {
   title: string;
   onPressed: Function;
-  loading: boolean;
+  loading?: boolean;
 }
 
 export function ContinueButton({title, onPressed, loading}: Props) {

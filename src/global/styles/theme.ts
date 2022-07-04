@@ -61,6 +61,7 @@ export default {
     exitWhite: require('../assets/Icons/exitwhite.png'),
     dollar: require('../assets/Icons/dollar.png'),
     cleanUp: require('../assets/Icons/cleanUp.png'),
+    checkOrders: require('../assets/Icons/checkOrders.png'),
   },
 
   images: {
@@ -75,5 +76,7 @@ export default {
     notFound: require('../assets/Images/not_found.png'),
     mapImage: require('../assets/Images/mapImage.png'),
     checkoutEmpty: require('../assets/Images/checkoutEmpty.png'),
+    checkoutSuccess: require('../assets/Images/checkoutsuccess.png'),
+    noOrder: require('../assets/Images/noOrder.png'),
   },
 };
