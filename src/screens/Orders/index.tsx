@@ -113,7 +113,14 @@ export function Orders() {
         <OrderCard
           photo_url={item.restaurant.photo_url}
           restaurantName={item.restaurant.name}
-          statusOrder={item.status}
+          statusOrder={
+            item.status.charAt(0).toUpperCase() +
+            item.status
+              .slice(1)
+              .toLowerCase()
+              .replace('_', ' ')
+              .replace('_', ' ')
+          }
           orderNumber={item.id}
           foodName={`${
             item.requestItems[0].quantity > 1
