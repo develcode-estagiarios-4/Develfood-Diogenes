@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import {useNavigation} from '@react-navigation/native';
+import {RouteProp, useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, StatusBar, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
@@ -45,7 +45,21 @@ interface Photo {
   code: string;
 }
 
-export function RestaurantProfile({route}: any) {
+interface RouteParams {
+  route: RouteProp<
+    {
+      params: {
+        id: number;
+        name: string;
+        food_types: string;
+        photo_url: string;
+      };
+    },
+    'params'
+  >;
+}
+
+export function RestaurantProfile({route}: RouteParams) {
   const navigation = useNavigation();
 
   const {id, name, photo_url, food_types} = route.params;

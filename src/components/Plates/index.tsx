@@ -41,8 +41,8 @@ interface ListPlatesProps {
   price: number;
   source: string;
   restaurantID: number;
-  restaurantFoodTypes: string;
-  restaurantName: string;
+  restaurantFoodTypes?: string;
+  restaurantName?: string;
   inside: boolean;
   photoRestaurant: string;
   Swipe: boolean;
