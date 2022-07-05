@@ -162,7 +162,7 @@ export function Plates({
                 ) : (
                   <LitterButton
                     onPress={() => removeProductFromCart(id, price)}>
-                    <LitterImage source={theme.icons.litter} />
+                    <RemoveQuantityButtonImage source={theme.icons.remove} />
                   </LitterButton>
                 )}
               </WrapperCartButton>
