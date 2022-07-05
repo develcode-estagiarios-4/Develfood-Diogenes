@@ -90,8 +90,8 @@ interface CartRequest {
   restaurant: {
     id: number;
   };
-  date: any;
-  dateLastUpdate: any;
+  date: () => string;
+  dateLastUpdate: () => string;
   totalValue: number;
   paymentType: string;
   status: string;
@@ -109,7 +109,7 @@ interface Props {
   totalItems: number;
   total: number;
   nameRestaurant: string;
-  foodTypes: any;
+  foodTypes: string;
   restaurantPhoto: string;
   userRequestCheckout: Function;
 }
@@ -122,10 +122,10 @@ interface ItemProps {
   name: string;
   description: string;
   source: string;
-  restaurantFoodTypes?: string;
-  restaurantName?: string;
-  photoRestaurant?: string;
-  unityPrice?: number;
+  restaurantFoodTypes: string;
+  restaurantName: string;
+  photoRestaurant: string;
+  unityPrice: number;
 }
 
 const CartContext = createContext({} as Props);
@@ -139,7 +139,7 @@ function CartProvider({children}: AuthProviderProps) {
 
   const [nameRestaurant, setNameRestaurant] = useState('');
 
-  const [foodTypes, setFoodTypes] = useState<any>([]);
+  const [foodTypes, setFoodTypes] = useState('');
 
   const [restaurantPhoto, setRestaurantPhoto] = useState('');
 
@@ -204,7 +204,7 @@ function CartProvider({children}: AuthProviderProps) {
   ) {
     const addingProducts = [...cart];
 
-    const item = addingProducts.find((product: any) => product.id === id);
+    const item = addingProducts.find((product: ItemProps) => product.id === id);
 
     const fromOtherRestaurant = addingProducts.find(
       (product: ItemProps) => product.restaurantID !== restaurantID,
@@ -220,6 +220,10 @@ function CartProvider({children}: AuthProviderProps) {
           name,
           description,
           source,
+          photoRestaurant: '',
+          restaurantName: '',
+          restaurantFoodTypes: '',
+          unityPrice: price,
         });
       } else {
         item.quantity += 1;
@@ -250,7 +254,7 @@ function CartProvider({children}: AuthProviderProps) {
       setTotalItems(totalItems - 1);
     } else {
       const filterCart = removingProducts.filter(
-        (product: any) => product.id !== id,
+        (product: ItemProps) => product.id !== id,
       );
       setCart(filterCart);
       setTotal(total - price);
@@ -298,14 +302,24 @@ function CartProvider({children}: AuthProviderProps) {
     },
   });
 
-  const loginError = (error: any) => {
+  const cartError = () => {
     Alert.alert(
       'Erro',
-      error.response.data.status === 409
-        ? 'Usuário não encontrado'
-        : error.response.data.message,
+      'Ocorreu um erro ao tentar realizar o pedido, tente novamente',
     );
   };
+
+  const checkoutRequest = cart.map(item => {
+    return {
+      plate: {
+        id: item.id,
+        price: item.price,
+      },
+      quantity: item.quantity,
+      price: item.price,
+      observation: '',
+    };
+  });
 
   async function userRequestCheckout(CheckoutUserSuccess: () => void) {
     const createCheckoutRequest: CartRequest = {
@@ -320,20 +334,10 @@ function CartProvider({children}: AuthProviderProps) {
       totalValue: total,
       paymentType: 'card',
       status: 'PEDIDO_REALIZADO',
-      requestItems: cart.map((item: any) => {
-        return {
-          plate: {
-            id: item.id,
-            price: item.price,
-          },
-          quantity: item.quantity,
-          price: item.price,
-          observation: '',
-        };
-      }),
+      requestItems: checkoutRequest,
       restaurantPromotion: null,
     };
-    await handlerPost(createCheckoutRequest, loginError, CheckoutUserSuccess);
+    await handlerPost(createCheckoutRequest, cartError, CheckoutUserSuccess);
   }
 
   return (

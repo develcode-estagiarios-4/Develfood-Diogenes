@@ -1,7 +1,10 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect} from 'react';
 import {StatusBar} from 'react-native';
+import {FlatList} from 'react-native-gesture-handler';
+import {RFValue} from 'react-native-responsive-fontsize';
 import {useTheme} from 'styled-components';
 import {BackButton} from '../../components/BackButton';
 import {CheckoutComponent} from '../../components/CheckoutComponent';
@@ -30,7 +33,6 @@ import {
   RestaurantPhoto,
   WrapperPlates,
   TitleCart,
-  CartList,
   WrapperCartPlates,
   FooterComponent,
 } from './styles';
@@ -38,13 +40,13 @@ import {
 interface PlateProps {
   name: string;
   description: string;
-  source: any;
-  price: string;
+  source: string;
+  price: number;
   id: number;
   restaurantID: number;
   restaurantFoodTypes: string;
   restaurantName: string;
-  unityPrice: string;
+  unityPrice: number;
 }
 
 interface Photos {
@@ -82,6 +84,26 @@ export function Checkout({
     },
   });
 
+  const renderItem = ({item}: {item: PlateProps}) => {
+    return (
+      <WrapperCartPlates>
+        <Plates
+          Swipe
+          inside
+          name={item.name}
+          description={item.description}
+          source={item.source ? item.source : theme.images.noImage}
+          price={item.unityPrice}
+          id={item.id}
+          restaurantID={item.restaurantID}
+          restaurantFoodTypes={restaurantFoodTypes}
+          restaurantName={restaurantName}
+          photoRestaurant={restaurantPhoto}
+        />
+      </WrapperCartPlates>
+    );
+  };
+
   useEffect(() => {
     fetchData();
     fetchPhoto();
@@ -91,7 +113,7 @@ export function Checkout({
     <Container>
       <StatusBar
         barStyle={'light-content'}
-        translucent
+        translucent={false}
         backgroundColor={theme.colors.background_red}
       />
       <Header>
@@ -135,27 +157,17 @@ export function Checkout({
             </WrapperInfoRestaurant>
           </Content>
           <WrapperPlates>
-            <TitleCart>Meus Pedidos</TitleCart>
+            <TitleCart>Meus Itens</TitleCart>
           </WrapperPlates>
-          <CartList
+          <FlatList
             data={cart}
-            renderItem={({item}: any) => (
-              <WrapperCartPlates>
-                <Plates
-                  Swipe
-                  inside
-                  name={item.name}
-                  description={item.description}
-                  source={item.source ? item.source : theme.images.noImage}
-                  price={item.unityPrice}
-                  id={item.id}
-                  restaurantID={item.restaurantID}
-                  restaurantFoodTypes={restaurantFoodTypes}
-                  restaurantName={restaurantName}
-                  photoRestaurant={restaurantPhoto}
-                />
-              </WrapperCartPlates>
-            )}
+            keyExtractor={item => item.id.toString()}
+            renderItem={renderItem}
+            style={{
+              width: '90%',
+              marginLeft: '10%',
+              marginTop: RFValue(170),
+            }}
             ListFooterComponent={() => <FooterComponent />}
           />
         </>

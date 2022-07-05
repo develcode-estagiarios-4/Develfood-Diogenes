@@ -25,7 +25,7 @@ export function CheckoutComponent() {
   const priceFormatted = priceConverter();
 
   function handleCheckout() {
-    function CheckoutUserSuccess(data: any) {
+    function CheckoutUserSuccess(data: string) {
       data && navigation.navigate('CheckoutSuccess' as never);
       clearCart();
     }

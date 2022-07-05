@@ -9,6 +9,8 @@ import {useFetch} from '../../global/services/get';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {useDebouncedCallback} from 'use-debounce';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {ListEmptyComponent} from '../../components/ListEmptyComponent';
+import {FlatList} from 'react-native-gesture-handler';
 
 import {Restaurants} from '../../components/Restaurants';
 import {Category} from '../../components/CategoryButton';
@@ -23,10 +25,8 @@ import {
   Title,
   CategorySelect,
   RestaurantListWrapper,
-  RestaurantList,
   Footer,
 } from './styles';
-import {ListEmptyComponent} from '../../components/ListEmptyComponent';
 
 interface ListRestaurantProps {
   food_types: ListFoodType[];
@@ -115,6 +115,33 @@ export function Home() {
     handleSearch(value);
   }, 1500);
 
+  const renderItem = ({item}: {item: ListRestaurantProps}) => {
+    return (
+      <RestaurantListWrapper>
+        <Restaurants
+          onPress={() =>
+            handleRestaurantProfile(
+              item.id,
+              item.name,
+              item.photo_url,
+              item.food_types.length > 0 ? item.food_types[0].name : '',
+            )
+          }
+          name={item.name}
+          id={item.id}
+          category={
+            item.food_types.length > 0
+              ? item.food_types[0]?.name.charAt(0).toUpperCase() +
+                item.food_types[0]?.name.slice(1).toLowerCase()
+              : ''
+          }
+          avaliation={item.id}
+          source={item.photo_url ? item.photo_url : theme.images.noImage}
+        />
+      </RestaurantListWrapper>
+    );
+  };
+
   useFocusEffect(
     useCallback(() => {
       loadRestaurants();
@@ -130,9 +157,9 @@ export function Home() {
           backgroundColor={theme.colors.background_red}
         />
         <Header />
-        <RestaurantList
+        <FlatList
           data={restaurants}
-          keyExtractor={(item: any) => item.id}
+          keyExtractor={item => item.id.toString()}
           numColumns={2}
           columnWrapperStyle={{
             justifyContent: 'space-between',
@@ -181,30 +208,7 @@ export function Home() {
               <ActivityIndicator color={theme.colors.background_red} />
             </Footer>
           )}
-          renderItem={({item}: any) => (
-            <RestaurantListWrapper>
-              <Restaurants
-                onPress={() =>
-                  handleRestaurantProfile(
-                    item.id,
-                    item.name,
-                    item.photo_url,
-                    item.food_types.length > 0 ? item.food_types[0].name : '',
-                  )
-                }
-                name={item.name}
-                id={item.id}
-                category={
-                  item.food_types.length > 0
-                    ? item.food_types[0]?.name.charAt(0).toUpperCase() +
-                      item.food_types[0]?.name.slice(1).toLowerCase()
-                    : ''
-                }
-                avaliation={item.id}
-                source={item.photo_url ? item.photo_url : theme.images.noImage}
-              />
-            </RestaurantListWrapper>
-          )}
+          renderItem={renderItem}
           style={{
             width: '100%',
             marginTop: 10,

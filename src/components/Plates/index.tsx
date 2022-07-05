@@ -38,7 +38,7 @@ interface ListPlatesProps {
   id: number;
   name: string;
   description: string;
-  price: string;
+  price: number;
   source: string;
   restaurantID: number;
   restaurantFoodTypes: string;
@@ -101,7 +101,7 @@ export function Plates({
   });
 
   function priceConverter() {
-    const priceWZeros = parseFloat(price).toFixed(2);
+    const priceWZeros = parseFloat(price.toString()).toFixed(2);
     const priceFormatted = priceWZeros.toString().replace('.', ',');
     return priceFormatted;
   }
@@ -214,7 +214,8 @@ export function Plates({
 
               <NumberOfQuantityWrapper>
                 <Number>
-                  {cart && cart.find((item: any) => item?.id === id)?.quantity}
+                  {cart &&
+                    cart.find((item: ItemProps) => item?.id === id)?.quantity}
                 </Number>
               </NumberOfQuantityWrapper>
 

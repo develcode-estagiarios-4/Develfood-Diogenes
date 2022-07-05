@@ -34,13 +34,8 @@ function AuthProvider({children}: AuthProviderProps) {
   const {data, handlerPost, loading} = usePost<LoginRequest, UserData>('/auth');
   const [token, setToken] = useState('');
 
-  const loginError = (error: any) => {
-    Alert.alert(
-      'Erro',
-      error.response.data.status === 409
-        ? 'Usuário não encontrado'
-        : error.response.data.message,
-    );
+  const loginError = () => {
+    Alert.alert('Erro', 'Email ou senha incorretos');
   };
 
   async function userLogin(request: LoginRequest) {

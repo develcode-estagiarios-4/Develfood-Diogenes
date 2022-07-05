@@ -228,7 +228,7 @@ export function Orders() {
 
         <SectionList
           sections={orderSections}
-          keyExtractor={(item: any) => item.id}
+          keyExtractor={item => item.id.toString()}
           renderItem={({item}) => renderItem({item})}
           renderSectionHeader={({section: {title}}) => (
             <OrderDate>{moment(title).format('llll').slice(0, -9)}</OrderDate>

@@ -61,13 +61,8 @@ function CreateUserProvider({children}: AuthProviderProps) {
     setPostData({...postData, ...dataPost});
   }
 
-  const createUserError = (error: any) => {
-    Alert.alert(
-      'Erro',
-      error.response.data.status === 409
-        ? 'Dados inválidos'
-        : error.response.data.message,
-    );
+  const createUserError = () => {
+    Alert.alert('Erro', 'Usuário já existe ou dados inválidos');
   };
 
   async function createUserAccount(

@@ -3,6 +3,7 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, StatusBar, View} from 'react-native';
+import {FlatList} from 'react-native-gesture-handler';
 import {useTheme} from 'styled-components';
 import {useDebouncedCallback} from 'use-debounce';
 import {BackButton} from '../../components/BackButton';
@@ -28,13 +29,13 @@ import {
   RestaurantPhoto,
   LineBetween,
   Content,
-  PlatesList,
   Title,
   PlatesWrapper,
 } from './styles';
 
 interface Plate {
   id: number;
+  name: string;
   description: string;
   price: number;
   photo_url: string;
@@ -112,6 +113,26 @@ export function RestaurantProfile({route}: any) {
     navigation.navigate('Checkout' as never);
   }
 
+  const renderItem = ({item}: {item: Plate}) => {
+    return (
+      <PlatesWrapper>
+        <Plates
+          Swipe={false}
+          inside={false}
+          name={item.name}
+          description={item.description}
+          price={item.price}
+          source={item.photo_url}
+          restaurantID={id}
+          id={item.id}
+          restaurantFoodTypes={food_types}
+          restaurantName={name}
+          photoRestaurant={photo_url}
+        />
+      </PlatesWrapper>
+    );
+  };
+
   useEffect(() => {
     loadPlates();
     fetchPhoto();
@@ -164,9 +185,9 @@ export function RestaurantProfile({route}: any) {
 
       <LineBetween />
 
-      <PlatesList
+      <FlatList
         data={plate}
-        keyExtractor={(item: any) => item.id}
+        keyExtractor={item => item.id.toString()}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
           <>
@@ -189,23 +210,7 @@ export function RestaurantProfile({route}: any) {
             )}
           </View>
         )}
-        renderItem={({item}: any) => (
-          <PlatesWrapper>
-            <Plates
-              Swipe={false}
-              inside={false}
-              name={item.name}
-              description={item.description}
-              price={item.price}
-              source={item.photo_url}
-              restaurantID={id}
-              id={item.id}
-              restaurantFoodTypes={food_types}
-              restaurantName={name}
-              photoRestaurant={photo_url}
-            />
-          </PlatesWrapper>
-        )}
+        renderItem={renderItem}
         ListEmptyComponent={
           !isLoading ? (
             <ListEmptyComponent

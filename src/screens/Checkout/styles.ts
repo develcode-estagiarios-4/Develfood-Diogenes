@@ -8,11 +8,10 @@ export const Container = styled.View`
 
 export const Header = styled.View`
   width: 100%;
-  height: ${RFValue(100)}px;
+  height: ${RFValue(56)}px;
   background-color: ${({theme}) => theme.colors.header};
   flex-direction: row;
   align-items: center;
-  padding-top: ${RFValue(30)}px;
 `;
 
 export const Title = styled.Text`
