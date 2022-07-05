@@ -160,10 +160,10 @@ export function Plates({
                     <RemoveQuantityButtonImage source={theme.icons.remove} />
                   </RemoveCartButton>
                 ) : (
-                  <LitterButton
+                  <RemoveCartButton
                     onPress={() => removeProductFromCart(id, price)}>
                     <RemoveQuantityButtonImage source={theme.icons.remove} />
-                  </LitterButton>
+                  </RemoveCartButton>
                 )}
               </WrapperCartButton>
             ) : (
