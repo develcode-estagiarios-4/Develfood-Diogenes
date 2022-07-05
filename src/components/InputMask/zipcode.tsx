@@ -5,7 +5,7 @@ import {Container, LoginIcon, TextMask, Error} from './styles';
 import {ImageSourcePropType, TextInputProps} from 'react-native';
 
 interface Props extends TextInputProps {
-  error: string;
+  error?: string;
   editable: boolean;
   source: ImageSourcePropType;
   placeholder: string;

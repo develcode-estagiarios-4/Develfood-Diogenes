@@ -32,6 +32,13 @@ import {
   Wrapper,
 } from './styles';
 
+interface FormData {
+  name: string;
+  lastName: string;
+  cpf: string;
+  phone: string;
+}
+
 const schema = Yup.object().shape({
   name: Yup.string().required('Nome é obrigatório.'),
   lastName: Yup.string().required('Sobrenome é obrigatório.'),
@@ -58,11 +65,11 @@ export function RegisterPersonalData() {
     control,
     handleSubmit,
     formState: {errors},
-  } = useForm({
+  } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (value: any) => {
+  const onSubmit = (value: FormData) => {
     handleSetPostData({
       ...postData,
       costumer: {
@@ -115,7 +122,6 @@ export function RegisterPersonalData() {
               rules={{required: true}}
               render={({field: {onChange, value}}) => (
                 <Input
-                  control={control}
                   editable={!loading}
                   error={errors.name && errors.name.message}
                   keyboardType="email-address"
@@ -134,7 +140,6 @@ export function RegisterPersonalData() {
               rules={{required: true}}
               render={({field: {onChange, value}}) => (
                 <Input
-                  control={control}
                   editable={!loading}
                   error={errors.lastName && errors.lastName.message}
                   keyboardType="email-address"
@@ -153,7 +158,6 @@ export function RegisterPersonalData() {
               rules={{required: true}}
               render={({field: {onChange, value}}) => (
                 <Input
-                  control={control}
                   editable={!loading}
                   error={errors.cpf && errors.cpf.message}
                   keyboardType="email-address"

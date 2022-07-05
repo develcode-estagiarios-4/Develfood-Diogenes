@@ -30,6 +30,13 @@ import {
   ButtonWrapper,
 } from './styles';
 
+interface FormData {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  creationDate: Date;
+}
+
 const schema = Yup.object().shape({
   email: Yup.string()
     .email('Digite um email válido.')
@@ -57,11 +64,11 @@ export function Register() {
     control,
     handleSubmit,
     formState: {errors},
-  } = useForm({
+  } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (value: any) => {
+  const onSubmit = (value: FormData) => {
     handleSetPostData({
       email: value.email,
       password: value.password,
@@ -109,7 +116,6 @@ export function Register() {
             rules={{required: true}}
             render={({field: {onChange, value}}) => (
               <Input
-                control={control}
                 editable={!loading}
                 error={errors.email && errors.email.message}
                 keyboardType="email-address"
@@ -128,7 +134,6 @@ export function Register() {
             rules={{required: true}}
             render={({field: {onChange, value}}) => (
               <Input
-                control={control}
                 editable={!loading}
                 error={errors.password && errors.password.message}
                 keyboardType="default"
@@ -148,7 +153,6 @@ export function Register() {
             rules={{required: true}}
             render={({field: {onChange, value}}) => (
               <Input
-                control={control}
                 editable={!loading}
                 error={errors.confirmPassword && errors.confirmPassword.message}
                 keyboardType="default"

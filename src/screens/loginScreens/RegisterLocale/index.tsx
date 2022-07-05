@@ -37,6 +37,46 @@ import {
 } from './styles';
 import {InputMaskZipCode} from '../../../components/InputMask/zipcode';
 
+interface FormData {
+  street: string;
+  number: string;
+  neighborhood: string;
+  city: string;
+  zipCode: string;
+  state: string;
+  nickname: string;
+  cep: string;
+}
+
+interface CreateUserAddress {
+  street: string;
+  number: string;
+  neighborhood: string;
+  city: string;
+  zipCode: string;
+  state: string;
+  nickname: string;
+}
+
+interface CreateUserAccount {
+  email: string;
+  password: string;
+  creationDate: Date;
+  role?: {
+    id: number;
+  };
+  costumer?: {
+    firstName?: string;
+    lastName?: string;
+    cpf?: string;
+    phone?: string;
+    photo?: {
+      code: string;
+    };
+    address?: CreateUserAddress[];
+  };
+}
+
 const schema = Yup.object().shape({
   street: Yup.string().required('Rua é obrigatório.'),
   city: Yup.string().required('Cidade é obrigatória.'),
@@ -65,11 +105,11 @@ export function RegisterLocale() {
     control,
     handleSubmit,
     formState: {errors},
-  } = useForm({
+  } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (value: any) => {
+  const onSubmit = async (value: FormData) => {
     handleSetPostData({
       ...postData,
       costumer: {
@@ -87,7 +127,7 @@ export function RegisterLocale() {
         ],
       },
     });
-    function createUserSuccess(data: any) {
+    function createUserSuccess(data: CreateUserAccount) {
       data && navigation.navigate('RegisterSuccess' as never);
     }
     await createUserAccount(createUserSuccess, postData);
@@ -131,7 +171,6 @@ export function RegisterLocale() {
                 rules={{required: true}}
                 render={({field: {onChange, value}}) => (
                   <Input
-                    control={control}
                     editable={!loading}
                     error={errors.nickname && errors.nickname.message}
                     keyboardType="email-address"
@@ -172,7 +211,6 @@ export function RegisterLocale() {
               rules={{required: true}}
               render={({field: {onChange, value}}) => (
                 <Input
-                  control={control}
                   editable={!loading}
                   error={errors.street && errors.street.message}
                   keyboardType="email-address"
@@ -191,7 +229,6 @@ export function RegisterLocale() {
               rules={{required: true}}
               render={({field: {onChange, value}}) => (
                 <Input
-                  control={control}
                   editable={!loading}
                   error={errors.city && errors.city.message}
                   keyboardType="email-address"
@@ -210,7 +247,6 @@ export function RegisterLocale() {
               rules={{required: true}}
               render={({field: {onChange, value}}) => (
                 <Input
-                  control={control}
                   editable={!loading}
                   error={errors.neighborhood && errors.neighborhood.message}
                   keyboardType="email-address"
@@ -232,7 +268,6 @@ export function RegisterLocale() {
                 rules={{required: true}}
                 render={({field: {onChange, value}}) => (
                   <Input
-                    control={control}
                     editable={!loading}
                     error={errors.state && errors.state.message}
                     keyboardType="email-address"
@@ -253,7 +288,6 @@ export function RegisterLocale() {
                 rules={{required: true}}
                 render={({field: {onChange, value}}) => (
                   <Input
-                    control={control}
                     editable={!loading}
                     error={errors.number && errors.number.message}
                     keyboardType="email-address"

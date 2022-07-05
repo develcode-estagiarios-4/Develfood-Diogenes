@@ -27,6 +27,11 @@ import {
 } from './styled';
 import {ContinueButton} from '../../../components/ContinueButton';
 
+interface FormData {
+  email: string;
+  password: string;
+}
+
 const schema = Yup.object().shape({
   email: Yup.string()
     .email('Digite um email válido.')
@@ -51,11 +56,11 @@ export function Login() {
     control,
     handleSubmit,
     formState: {errors},
-  } = useForm({
+  } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (value: any) => {
+  const onSubmit = (value: FormData) => {
     userLogin({
       email: value.email,
       password: value.password,
@@ -83,7 +88,6 @@ export function Login() {
               rules={{required: true}}
               render={({field: {onChange, value}}) => (
                 <Input
-                  control={control}
                   editable={!loading}
                   error={errors.email && errors.email.message}
                   keyboardType="email-address"
@@ -102,7 +106,6 @@ export function Login() {
               rules={{required: true}}
               render={({field: {onChange, value}}) => (
                 <Input
-                  control={control}
                   editable={!loading}
                   error={errors.password && errors.password.message}
                   keyboardType="default"
