@@ -21,6 +21,7 @@ import {
   WrapperInfo,
   Footer,
 } from './styles';
+import {useNavigation} from '@react-navigation/native';
 
 interface PlateDTOResponse {
   id: number;
@@ -76,9 +77,11 @@ interface SectionListData {
 export function Orders() {
   const {token} = useAuth();
 
+  const theme = useTheme();
+
   const [filter, setFilter] = useState(0);
 
-  const theme = useTheme();
+  const navigation = useNavigation();
 
   const [order, setOrder] = useState<OrderProps[]>([]);
 
@@ -106,10 +109,22 @@ export function Orders() {
     setIsLoading(false);
   }
 
+  function handlerOrderInfo(name: string, photo_url: string, id: number) {
+    navigation.navigate('OrderInfo' as never, {name, photo_url, id} as never);
+  }
+
   const renderItem = ({item}: {item: OrderProps}) => {
     return item ? (
       <Content>
         <OrderCard
+          restaurantID={item.restaurant.id}
+          onPress={() =>
+            handlerOrderInfo(
+              item.restaurant.name,
+              item.restaurant.photo_url,
+              item.id,
+            )
+          }
           photo_url={item.restaurant.photo_url}
           restaurantName={item.restaurant.name}
           statusOrder={

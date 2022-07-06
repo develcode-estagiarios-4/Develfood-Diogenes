@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect} from 'react';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useTheme} from 'styled-components';
 import {useAuth} from '../../global/Context';
 import {useFetch} from '../../global/services/get';
@@ -22,6 +23,8 @@ interface OrderProps {
   statusOrder: string;
   orderNumber: number;
   foodName: string;
+  onPress: () => void;
+  restaurantID: number;
 }
 
 interface Photo {
@@ -35,6 +38,7 @@ export function OrderCard({
   statusOrder,
   orderNumber,
   foodName,
+  onPress,
 }: OrderProps) {
   const {token} = useAuth();
 
@@ -50,26 +54,28 @@ export function OrderCard({
     fetchData();
   }, [photo_url]);
   return (
-    <Container>
-      <RestaurantPhoto
-        source={
-          data.code
-            ? {
-                uri: `${data.code}`,
-              }
-            : theme.images.noImage
-        }
-      />
-      <WrapperRestaurantInfo>
-        <RestaurantName>{restaurantName}</RestaurantName>
-        <CheckOrders source={theme.icons.checkOrders} />
-        <WrapperInfoPoduct>
-          <StatusOrder>{statusOrder}</StatusOrder>
-          <OrderN>N° </OrderN>
-          <OrderNumber>{orderNumber}</OrderNumber>
-        </WrapperInfoPoduct>
-        <FoodOrderName>{foodName}</FoodOrderName>
-      </WrapperRestaurantInfo>
-    </Container>
+    <TouchableOpacity onPress={onPress} activeOpacity={0}>
+      <Container>
+        <RestaurantPhoto
+          source={
+            data.code
+              ? {
+                  uri: `${data.code}`,
+                }
+              : theme.images.noImage
+          }
+        />
+        <WrapperRestaurantInfo>
+          <RestaurantName>{restaurantName}</RestaurantName>
+          <CheckOrders source={theme.icons.checkOrders} />
+          <WrapperInfoPoduct>
+            <StatusOrder>{statusOrder}</StatusOrder>
+            <OrderN>N° </OrderN>
+            <OrderNumber>{orderNumber}</OrderNumber>
+          </WrapperInfoPoduct>
+          <FoodOrderName>{foodName}</FoodOrderName>
+        </WrapperRestaurantInfo>
+      </Container>
+    </TouchableOpacity>
   );
 }

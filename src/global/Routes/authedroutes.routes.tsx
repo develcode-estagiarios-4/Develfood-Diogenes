@@ -5,6 +5,7 @@ import {Routes} from './routes.routes';
 import {CartComponent} from '../../components/CartComponent';
 import {Checkout} from '../../screens/Checkout';
 import {CheckoutSuccess} from '../../screens/CheckoutSuccess';
+import {OrderInfo} from '../../screens/OrderInfo';
 
 const {Navigator, Screen} = createStackNavigator();
 
@@ -17,6 +18,7 @@ export function AuthedRoutes() {
         <Screen name="CartComponent" component={CartComponent} />
         <Screen name="Checkout" component={Checkout} />
         <Screen name="CheckoutSuccess" component={CheckoutSuccess} />
+        <Screen name="OrderInfo" component={OrderInfo} />
       </Navigator>
     </>
   );

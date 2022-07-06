@@ -13,3 +13,15 @@ export const Header = styled.View`
 
   background-color: ${({theme}) => theme.colors.header};
 `;
+
+export const BannerWrapper = styled.ScrollView.attrs({
+  horizontal: true,
+  showsHorizontalScrollIndicator: false,
+  contentContainerStyle: {paddingLeft: 12},
+})`
+  top: ${RFValue(20)}px;
+`;
+
+export const Banner = styled.Image`
+  margin-right: ${RFValue(8)}px;
+`;
