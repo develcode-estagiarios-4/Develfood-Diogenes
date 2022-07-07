@@ -78,5 +78,9 @@ export default {
     checkoutEmpty: require('../assets/Images/checkoutEmpty.png'),
     checkoutSuccess: require('../assets/Images/checkoutsuccess.png'),
     noOrder: require('../assets/Images/noOrder.png'),
+    waiting: require('../assets/Images/waiting.png'),
+    doing: require('../assets/Images/doing.png'),
+    inRoute: require('../assets/Images/inRoute.png'),
+    delivered: require('../assets/Images/delivered.png'),
   },
 };

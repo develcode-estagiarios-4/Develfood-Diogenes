@@ -26,6 +26,13 @@ import {
   WrapperCartPlates,
   WrapperPlates,
   LineBetween,
+  DateCard,
+  Day,
+  Month,
+  WrapperOrderInfo,
+  StatusImage,
+  WrapperText,
+  StatusText,
 } from './styles';
 
 interface RouteParams {
@@ -128,7 +135,7 @@ export function OrderInfo({route}: RouteParams, {source}: PlateProps) {
       />
       <Header>
         <BackButton name="exitWhite" onPressed={handlerBackHome} />
-        <Title>Pedido N°</Title>
+        <Title>Pedido N° {id}</Title>
       </Header>
 
       <WrapperInfo>
@@ -137,8 +144,12 @@ export function OrderInfo({route}: RouteParams, {source}: PlateProps) {
         <WrapperAddresInfo>
           <SubTitle>Entregar em:</SubTitle>
           <Street>Garusogil 43</Street>
-          <Neighborhood>Gangnam - Garusogil 43 {id}</Neighborhood>
+          <Neighborhood>Gangnam - Garusogil 43</Neighborhood>
         </WrapperAddresInfo>
+        <DateCard>
+          <Day>05</Day>
+          <Month>Jul</Month>
+        </DateCard>
       </WrapperInfo>
 
       <WrapperRestaurantInfo>
@@ -155,6 +166,13 @@ export function OrderInfo({route}: RouteParams, {source}: PlateProps) {
           <Restaurant>Restaurante</Restaurant>
           <RestaurantName>{name}</RestaurantName>
         </WrapperName>
+        <WrapperOrderInfo>
+          <StatusImage source={theme.images.waiting} />
+
+          <WrapperText>
+            <StatusText>Aguardando aprovação</StatusText>
+          </WrapperText>
+        </WrapperOrderInfo>
       </WrapperRestaurantInfo>
 
       <LineBetween />

@@ -18,7 +18,7 @@ export const Title = styled.Text`
   font-size: ${RFValue(14)}px;
   font-weight: 500;
   color: ${({theme}) => theme.colors.text_white};
-  left: ${RFValue(110)}px;
+  left: ${RFValue(90)}px;
 `;
 
 export const WrapperInfo = styled.View`
@@ -54,6 +54,29 @@ export const Neighborhood = styled.Text`
   color: ${({theme}) => theme.colors.text_dark};
 `;
 
+export const DateCard = styled.View`
+  width: ${RFValue(54)}px;
+  height: ${RFValue(54)}px;
+  border: ${RFValue(2)}px;
+  border-radius: ${RFValue(5)}px;
+  border-color: ${({theme}) => theme.colors.background_red};
+  left: ${RFValue(95)}px;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const Day = styled.Text`
+  font-size: ${RFValue(20)}px;
+  font-weight: 700;
+  color: ${({theme}) => theme.colors.icon_red};
+`;
+
+export const Month = styled.Text`
+  font-size: ${RFValue(16)}px;
+  font-weight: 700;
+  color: ${({theme}) => theme.colors.icon_red};
+`;
+
 export const WrapperRestaurantInfo = styled.View`
   left: ${RFValue(16)}px;
   flex-direction: row;
@@ -80,6 +103,26 @@ export const RestaurantName = styled.Text`
   font-size: ${RFValue(18)}px;
   font-weight: 400;
   color: ${({theme}) => theme.colors.text_dark};
+`;
+
+export const WrapperOrderInfo = styled.View`
+  left: ${RFValue(108)}px;
+  align-items: center;
+`;
+
+export const StatusImage = styled.Image``;
+
+export const WrapperText = styled.View`
+  width: ${RFValue(70)}px;
+  height: ${RFValue(30)}px;
+  align-items: center;
+`;
+
+export const StatusText = styled.Text`
+  font-size: ${RFValue(12)}px;
+  font-weight: 400;
+  text-align: center;
+  color: ${({theme}) => theme.colors.icon_red};
 `;
 
 export const WrapperPlates = styled.View`
