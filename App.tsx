@@ -3,8 +3,11 @@ import {NavigationContainer} from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
 import {ThemeProvider} from 'styled-components';
 import theme from './src/global/styles/theme';
-import {Routes} from './src/global/Routes/routes.routes';
 import {useEffect} from 'react';
+import {AuthProvider} from './src/global/Context';
+import {AppRoutes} from './src/global/Routes';
+import {CreateUserProvider} from './src/global/Context/createUserAuth';
+import {CartProvider} from './src/global/Context/Cart';
 
 export default function App() {
   useEffect(() => {
@@ -12,10 +15,16 @@ export default function App() {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <NavigationContainer>
-        <Routes />
-      </NavigationContainer>
-    </ThemeProvider>
+    <AuthProvider>
+      <CartProvider>
+        <CreateUserProvider>
+          <ThemeProvider theme={theme}>
+            <NavigationContainer>
+              <AppRoutes />
+            </NavigationContainer>
+          </ThemeProvider>
+        </CreateUserProvider>
+      </CartProvider>
+    </AuthProvider>
   );
 }
