@@ -62,6 +62,7 @@ export default {
     dollar: require('../assets/Icons/dollar.png'),
     cleanUp: require('../assets/Icons/cleanUp.png'),
     checkOrders: require('../assets/Icons/checkOrders.png'),
+    map: require('../assets/Icons/map.png'),
   },
 
   images: {

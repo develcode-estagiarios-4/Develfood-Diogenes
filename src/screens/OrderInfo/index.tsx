@@ -4,19 +4,17 @@ import {RouteProp, useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {FlatList, StatusBar} from 'react-native';
 import {useTheme} from 'styled-components';
-import {BackButton} from '../../components/BackButton';
 import {CardOrderInfo} from '../../components/CardOrderInfo';
+import {HeaderComponent} from '../../components/HeaderComponent';
 import {useAuth} from '../../global/Context';
 import {useFetch} from '../../global/services/get';
 import {
   Container,
-  Header,
   MapImage,
   Neighborhood,
   RestaurantPhoto,
   Street,
   SubTitle,
-  Title,
   WrapperAddresInfo,
   WrapperInfo,
   WrapperRestaurantInfo,
@@ -129,18 +127,23 @@ export function OrderInfo({route}: RouteParams, {source}: PlateProps) {
         translucent={false}
         backgroundColor={theme.colors.background_red}
       />
-      <Header>
-        <BackButton name="exitWhite" onPressed={handlerBackHome} />
-        <Title>Pedido N° {id}</Title>
-      </Header>
+
+      <HeaderComponent
+        backgroudColor={theme.colors.background_red}
+        name={`Pedido N° ${id}`}
+        source={theme.icons.exitWhite}
+        iconColor={theme.colors.icon_white}
+        Textcolor={theme.colors.text_white}
+        onPress={handlerBackHome}
+      />
 
       <WrapperInfo>
         <MapImage source={theme.images.mapImage} />
 
         <WrapperAddresInfo>
           <SubTitle>Entregar em:</SubTitle>
-          <Street>Garusogil 43</Street>
-          <Neighborhood>Gangnam - Garusogil 43</Neighborhood>
+          <Street>도산대로49길</Street>
+          <Neighborhood>서울특별시 강남구 도산대로49길 22</Neighborhood>
         </WrapperAddresInfo>
         <DateCard>
           <Day>05</Day>

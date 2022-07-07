@@ -14,14 +14,13 @@ import 'moment/locale/pt-br';
 import {
   Container,
   Content,
-  Header,
   OrderDate,
   SubTitle,
-  Title,
   WrapperInfo,
   Footer,
 } from './styles';
 import {useNavigation} from '@react-navigation/native';
+import {HeaderComponent} from '../../components/HeaderComponent';
 
 interface PlateDTOResponse {
   id: number;
@@ -229,12 +228,15 @@ export function Orders() {
     <Container>
       <StatusBar
         barStyle={'light-content'}
-        translucent
-        backgroundColor="transparent"
+        translucent={false}
+        backgroundColor={theme.colors.background_red}
       />
-      <Header>
-        <Title>Meus Pedidos</Title>
-      </Header>
+
+      <HeaderComponent
+        backgroudColor={theme.colors.background_red}
+        name="Meus Pedidos"
+        Textcolor={theme.colors.text_white}
+      />
 
       <>
         <WrapperInfo>

@@ -18,7 +18,6 @@ import {Category} from '../../components/CategoryButton';
 import {
   Container,
   Content,
-  Header,
   BannerWrapper,
   Banner,
   TitleWrapper,
@@ -27,6 +26,7 @@ import {
   RestaurantListWrapper,
   Footer,
 } from './styles';
+import {HeaderComponent} from '../../components/HeaderComponent';
 
 interface ListRestaurantProps {
   food_types: ListFoodType[];
@@ -153,10 +153,18 @@ export function Home() {
       <Container>
         <StatusBar
           barStyle={'light-content'}
-          translucent
+          translucent={false}
           backgroundColor={theme.colors.background_red}
         />
-        <Header />
+
+        <HeaderComponent
+          backgroudColor={theme.colors.background_red}
+          name="서울특별시 강남구 도산대로49길 22"
+          source={theme.icons.map}
+          iconColor={theme.colors.icon_white}
+          Textcolor={theme.colors.text_white}
+        />
+
         <FlatList
           data={restaurants}
           keyExtractor={item => item.id.toString()}

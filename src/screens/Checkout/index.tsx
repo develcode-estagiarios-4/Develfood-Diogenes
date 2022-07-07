@@ -6,8 +6,8 @@ import {StatusBar} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {useTheme} from 'styled-components';
-import {BackButton} from '../../components/BackButton';
 import {CheckoutComponent} from '../../components/CheckoutComponent';
+import {HeaderComponent} from '../../components/HeaderComponent';
 import {ListEmptyComponent} from '../../components/ListEmptyComponent';
 import {Plates} from '../../components/Plates';
 import {useAuth} from '../../global/Context';
@@ -16,8 +16,6 @@ import {useFetch} from '../../global/services/get';
 
 import {
   Container,
-  Header,
-  Title,
   WrapperInfo,
   MapImage,
   WrapperAddresInfo,
@@ -116,10 +114,15 @@ export function Checkout({
         translucent={false}
         backgroundColor={theme.colors.background_red}
       />
-      <Header>
-        <BackButton name="exitWhite" onPressed={handlerBackHome} />
-        <Title>Compras</Title>
-      </Header>
+
+      <HeaderComponent
+        backgroudColor={theme.colors.background_red}
+        name="Compras"
+        source={theme.icons.exitWhite}
+        iconColor={theme.colors.icon_white}
+        Textcolor={theme.colors.text_white}
+        onPress={handlerBackHome}
+      />
 
       {cart.length > 0 ? (
         <>
@@ -128,8 +131,8 @@ export function Checkout({
 
             <WrapperAddresInfo>
               <SubTitle>Entregar em:</SubTitle>
-              <Street>Garusogil 43</Street>
-              <Neighborhood>Gangnam - Garusogil 43</Neighborhood>
+              <Street>도산대로49길</Street>
+              <Neighborhood>서울특별시 강남구 도산대로49길 22</Neighborhood>
             </WrapperAddresInfo>
           </WrapperInfo>
           <Content>
