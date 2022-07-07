@@ -52,11 +52,7 @@ interface PlateProps {
   name: string;
   description: string;
   source: string;
-  price: number;
   id: number;
-  restaurantID: number;
-  restaurantFoodTypes: string;
-  restaurantName: string;
   unityPrice: number;
 }
 
