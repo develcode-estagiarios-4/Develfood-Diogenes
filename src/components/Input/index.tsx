@@ -1,6 +1,5 @@
 import React from 'react';
 import {useState} from 'react';
-import {Control} from 'react-hook-form';
 
 import {
   Container,
@@ -15,7 +14,6 @@ import {ImageSourcePropType, KeyboardType, TextInputProps} from 'react-native';
 
 interface Props extends TextInputProps {
   name?: string;
-  control?: Control;
   error?: string;
   editable?: boolean;
   source: ImageSourcePropType;
